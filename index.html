@@ -299,7 +299,7 @@
         </div>
     </div>
 
-    
+
     <!-- Start Modal -->
 <div class="modal fade" id="panelplayar" tabindex="-1" role="dialog" aria-labelledby="modalanelplayar" aria-hidden="true">
     <div class="modal-dialog modal-player" role="document">
@@ -423,6 +423,7 @@
     <!-- Material Kit Core initialisations of plugins and Bootstrap Material Design Library -->
     <script src="./assets/js/material-kit.js?v=2.0.2"></script>
     <script src="./assets/js/jquery.jplayer.min.js"></script>
+
 <script type="text/javascript">
 //<![CDATA[
 $(document).ready(function(){
@@ -434,16 +435,31 @@ $(document).ready(function(){
                 oga:" http://dmorita.out.airtime.pro:8000/dmorita_b"
             });
         },
-        swfPath: "js",
+        // swfPath: "js",
         supplied: "oga",
         wmode: "window",
         useStateClassSkin: true,
-        autoBlur: false,
-        smoothPlayBar: true,
-        keyEnabled: true,
-        remainingDuration: true,
-        toggleDuration: true
+        // autoBlur: false,
+        // smoothPlayBar: true,
+        // keyEnabled: true,
+        // remainingDuration: true,
+        // toggleDuration: true
     });
+
+
+// var id = "#jquery_jplayer_1";
+// var media = {
+//     oga:" http://dmorita.out.airtime.pro:8000/dmorita_b"
+// };
+// var options = {
+//     swfPath: "/my/swf/path/js",
+//     supplied: "oga",
+//     wmode: "window",
+//     smoothPlayBar: true,
+//     keyEnabled: true
+// };
+// var myFix = new jPlayerAndroidFix(id, media, options);
+
 });
 //]]>
 
