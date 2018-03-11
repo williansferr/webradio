@@ -1,0 +1,33 @@
+.modal-dialog {
+    width:auto;
+    height: auto;
+    position: fixed;
+    left: 60%;
+    top: 20%;
+    /* margin-left:-175px; */
+    /* margin-left:-420px;
+    margin-top:-40px; */
+}
+
+.modal-dialog.modal-player {
+	margin-top:0px;	
+}
+
+@media (max-width: 600px) {
+    .modal-dialog.modal-player {
+        margin-left:-175px;
+    }
+    .modal-body{
+        height: 100px;
+        overflow-y: auto;
+    }
+}
+
+/* Important part */
+.modal-dialog{
+    overflow-y: initial !important
+}
+.modal-body{
+    height: 400px;
+    overflow-y: auto;
+}

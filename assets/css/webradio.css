@@ -1,0 +1,55 @@
+/* Estas classes abaixo e outras que quiseres adicionar, serão implementadas no teu ficheiro .css */
+
+.blackIcon {color:#000;}
+.greenIcon {color:green;}
+.rBlueIcon {color:royalblue;}
+.redIcon {color: red;}
+
+/* sharing CSS */
+.sharing-area{
+    margin-top: 80px;
+}
+.sharing-area .btn{
+    margin: 15px 4px 0;
+    color: #FFFFFF;
+}
+.sharing-area .btn i{
+    font-size: 18px;
+    position: relative;
+    top: 2px;
+    margin-right: 5px;
+}
+.sharing-area .btn-twitter{
+    background-color: #55acee;
+}
+.sharing-area .btn-facebook{
+    background-color: #3b5998;
+}
+.sharing-area .btn-google-plus{
+    background-color: #dd4b39;
+}
+.sharing-area .btn-github{
+    background-color: #333333;
+}
+
+.float-player {
+	position: fixed;
+	left: 90%;
+	top: 20%;
+	/* margin-left:-110px;
+	margin-top:-40px; */
+}
+
+.animated-live {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -vendor-animation-duration: 1s;
+
+  /* -webkit-animation-delay: 5s;
+  animation-delay: 5s;
+  -vendor-animation-delay: 5s; */
+
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -vendor-animation-iteration-count: infinite;
+}
