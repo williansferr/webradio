@@ -19,9 +19,7 @@
     <link rel="stylesheet" href="./assets/css/material-kit-aux.css"/>
     <!-- Documentation extras -->
     <link rel="stylesheet" href="./assets/css/webradio.css">
-    <link rel="stylesheet" href="./assets/css/animate.css">
-    <link rel="stylesheet" href="./assets/css/modal-player.css">
-    <link rel="stylesheet" href="./assets/css/skin/blue.monday/css/jplayer.blue.monday.min.css">
+    <link rel="stylesheet" href="./assets/jplayer/clean-jplayer-skin/style.css">
     
     <!-- iframe removal -->
 </head>
@@ -97,7 +95,52 @@
     <div class="main main-raised">
         <div class="section section-basic">
             <div class="container">
-                    <iframe id="embed_player" frameborder="0" width="280" height="216" src="https://dmorita.airtime.pro/embed/player?stream=auto"></iframe>
+                    <!-- <iframe id="embed_player" frameborder="0" width="280" height="216" src="https://dmorita.airtime.pro/embed/player?stream=auto"></iframe> -->
+
+<div class="box">
+    <div id="uniquePlayer-5" class="webPlayer light audioPlayer">
+        <div id="uniqueContainer-5" class="videoPlayer" style="width: 720px; height: 0px;"><img id="jp_poster_3" style="width: 720px; height: 0px; display: none;">
+            <audio id="jp_audio_3" preload="none" src="https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3"></audio>
+        </div>
+        <div class="playerScreen">
+            <a tabindex="1" href="#" class="video-play noload" style="display: none;"></a>
+        </div>
+        <div class="controls">
+            <div class="leftblock">
+                <a tabindex="1" href="#" class="play smooth noload"></a>
+                <a tabindex="1" href="#" class="pause smooth noload" style="display: none;"></a>
+            </div>
+            <div class="play-progress"> <span>Dj Jacky - HouseFire XXIII (2013)</span>
+                <div class="progressbar">
+                    <div class="seekBar horizontal" style="width: 0%;">
+                        <div class="playBar" style="width: 0%;"></div>
+                        <a style="left: 0%;">
+                            <div></div>
+                        </a>
+                        <input type="hidden" name="" value="0.00">
+                    </div>
+                </div>
+                <div class="time current">00:00</div>
+                <div class="time duration">00:00</div>
+            </div>
+            <div class="rightblock">
+                <div class="volumeBar">
+                    <div class="currentVolume horizontal">
+                        <div class="curvol" style="width: 50%;"></div>
+                        <a style="left: 50%;">
+                            <div></div>
+                        </a>
+                        <input type="hidden" name="" value="0.50">
+                    </div>
+                </div>
+                <div class="volumeText">Volume: 50</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
             </div>
         </div>      
     </div>
@@ -138,6 +181,22 @@
             </div>
         </div>
     </footer>
+
+    <!--   Core JS Files   -->
+    <script src="./assets/js/core/jquery.min.js"></script>
+    <script src="./assets/js/core/popper.min.js"></script>
+    <script src="./assets/js/bootstrap-material-design.js"></script>
+    <!-- Material Kit Core initialisations of plugins and Bootstrap Material Design Library -->
+    <script src="./assets/js/material-kit.js?v=2.0.2"></script>
+    <!-- <script src="./assets/jplayer/jtube/js/jplayer.easydeploy.min.js"></script>
+    <script src="./assets/jplayer/jtube/js/jquery.jplayer.min.js"></script> -->
+    <script src="./assets/jplayer/clean-jplayer-skin/jquery.jplayer.min.js"></script>
+    <script src="./assets/jplayer/clean-jplayer-skin/jplayer.cleanskin.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(document).find('.webPlayer').each(function() { $('#'+this.id).videoPlayer(); });
+        });
+    </script>
 </body>
 
 </html>

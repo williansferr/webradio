@@ -15,15 +15,22 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" /> -->
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="./assets/css/material-kit.css?v=2.0.2">
-    <!-- <link rel="stylesheet" href="./assets/css/material-kit2.css?v=2.0.2"> -->
-    <link rel="stylesheet" href="./assets/css/material-kit-aux.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="./assets/css/material-kit2.css?v=2.0.2">
+    <!-- <link rel="stylesheet" href="./assets/css/material-kit-aux.css"/> -->
     <!-- Documentation extras -->
     <link rel="stylesheet" href="./assets/css/webradio.css">
-    <link rel="stylesheet" href="./assets/css/animate.css">
-    <link rel="stylesheet" href="./assets/css/modal-player.css">
-    <link rel="stylesheet" href="./assets/css/skin/blue.monday/css/jplayer.blue.monday.min.css">
+    <!-- <link rel="stylesheet" href="./assets/css/search-podcasts.css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/animate.css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/modal-player.css"> -->
+    <!-- <link rel="stylesheet" href="./assets/css/skin/blue.monday/css/jplayer.blue.monday.min.css"> -->
+    <link type="text/css" href="./assets/css/skin/dkm.player/css/jplayer.dkm.css" rel="stylesheet" />
     
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css"> -->
+
+
+
     <!-- iframe removal -->
 </head>
 
@@ -31,39 +38,14 @@
     <nav class="navbar navbar-color-on-scroll bg-dark fixed-top  navbar-expand-lg " color-on-scroll="100" id="sectionsNav">
         <div class="container">
             <div class="navbar-translate">
-                <a class="navbar-brand" href="./teste.html">WebRadio </a>
+
+                <a class="navbar-brand" href="./index.html"><img style="max-width: 55px" src="./assets/img/logo/luppi.png" alt="logo-luppi"/></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                     <span class="navbar-toggler-icon"></span>
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            <!--div class="dropdown button-dropdown">
-                <a href="#pablo" class="dropdown-toggle" id="navbarDropdown" data-toggle="dropdown">
-                    <span class="button-bar"></span>
-                    <span class="button-bar"></span>
-                    <span class="button-bar"></span>
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-header">WebRadio</a>
-                    <a class="dropdown-item" href="#">Home</a>
-                    <a class="dropdown-item" href="#">PodCasts</a>
-                    <a class="dropdown-item" href="#">Sobre nós</a>
-                    <a class="dropdown-item" href="page-contato.html">Contato</a>
-                    <div class="dropdown-divider"></div>
-                    <div class="dropdown-divider"></div>
-                </div
-            </div>
-            <div class="navbar-translate">
-                <a class="navbar-brand" href="index.html" rel="tooltip" title="WebRadio Brasil" data-placement="bottom" target="_blank">
-                    WebRadio
-                </a>
-                <button class="navbar-toggler navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar bar1"></span>
-                    <span class="navbar-toggler-bar bar2"></span>
-                    <span class="navbar-toggler-bar bar3"></span>
-                </button>
-            </div-->
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="dropdown nav-item">
@@ -109,647 +91,318 @@
             </div>
         </div>
     </nav>
-    <!-- header-filter blue-filter clear-filter -->
-    <div class="page-header header-filter clear-filter blue-filter" data-parallax="true" style="background-image: url('assets/img/capa.jpg');">
+    
+    <div class="page-header header-filter clear-filter blue-filter" data-parallax="true" style="background-image: url('assets/img/capa.jpg'); background-repeat: repeat-x;">
         <div class="container">
             <div class="row">
-                <div class="col-md-8 ml-auto mr-auto">
-                    <div class="brand">
-                        <h1>Web Rádio</h1>
-                        <h3>Ouça suas musicas onde estiver.</h3>
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                    <div id="jp_container_N" class="jp-video jp-video-270p" role="application" aria-label="media player">
+                        <div class="jp-type-playlist">
+                            <div id="jquery_jplayer_N" class="jp-jplayer"></div>
+                            <div class="jp-gui">
+                                <div class="jp-video-play">
+                                    <button class="jp-video-play-icon" role="button" tabindex="0">play</button>
+                                </div>
+                                <div class="jp-interface">
+                                    <div class="jp-progress">
+                                        <div class="jp-seek-bar">
+                                            <div class="jp-play-bar"></div>
+                                        </div>
+                                    </div>
+                                    <div class="jp-current-time" role="timer" aria-label="time">&nbsp;</div>
+                                    <div class="jp-duration" role="timer" aria-label="duration">&nbsp;</div>
+                                    <div class="jp-controls-holder">
+                                        <div class="jp-controls">
+                                            <!-- <button class="jp-previous" role="button" tabindex="0">previous</button> -->
+                                            <button class="jp-play" role="button" tabindex="0">play</button>
+                                            <!-- <button class="jp-next" role="button" tabindex="0">next</button> -->
+                                            <button class="jp-stop" role="button" tabindex="0">stop</button>
+                                        </div>
+                                        <div class="jp-volume-controls">
+                                            <button class="jp-mute" role="button" tabindex="0">mute</button>
+                                            <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
+                                            <div class="jp-volume-bar">
+                                                <div class="jp-volume-bar-value"></div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="jp-toggles">
+                                            <button class="jp-repeat" role="button" tabindex="0">repeat</button>
+                                            <button class="jp-shuffle" role="button" tabindex="0">shuffle</button>
+                                            <button class="jp-full-screen" role="button" tabindex="0">full screen</button>
+                                        </div> -->
+                                    </div>
+                                    <div class="jp-details">
+                                        <div class="jp-title" aria-label="title">&nbsp;</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="jp-playlist">
+                                <ul>
+                                    <li>&nbsp;</li>
+                                </ul>
+                            </div> -->
+                            <div class="jp-no-solution">
+                                <span>Update Required</span>
+                                To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="main main-raised">
         <div class="section section-basic">
             <div class="container">
+                <!-- <button type="button" class="btn btn-primary" onclick="play()" >Primary</button> -->
+                <!-- <div class="row" style="max-width: 440px">
+                    <img style='width:100%;' border="0" alt="Null" src="./assets/img/logo/luppi-big.png" alt="logo-luppi">
+                </div> -->
                 <div class="row">
-                    <div class="col-md-12">
-                        <h2 class="title">Último Post</h2>
-                        <div class="card" style="max-width: 100rem; width: auto;">
-                            <img class="card-img-top" src="assets/img/exemplos/img1.jpg" alt="Card image cap">
-                            <div class="card-body">
-                                <h4 class="card-title">PodCast1</h4>
-                                <p class="card-text">Resumo do detalhes de PodCast1.</p>
-                                <a href="#" class="btn btn-primary">Ouvir</a>
-                            </div>
+                    <div class="col-md-4 ml-auto">
+                        <div class="card card-contact">
+                            <form id="contact-form" method="post">
+                                <div class="card-header card-header-raised card-header-primary text-center">
+                                    <h4 class="card-title">Comente</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group label-floating is-empty bmd-form-group">
+                                                <label class="bmd-label-floating">Nome completo</label>
+                                                <input type="text" name="name" class="form-control">
+                                                <span class="material-input"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <label class="bmd-label-floating">Email</label>
+                                        <input type="email" name="email" class="form-control">
+                                        <span class="material-input"></span>
+                                    </div>
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <label for="exampleMessage1" class="bmd-label-floating">Comentário</label>
+                                        <textarea name="message" class="form-control" id="exampleMessage1" rows="6"></textarea>
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="card-footer justify-content-between">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value=""> Não sou robo
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-8 ml-auto">
+                        <div class="card card-contact">
+                            <!-- <form id="contact-form" method="post"> -->
+                                <div class="card-header card-header-raised card-header-primary text-center">
+                                    <h4 class="card-title">Comentários</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <!-- <label for="exampleMessage1" class="bmd-label-floating"></label> -->
+                                        <textarea name="message" class="form-control" id="exampleMessage1" rows="20" readonly>
+                                        </textarea>
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                            <!-- </form> -->
                         </div>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-md-6 ml-auto mr-auto">
-                        <div class="profile-tabs">
-                            <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#post-dashboard-1" role="tab" data-toggle="tab">
-                                        <i class="material-icons">dashboard</i>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#post-list-1" role="tab" data-toggle="tab">
-                                        <i class="material-icons">list</i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="tab-content tab-space">
-                    <div class="tab-pane active" id="post-dashboard-1">
-                      <div class="features">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card" style="max-width:100rem; width: auto;">
-                                    <img class="card-img-top" src="assets/img/kit/free/examples/card-blog1.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">PodCast1</h4>
-                                        <p class="card-text">Resumo do detalhes de PodCast1.</p>
-                                        <a href="#" class="btn btn-primary">Ouvir</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" style="max-width:100rem; width: auto;">
-                                    <img class="card-img-top" src="assets/img/kit/free/examples/card-blog2.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">PodCast2</h4>
-                                        <p class="card-text">Resumo do detalhes de PodCast2.</p>
-                                        <a href="#" class="btn btn-primary">Ouvir</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" style="max-width:100rem; width: auto;">
-                                    <img class="card-img-top" src="assets/img/kit/free/examples/card-blog3.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">PodCast3</h4>
-                                        <p class="card-text">Resumo do detalhes de PodCast3.</p>
-                                        <a href="#" class="btn btn-primary">Ouvir</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="card" style="max-width:100rem; width: auto;">
-                                    <img class="card-img-top" src="assets/img/kit/free/examples/card-blog4.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">PodCast4</h4>
-                                        <p class="card-text">Resumo do detalhes de PodCast4.</p>
-                                        <a href="#" class="btn btn-primary">Ouvir</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" style="max-width:100rem; width: auto;">
-                                    <img class="card-img-top" src="assets/img/kit/free/examples/card-blog5.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">PodCast5</h4>
-                                        <p class="card-text">Resumo do detalhes de PodCast5.</p>
-                                        <a href="#" class="btn btn-primary">Ouvir</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card" style="max-width:100rem; width: auto;">
-                                    <img class="card-img-top" src="assets/img/kit/free/examples/card-blog6.jpg" alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">PodCast6</h4>
-                                        <p class="card-text">Resumo do detalhes de PodCast6.</p>
-                                        <a href="#" class="btn btn-primary">Ouvir</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <ul class="pagination pagination-primary">
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">...</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">5</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">6</a>
-                            </li>
-                            <li class="active page-item">
-                                <a href="javascript:void(0);" class="page-link">7</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">8</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">9</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">...</a>
-                            </li>
-                            <li class="page-item">
-                                <a href="javascript:void(0);" class="page-link">12</a>
-                            </li>
-                        </ul>
-                    </div>
-                    </div>
-                    <div class="tab-pane" id="post-list-1">
-                        <div class="features">
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog1.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title wb-align-initial">Podcast1</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast1.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog1.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title wb-align-initial">Podcast1</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast1.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog2.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast2</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast2.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog2.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast2</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast2.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog3.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast3</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast3.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog3.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast3</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast3.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog4.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast4</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast4.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog4.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast4</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast4.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog5.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast5</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast5.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog5.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Podcast5</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast5.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog6.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title wb-align-initial">Podcast6</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast6.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/free/examples/card-blog6.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h4 class="card-title wb-align-initial">Podcast6</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Podcast6.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/faces/card-profile1-square.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Noticia1</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Noticia1.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 ml-auto mr-auto">
-                                    <div class="card card-deck card-profile">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <div class="card-frame">
-                                                    <a href="#pablo">
-                                                        <img class="img" src="assets/img/kit/faces/card-profile1-square.jpg">
-                                                    </a>
-                                                    <div class="ripple-container"></div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4 class="card-title wb-align-initial">Noticia1</h4>
-                                                <p class="description wb-align-initial">Resumo descrição Noticia1.</p>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <button type="button" class="btn btn-default pull-right btn-round">Ouvir</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 ml-auto mr-auto">
-                                    <ul class="pagination pagination-primary">
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">1</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">...</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">5</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">6</a>
-                                        </li>
-                                        <li class="active page-item">
-                                            <a href="javascript:void(0);" class="page-link">7</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">8</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">9</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">...</a>
-                                        </li>
-                                        <li class="page-item">
-                                            <a href="javascript:void(0);" class="page-link">12</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                
-            </div>   
-        <!--div id="navbar">
-            <nav class="navbar navbar-expand-lg bg-rose">
-                <div class="container">
-                    <div class="navbar-translate">
-                        <a class="navbar-brand" href="/presentation.html">Brand</a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                            <span class="navbar-toggler-icon"></span>
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                    </div>
-                    <div class="collapse navbar-collapse">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a href="#pablo" class="nav-link">link</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#pablo" class="nav-link">link</a>
-                            </li>
-                        </ul>
-                        <form class="form-inline ml-auto">
-                            <div class="form-group has-white">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </div>
-                            <button type="submit" class="btn btn-white btn-raised btn-fab btn-round">
-                                <i class="material-icons">search</i>
-                            </button>
-                        </form>
-                    </div>
-                </div>                
-            </nav>
-        </div-->
+            </div>      
         </div>
-        <div class="section section-download" id="downloadSection">
+
+        <div class="section section-examples section-dark">
             <div class="container">
-                <div class="sharing-area text-center">
-                    <div class="row justify-content-center">
-                        <h3>Obrigado pelo apoio!</h3>
+                <div class="col-md-8 ml-auto mr-auto">
+                    <div class="section-description">
+                        <h2 class="title">Podcasts</h2>
+                      <!--   <h5 class="description"><p>Podcasting é uma forma de publicação de ficheiros multimédia (áudio, vídeo, foto, PPS, etc…) na Internet, através de um feed RSS, que permite aos utilizadores acompanhar a sua atualização. O utilizador pode, assim, meramente acompanhar, ou até mesmo a descarregar automaticamente o conteúdo de um podcast.</p>
+<p>
+A palavra "podcasting" é uma junção de iPod - marca do aparelho multimédia homónimo, da Apple Inc., que é sigla de "Personal On Demand" (numa tradução literal, algo pessoal e sob demanda) - e broadcasting (radiodifusão). O conjunto de ficheiros publicados por podcasting é chamada oe podcast. O autor de um podcast é chamado podcaster.</p></h5> -->
                     </div>
-                    <button id="twitter" class="btn btn-raised btn-twitter sharrre">
-                        <i class="fab fa-twitter"></i> Tweet
-                    </button>
-                    <button id="facebook" class="btn btn-raised btn-facebook sharrre">
-                        <i class="fab fa-facebook-square"></i> Compartilhe
-                    </button>
-                    <button id="googlePlus" class="btn btn-raised btn-google-plus sharrre">
-                        <i class="fab fa-google-plus"></i> Compartilhe
-                    </button>
-                    <a id="github" href="https://github.com/" target="_blank" class="btn btn-raised btn-github">
-                        <i class="fab fa-github"></i> *
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- Button trigger modal -->
-        <div id="float-div-player" class="float-player">
-            <button type="button" class="btn btn-fab btn-fab-mini btn-round"  data-toggle="modal" data-target="#panelplayar">
-                <i class="material-icons redIcon">play_circle_filled</i>
-            </button>
-        </div>
-    </div>
-
-
-    <!-- Start Modal -->
-<div class="modal fade" id="panelplayar" tabindex="-1" role="dialog" aria-labelledby="modalanelplayar" aria-hidden="true">
-    <div class="modal-dialog modal-player" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalanelplayar">Ao vivo/Fora do ar</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-
-<div id="jquery_jplayer_1" class="jp-jplayer"></div>
-<div id="jp_container_1" class="jp-audio-stream" role="application" aria-label="media player">
-    <div class="jp-type-single">
-        <div class="jp-gui jp-interface">
-            <div class="jp-controls">
-                <button id="play" class="jp-play" role="button" tabindex="0">play</button>
-            </div>
-            <div class="jp-volume-controls">
-                <button class="jp-mute" role="button" tabindex="0">mute</button>
-                <button class="jp-volume-max" role="button" tabindex="0">max volume</button>
-                <div class="jp-volume-bar">
-                    <div class="jp-volume-bar-value"></div>
-                </div>
-            </div>
-        </div>
-        <div class="jp-details">
-            <div class="jp-title" aria-label="title">&nbsp;</div>
-        </div>
-        <div class="jp-no-solution">
-            <span>Update Required</span>
-            To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-        </div>
-    </div>
-</div>
-
-
-<div class="section">
-    <div class="row">
-        <div class="col-md-8 ml-auto mr-auto">
-            <h2 class="text-center title">Comente</h2>  
-            <form class="contact-form">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="bmd-label-floating">Nome</label>
-                            <input type="email" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="bmd-label-floating">Email</label>
-                            <input type="email" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="exampleMessage" class="bmd-label-floating">mensagem</label>
-                    <textarea type="email" class="form-control" rows="4" id="exampleMessage"></textarea>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 ml-auto mr-auto text-center">
-                        <button class="btn btn-primary btn-raised">
-                            Enviar
-                        </button>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <!-- nowrap -->
+                        <table id="dt-podcasts" class="table table-striped dt-responsive" 
+                         style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th style="color: white;">Capa</th>
+                                    <th style="color: white;">Artista</th>
+                                    <th style="color: white;">Título</th>
+                                    <th style="color: white;">Album</th>
+                                    <th style="color: white;">Play</th>
+                                    <th style="color: white;">Ordem</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="http://static.djbooth.net/pics-tracks/wiz-khalifa-see-you-again.jpg">
+                                    </td>
+                                    <td>Wiz Khalifa feat. Charlie Puth</td>
+                                    <td>See You Again</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="http://cdnrf.securenetsystems.net/file_radio/album_art/B/1/5/51B2BHP42pDL.jpg">
+                                    </td>
+                                    <td>Ellie Goulding</td>
+                                    <td>Love Me Like You Do</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>2</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://3.bp.blogspot.com/_mupIVJbjvuU/TKgPuOEekII/AAAAAAAAHd4/HGTyRWuhw2c/s1600/Made+by+In+For+The+Kill.png">
+                                    </td>
+                                    <td>Kelly Clarkson</td>
+                                    <td>Already Gone</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>3</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="http://img02.cdn2-rdio.com/album/d/3/d/000000000039fd3d/2/square-600.jpg">
+                                    </td>
+                                    <td>Blake Shelton</td>
+                                    <td>Sangria</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>4</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://eyespytz.files.wordpress.com/2011/11/6837-gif.jpeg">
+                                    </td>
+                                    <td>Red Hot Chili Peppers</td>
+                                    <td>Californication</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="http://media.fanfire.com/images/product/large/MAR/MAR61934.jpg">
+                                    </td>
+                                    <td>Maroon 5</td>
+                                    <td>Sugar</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>6</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://upload.wikimedia.org/wikipedia/en/6/64/MeteoraLP.jpg">
+                                    </td>
+                                    <td>Linkin Park</td>
+                                    <td>Numb</td>
+                                    <td>Meteora</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>7</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://upload.wikimedia.org/wikipedia/pt/8/81/CAPA_CD_NOTHING_BUT_THE_BEAT.jpg">
+                                    </td>
+                                    <td>David Gueta</td>
+                                    <td>Teste1</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>8</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://upload.wikimedia.org/wikipedia/pt/8/81/CAPA_CD_NOTHING_BUT_THE_BEAT.jpg">
+                                    </td>
+                                    <td>David Gueta</td>
+                                    <td>Teste2</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>9</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://upload.wikimedia.org/wikipedia/pt/8/81/CAPA_CD_NOTHING_BUT_THE_BEAT.jpg">
+                                    </td>
+                                    <td>David Gueta</td>
+                                    <td>Teste3</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://upload.wikimedia.org/wikipedia/pt/8/81/CAPA_CD_NOTHING_BUT_THE_BEAT.jpg">
+                                    </td>
+                                    <td>David Gueta</td>
+                                    <td>Teste4</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>11</td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <img style="width: 60px; height: 60px;" src="https://upload.wikimedia.org/wikipedia/pt/8/81/CAPA_CD_NOTHING_BUT_THE_BEAT.jpg">
+                                    </td>
+                                    <td>David Gueta</td>
+                                    <td>Teste5</td>
+                                    <td>Album?</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" onclick="">Play</button>
+                                    </td>
+                                    <td>12</td>
+                                </tr>
+                            </tbody>
+                        </table>                    
                     </div>
                 </div>
-            </form>
-        </div>
-    </div>
-</div>
-            </div>  
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
-    </div>
-</div>
-    <!-- End Modal -->
+
+
     <footer class="footer ">
         <div class="container">
             <nav class="pull-left">
@@ -785,72 +438,198 @@
             </div>
         </div>
     </footer>
+
     <!--   Core JS Files   -->
     <script src="./assets/js/core/jquery.min.js"></script>
     <script src="./assets/js/core/popper.min.js"></script>
     <script src="./assets/js/bootstrap-material-design.js"></script>
     <!-- Material Kit Core initialisations of plugins and Bootstrap Material Design Library -->
     <script src="./assets/js/material-kit.js?v=2.0.2"></script>
-    <script src="./assets/js/jquery.jplayer.min.js"></script>
+    <script src="./assets/js/jquery.jplayer.js"></script>
+    <script src="./assets/js/add-on/jplayer.playlist.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js"></script>
 
-<script type="text/javascript">
-//<![CDATA[
-$(document).ready(function(){
+    
 
-    $("#jquery_jplayer_1").jPlayer({
-        ready: function (event) {
-            $(this).jPlayer("setMedia", {
-                title: "",
-                oga:" http://dmorita.out.airtime.pro:8000/dmorita_a",
-                mp3:" http://dmorita.out.airtime.pro:8000/dmorita_a"
+
+
+    <!-- <script src="./assets/jplayer/clean-jplayer-skin/jquery.jplayer.min.js"></script> -->
+    <!-- <script src="./assets/jplayer/clean-jplayer-skin/jplayer.cleanskin.min.js"></script> -->
+    <script type="text/javascript">
+        var playList;
+        function play(id){
+            console.log("play");
+            playList.play(id);
+            // console.log(playList);
+            // console.log(playList.playlist.length);
+            // for (var i = 0; i < playList.playlist.length; i++) {
+            //     console.log(playList.playlist[i].title);
+            // }
+        }
+
+        $(document).ready(function(){
+             
+
+            //hide "show entries"
+            $('#dt-podcasts').dataTable( {
+                "pageLength": 5,
+                "bPaginate": true,
+                "bLengthChange": false,
+                "bFilter": true,
+                "bInfo": false,
+                "bAutoWidth": false,
+                "oLanguage": {
+                    "sSearch": "Buscar:"
+                }
+            }); 
+
+            var tabela =  $('#dt-podcasts').DataTable();
+            tabela.column(5).visible(false);
+
+            $('#dt-podcasts tbody').on( 'click', 'tr', function () {
+                console.log( tabela.row( this ).data()[5] );
+                play(tabela.row( this ).data()[5]);
+            } );
+
+            // playList = new jPlayerPlaylist({
+            //     jPlayer: "#jquery_jplayer_1",
+            //     cssSelectorAncestor: "#jp_container_1"
+            // }, [
+            //     {
+            //         title:"Teste1",
+            //         artist:"Artista1",
+            //         // free:true,
+            //         mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3",
+            //         poster:"http://www.jplayer.org/video/poster/Big_Buck_Bunny_Trailer_480x270.png"
+            //     },
+            //     {
+            //         title:"Teste2",
+            //         // artist:"Artista2",
+            //         mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3",
+            //         poster: "http://www.jplayer.org/video/poster/Finding_Nemo_Teaser_640x352.png"
+            //     },
+            //     {
+            //         title:"Teste3",
+            //         artist:"Artista3",
+            //         mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3",
+            //         poster: "http://www.jplayer.org/video/poster/Incredibles_Teaser_640x272.png"
+            //     },
+            //     {
+            //         title:"Teste4",
+            //         artist:"Artista4",
+            //         mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3",
+            //         poster: "http://www.jplayer.org/video/poster/Incredibles_Teaser_640x272.png"
+            //     },
+            //     {
+            //         title:"Teste5",
+            //         artist:"Artista5",
+            //         mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3",
+            //         poster: "http://www.jplayer.org/video/poster/Incredibles_Teaser_640x272.png"
+            //     },
+            //     {
+            //         title:"Teste6",
+            //         artist:"Artista6",
+            //         mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3",
+            //         poster: "http://www.jplayer.org/video/poster/Incredibles_Teaser_640x272.png"
+            //     }
+            // ], {
+            //     swfPath: "/js",
+            //     supplied: "mp3",
+            //     useStateClassSkin: true,
+            //     autoBlur: false,
+            //     smoothPlayBar: true,
+            //     keyEnabled: true
+            // });
+
+            playList = new jPlayerPlaylist({
+                jPlayer: "#jquery_jplayer_N",
+                cssSelectorAncestor: "#jp_container_N"
+            }, [
+                {
+                    title:"See You Again",
+                    artist:"Wiz Khalifa feat. Charlie Puth",
+                    // free:true,
+                    mp3: "http://trendingmp3.com/music/user_folder/Wiz%20Khalifa%20See%20You%20Again%20Feat%20Charlie%20Puth%20-%201426839506.mp3",
+                    poster:"http://static.djbooth.net/pics-tracks/wiz-khalifa-see-you-again.jpg"
+                },
+                {
+                    title:"Love Me Like You Do",
+                    artist:"Ellie Goulding",
+                    mp3: "http://freemp3.se/music/user_folder/Love%20Me%20Like%20You%20Do%20By%20Ellie%20Goulding%20-%201424762922.mp3",
+                    poster: "http://cdnrf.securenetsystems.net/file_radio/album_art/B/1/5/51B2BHP42pDL.jpg"
+                },
+                {
+                    title:"Already Gone",
+                    artist:"Kelly Clarkson",
+                    mp3: "http://onlinekaraoke.tv/assets/songs/42000-42999/42594-already-gone-kelly-clarkson--1411577508.mp3",
+                    poster: "https://3.bp.blogspot.com/_mupIVJbjvuU/TKgPuOEekII/AAAAAAAAHd4/HGTyRWuhw2c/s1600/Made+by+In+For+The+Kill.png"
+                },
+                {
+                    title:"Sangria",
+                    artist:"Blake Shelton",
+                    mp3: "http://uhmp3.com/a/cache/Blake%20Shelton%20-%20Sangria.mp3",
+                    poster: "http://img02.cdn2-rdio.com/album/d/3/d/000000000039fd3d/2/square-600.jpg"
+                },
+                {
+                    title:"Faster",
+                    artist:"Within Tempation",
+                    mp3: "https://a.tumblr.com/tumblr_lli3gani2F1qetbfso1_r1.mp3",
+                    poster: "http://www.aceshowbiz.com/images/news/00038227.jpg"
+                },
+                {
+                    title:"Californication",
+                    artist:"Red Hot Chili Peppers",
+                    mp3: "http://mp3light.net/assets/songs/21000-21999/21582-californication-red-hot-chili-peppers--1411570819.mp3",
+                    poster: "https://eyespytz.files.wordpress.com/2011/11/6837-gif.jpeg"
+                },
+                {
+                    title:"Sugar",
+                    artist:"Maroon 5",
+                    mp3: "http://mp3light.net/assets/songs/393000-393999/393398-sugar-maroon-5-sugar-sugar-maroon.mp3",
+                    poster: "http://media.fanfire.com/images/product/large/MAR/MAR61934.jpg"
+                },
+                {
+                    album:"Meteora",
+                    title:"Numb",
+                    artist:"Linkin Park",
+                    mp3: "http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3",
+                    poster: "https://upload.wikimedia.org/wikipedia/en/6/64/MeteoraLP.jpg"
+                }
+            ], {
+                playlistOptions: {
+                    enableRemoveControls: true
+                },
+                swfPath: "../../dist/jplayer",
+                supplied: "webmv, ogv, m4v, oga, mp3",
+                useStateClassSkin: true,
+                autoBlur: false,
+                smoothPlayBar: true,
+                keyEnabled: true,
+                audioFullScreen: true
             });
-        },
-        // swfPath: "js",
-        supplied: "oga, mp3",
-        wmode: "window",
-        useStateClassSkin: true,
-        // autoBlur: false,
-        // smoothPlayBar: true,
-        // keyEnabled: true,
-        // remainingDuration: true,
-        // toggleDuration: true
-    });
 
 
-// var id = "#jquery_jplayer_1";
-// var media = {
-//     oga:" http://dmorita.out.airtime.pro:8000/dmorita_b"
-// };
-// var options = {
-//     swfPath: "/my/swf/path/js",
-//     supplied: "oga",
-//     wmode: "window",
-//     smoothPlayBar: true,
-//     keyEnabled: true
-// };
-// var myFix = new jPlayerAndroidFix(id, media, options);
-
-});
-//]]>
-
-    $(function(){
-        var animatedClass = "animated-live flash";
-        var animationEnd = "webkitAnimationEnd mozAnimationEnd MSAnimationend animationend";
-        $('#play').on('click', function () {
-
-            if ($('#jp_container_1').hasClass( "jp-state-playing" ) ){
-                $('#float-div-player').removeClass(animatedClass);
-            } else {
-                $('#float-div-player').addClass(animatedClass);
-                
-            }
-            // $('#float-div-player').addClass(animatedClass)
-            // .one(animationEnd, function(){
-            //     $(this).removeClass(animatedClass);
+            // $("#jquery_jplayer_1").jPlayer({
+            //     ready: function () {
+            //         $(this).jPlayer("setMedia", {
+            //             mp3: "https://cdn.prahec.com/data/demo/Dj%20Jacky%20-%20HouseFire%20XXIII%20(2013).mp3"
+            //         });
+            //     },
+            //     cssSelectorAncestor: "#jp_container_1",
+            //     swfPath: "/js",
+            //     supplied: "mp3",
+            //     useStateClassSkin: true,
+            //     autoBlur: false,
+            //     smoothPlayBar: true,
+            //     keyEnabled: true,
+            //     remainingDuration: true,
+            //     toggleDuration: true
             // });
         });
-    });
-</script>
+  </script>
 </body>
 
 </html>

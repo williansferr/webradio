@@ -82,3 +82,11 @@
     width: 100%;
     height: auto
 }
+
+
+#logo-luppi {
+  width: 100%;
+  /* max-width: 440px;
+  height: auto; */
+  /* background: url("../img/logo/luppi.png") 0 0 ; */
+}
