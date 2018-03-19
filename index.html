@@ -20,6 +20,8 @@
     <!-- <link rel="stylesheet" href="./assets/css/material-kit-aux.css"/> -->
     <!-- Documentation extras -->
     <link rel="stylesheet" href="./assets/css/webradio.css">
+    <link rel="stylesheet" href="./assets/css/efeito-vertical.css">
+    <link href='https://fonts.googleapis.com/css?family=Sintony:400,700' rel='stylesheet' type='text/css'>
     <!-- <link rel="stylesheet" href="./assets/css/search-podcasts.css"> -->
     <!-- <link rel="stylesheet" href="./assets/css/animate.css"> -->
     <!-- <link rel="stylesheet" href="./assets/css/modal-player.css"> -->
@@ -48,18 +50,23 @@
             </div>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#section1" onclick="">
+                            <i class=""></i> Comentários
+                        </a>
+                    </li>
                     <li class="dropdown nav-item">
-                        <a class="nav-link" href="#" onclick="">
-                            <i class=""></i> PodCasts
+                        <a class="nav-link" href="#section2" onclick="">
+                            <i class=""></i> Podcasts
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)" onclick="">
+                        <a class="nav-link" href="#section3" onclick="">
                             <i class=""></i> Sobre-nos
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0)" onclick="">
+                        <a class="nav-link" href="#section4" onclick="">
                             <i class=""></i> Contato
                         </a>
                     </li>
@@ -98,6 +105,7 @@
                 <div class="col-md-4">
                 </div>
                 <div class="col-md-4">
+
                     <div id="jp_container_N" class="jp-video jp-video-270p" role="application" aria-label="media player">
                         <div class="jp-type-playlist">
                             <div id="jquery_jplayer_N" class="jp-jplayer"></div>
@@ -155,7 +163,7 @@
     </div>
 
     <div class="main main-raised">
-        <div class="section section-basic">
+        <div id="section1"  class="section section-basic cd-section">
             <div class="container">
                 <!-- <button type="button" class="btn btn-primary" onclick="play()" >Primary</button> -->
                 <!-- <div class="row" style="max-width: 440px">
@@ -224,10 +232,11 @@
             </div>      
         </div>
 
-        <div class="section section-examples section-dark">
+        <div id="section2" class="section section-examples section-dark cd-section">
             <div class="container">
                 <div class="col-md-8 ml-auto mr-auto">
                     <div class="section-description">
+                        <a name="anchor"></a>
                         <h2 class="title">Podcasts</h2>
                       <!--   <h5 class="description"><p>Podcasting é uma forma de publicação de ficheiros multimédia (áudio, vídeo, foto, PPS, etc…) na Internet, através de um feed RSS, que permite aos utilizadores acompanhar a sua atualização. O utilizador pode, assim, meramente acompanhar, ou até mesmo a descarregar automaticamente o conteúdo de um podcast.</p>
 <p>
@@ -402,7 +411,207 @@ A palavra "podcasting" é uma junção de iPod - marca do aparelho multimédia h
             </div>
         </div>
 
+        <div id="section3" class="section section-basic cd-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 ml-auto mr-auto text-center">
+                        <h2 class="title">Sobre nos</h2>
+                        <h5 class="description">???????.</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="info info-horizontal">
+                            <div class="icon icon-info">
+                                <i class="material-icons">group_work</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title">Colaborações</h4>
+                                <p>texto. </p>
+                                <a href="#pablo">mais..</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info info-horizontal">
+                            <div class="icon icon-danger">
+                                <i class="material-icons">airplay</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title">Exemplo2</h4>
+                                <p>Texto.</p>
+                                <a href="#pablo">mais...</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="info info-horizontal">
+                            <div class="icon icon-success">
+                                <i class="material-icons">location_on</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title">Exemplo3</h4>
+                                <p>Texto3.</p>
+                                <a href="#pablo">mais...</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    
+        
+        <div id="section4" class="contactus-1 section-image cd-section" style="background-image: url('assets/img/exemplos/img6.jpg')">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5">
+                        <h2 class="title">Contato</h2>
+                        <h5 class="description">Breve descrição</h5>
+                        <div class="info info-horizontal">
+                            <div class="icon icon-primary">
+                                <i class="material-icons">pin_drop</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title">Endereço</h4>
+                                <p> Rua juscelino kubitchek, 1
+                                    <br> Londrina,
+                                    <br> Paraná,
+                                    <br> Brasil
+                                </p>
+                            </div>
+                        </div>
+                        <div class="info info-horizontal">
+                            <div class="icon icon-primary">
+                                <i class="material-icons">phone</i>
+                            </div>
+                            <div class="description">
+                                <h4 class="info-title">Contatos</h4>
+                                <p> Michael Jordan
+                                    <br> +43 9 9999 - 9999
+                                    <br> Seg - Sex, 8:00-18:00
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5 ml-auto">
+                        <div class="card card-contact">
+                            <form id="contact-form" method="post">
+                                <div class="card-header card-header-raised card-header-primary text-center">
+                                    <h4 class="card-title">Contate nos</h4>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group label-floating is-empty bmd-form-group">
+                                                <label class="bmd-label-floating">Name</label>
+                                                <input type="text" name="name" class="form-control">
+                                                <span class="material-input"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group label-floating is-empty bmd-form-group">
+                                                <label class="bmd-label-floating">Sobrenome</label>
+                                                <input type="text" name="name" class="form-control">
+                                                <span class="material-input"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <label class="bmd-label-floating">Email</label>
+                                        <input type="email" name="email" class="form-control">
+                                        <span class="material-input"></span>
+                                    </div>
+                                    <div class="form-group label-floating is-empty bmd-form-group">
+                                        <label for="exampleMessage1" class="bmd-label-floating">Mensagem</label>
+                                        <textarea name="message" class="form-control" id="exampleMessage1" rows="6"></textarea>
+                                        <span class="material-input"></span>
+                                    </div>
+                                </div>
+                                <div class="card-footer justify-content-between">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" value=""> Não sou robo
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                        </label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary pull-right">Enviar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
 
+
+    <footer class="footer footer-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="footer-brand" href="#">
+                        <img style="max-width: 55px" src="./assets/img/logo/luppi.png" alt="logo-luppi"/>
+                    </a>
+                    <ul class="pull-center">
+                        <li>
+                            <a href="" target="_blank">
+                                Podcasts
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" target="_blank">
+                                Sobre nos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" target="_blank">
+                                Contato
+                            </a>
+                        </li>
+                        <li>
+                            <a href="" target="_blank">
+                                Licenses
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    <ul class="social-buttons float-right">
+                        <li>
+                            <a href="https://twitter.com/" target="_blank" class="btn btn-just-icon btn-link btn-twitter">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/" target="_blank" class="btn btn-just-icon btn-link btn-dribbble">
+                                <i class="fa fa-dribbble"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="https://www.instagram.com/" target="_blank" class="btn btn-just-icon btn-link btn-instagram">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="copyright pull-right">
+                        <div class="copyright pull-right">
+                            &copy;<script>document.write(new Date().getFullYear())</script>, desenvolvido
+                            <i class="fab fa-creative-commons"></i> por
+                            <a href="#" target="_blank">Daniel K. Morita</a>.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- 
     <footer class="footer ">
         <div class="container">
             <nav class="pull-left">
@@ -437,7 +646,7 @@ A palavra "podcasting" é uma junção de iPod - marca do aparelho multimédia h
                 <a href="#" target="_blank">Daniel K. Morita</a>.
             </div>
         </div>
-    </footer>
+    </footer> -->
 
     <!--   Core JS Files   -->
     <script src="./assets/js/core/jquery.min.js"></script>
@@ -451,10 +660,7 @@ A palavra "podcasting" é uma junção de iPod - marca do aparelho multimédia h
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.1/js/responsive.bootstrap.min.js"></script>
-
-    
-
-
+    <script src="./assets/js/modernizr.js"></script>
 
     <!-- <script src="./assets/jplayer/clean-jplayer-skin/jquery.jplayer.min.js"></script> -->
     <!-- <script src="./assets/jplayer/clean-jplayer-skin/jplayer.cleanskin.min.js"></script> -->
@@ -630,6 +836,117 @@ A palavra "podcasting" é uma junção de iPod - marca do aparelho multimédia h
             // });
         });
   </script>
+    
+    <script>
+        jQuery(document).ready(function($){
+            var scrolling = false;
+            var contentSections = $('.cd-section'),
+                verticalNavigation = $('.cd-vertical-nav'),
+                navigationItems = verticalNavigation.find('a'),
+                navTrigger = $('.cd-nav-trigger'),
+                scrollArrow = $('.cd-scroll-down');
+
+            $(window).on('scroll', checkScroll);
+
+            //smooth scroll to the selected section
+            verticalNavigation.on('click', 'a', function(event){
+                event.preventDefault();
+                smoothScroll($(this.hash));
+                verticalNavigation.removeClass('open');
+            });
+
+            //smooth scroll to the second section
+            scrollArrow.on('click', function(event){
+                event.preventDefault();
+                smoothScroll($(this.hash));
+            });
+
+            // open navigation if user clicks the .cd-nav-trigger - small devices only
+            navTrigger.on('click', function(event){
+                event.preventDefault();
+                verticalNavigation.toggleClass('open');
+            });
+
+            function checkScroll() {
+                if( !scrolling ) {
+                    scrolling = true;
+                    (!window.requestAnimationFrame) ? setTimeout(updateSections, 300) : window.requestAnimationFrame(updateSections);
+                }
+            }
+
+            function updateSections() {
+                var halfWindowHeight = $(window).height()/2,
+                    scrollTop = $(window).scrollTop();
+                contentSections.each(function(){
+                    var section = $(this),
+                        sectionId = section.attr('id'),
+                        navigationItem = navigationItems.filter('[href^="#'+ sectionId +'"]');
+                    ( (section.offset().top - halfWindowHeight < scrollTop ) && ( section.offset().top + section.height() - halfWindowHeight > scrollTop) )
+                        ? navigationItem.addClass('active')
+                        : navigationItem.removeClass('active');
+                });
+                scrolling = false;
+            }
+
+            function smoothScroll(target) {
+                $('body,html').animate(
+                    {'scrollTop':target.offset().top},
+                    300
+                );
+            }
+        });
+
+    </script>
+  
+<nav class="cd-vertical-nav">
+    <ul>
+        <li><a href="#section1"><span class="label">Comentario</span></a></li>
+        <li><a href="#section2"><span class="label">Podcasts</span></a></li>
+        <li><a href="#section3"><span class="label">Sobre nos</span></a></li>
+        <li><a href="#section4"><span class="label">Contate nos</span></a></li>
+    </ul>
+</nav>
+
+<!-- <nav class="cd-vertical-nav">
+    <ul>
+        <li><a href="#section1" class="active"><span class="label">Intro</span></a></li>
+        <li><a href="#section2"><span class="label">Events</span></a></li>
+        <li><a href="#section3"><span class="label">Help</span></a></li>
+        <li><a href="#section4"><span class="label">Share</span></a></li>
+    </ul>
+</nav>
+
+<button class="cd-nav-trigger cd-image-replace">Open navigation<span aria-hidden="true"></span></button>
+
+<section id="section1" class="cd-section">
+    <div class="content-wrapper">
+        <h1>Vertical Fixed Navigation <b>#2</b></h1>
+        <a href="#section2" class="cd-scroll-down cd-image-replace">scroll down</a>
+    </div>
+</section>
+
+<section id="section2" class="cd-section">
+    <div class="content-wrapper">
+        <h2>Events</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto numquam, totam iusto officia earum perferendis, culpa ad atque eveniet praesentium nobis expedita similique beatae tenetur. Distinctio vel tenetur, id cum.</p>
+    </div>
+</section>
+
+<section id="section3" class="cd-section">
+    <div class="content-wrapper">
+        <h2>Help</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto numquam, totam iusto officia earum perferendis, culpa ad atque eveniet praesentium nobis expedita similique beatae tenetur. Distinctio vel tenetur, id cum.</p>
+    </div>
+</section>
+ 
+<section id="section4" class="cd-section">
+    <div class="content-wrapper">
+        <h2>Share</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto numquam, totam iusto officia earum perferendis, culpa ad atque eveniet praesentium nobis expedita similique beatae tenetur. Distinctio vel tenetur, id cum.</p>
+    </div>
+</section>
+-->
+
 </body>
 
 </html>
