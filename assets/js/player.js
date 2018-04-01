@@ -35,16 +35,16 @@ var Audio = {
 				title = $(this).data('title');
 
 
-
 				album=album?'<span class="album">'+album+'</span>':'';
 				albumart=albumart?'<img src="'+albumart+'">':'';
 				artist=artist?'<span class="song-artist">'+artist+'</span>':'';
 				title=title?'<div class="song-title">'+title+'</div>':'';
-
+ 
 				$(this).html('<div class="album-thumb pull-left">'+albumart+'</div><div class="songs-info pull-left">'+title+'<div class="songs-detail">'+artist+' - '+album+'</div></div></div>');
 			});
 		},
 		load:function(id,album,artist,title,albumart,mp3){
+
 			var currentTrack, totalTrack;
 			totalTrack = $('.play-list>a').length;
 			currentTrack = $('.play-list a').index($('.play-list .active'))+1;
@@ -59,6 +59,7 @@ var Audio = {
 			$('.current-info .song-artist').html('<i class="fas fa-user"></i> '+artist);
 			if(mp3)
 			$('.audio').html('<audio class="music" data-id="'+id+'" src="'+mp3+'"></audio>');
+
 		}
 	},
 	player:function(){
@@ -151,12 +152,12 @@ var Audio = {
 			$('.play-list').fadeIn(500);
 			$('.toggle-play-list').addClass('active');
 			$('.album-art').addClass('blur');
-		},
-		hide:function(){
-			$('.play-list').fadeOut(500);
-			$('.toggle-play-list').removeClass('active');
-			$('.album-art').removeClass('blur');
 		}
+		// hide:function(){
+		// 	$('.play-list').fadeOut(500);
+		// 	$('.toggle-play-list').removeClass('active');
+		// 	$('.album-art').removeClass('blur');
+		// }
 	},
 	play:function(e){
 		var musica = $('.music');

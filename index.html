@@ -22,142 +22,420 @@
     <link href="./assets/bootstrap-4.0.0-dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/css/style.css" rel="stylesheet">
     <link href="./assets/css/player.css" rel="stylesheet">
+    <link href="./assets/css/like.css" rel="stylesheet">
 
 </head>
 <body>
     
+    <div class="row">
+        <div class="col col-md-12 col-12 ">
+            <div class="logo">
+                <img  src="./assets/img/logo/luppi.png" alt="luppi"/>   
+            </div>
+        </div>
+    </div>
     <div class="row" style="width: 100%;">
-        <div class="col col-md-4 col-12">
-            <img id="logo" src="./assets/img/logo/luppi.png" alt="luppi"/>
-            <div class="mhn-player">
-                <div class="album-art"></div>
-                <div class="play-list">
-                    <a href="#" class="play"
-                        data-id="1"
-                        data-album="Atento"
-                        data-artist="Luppi"
-                        data-title="Luppi"
-                        data-albumart="./assets/img/logo/luppi.jpg"
-                        data-url="http://104.236.75.12:8000/radio1_96"></a>
-                    <a href="#" class="play"
-                        data-id="2"
-                        data-album=""
-                        data-artist="Wiz Khalifa Ft Charlie Puth"
-                        data-title="See You Again"
-                        data-albumart="./assets/img/music/t1.jpg"
-                        data-url="http://hiphoptxl.com/wp-content/uploads/2015/03/10-Wiz-Khalifa-ft-Charlie-Puth-See-You-Again-DatPiff-Exclusive1.mp3" download></a>
+        <div class="col col-md-3 col-12">
 
-                    <a href="#" class="play"
-                        data-id="3"
-                        data-album="Fifty Shades of Grey"
-                        data-artist="Ellie Goulding"
-                        data-title="Love Me Like You Do"
-                        data-albumart="http://cdnrf.securenetsystems.net/file_radio/album_art/B/1/5/51B2BHP42pDL.jpg"
-                        data-url="http://dl.best-music.biz/Music/Top%20Hits/Best%20Hits%20of%20Jan%202015/Best%20Hits%20of%20Jan%202015%20%5bInternational%20Hits%5d/11-%20Ellie%20Goulding%20-%20Love%20Me%20Like%20You%20Do.mp3"></a>
-
-                    <a href="#" class="play"
-                        data-id="4"
-                        data-album="All I Ever Wanted"
-                        data-artist="Kelly Clarkson"
-                        data-title="Already Gone"
-                        data-albumart="https://3.bp.blogspot.com/_mupIVJbjvuU/TKgPuOEekII/AAAAAAAAHd4/HGTyRWuhw2c/s1600/Made+by+In+For+The+Kill.png"
-                        data-url="http://api.ning.com/files/26eL9oYmcbCURdC4HsmG0ZWw*YLSXgaDBvm5MIxi0gagrr1IPK7OQmHatTYLnx4qqc9BLhStzHfS2WhuNve*pjtmcCiBjZ4p/06AlreadyGone.mp3"></a>
-
-                    <a href="#" class="play"
-                        data-id="5"
-                        data-album="Pure Bs"
-                        data-artist="Blake Shelton"
-                        data-title="Home"
-                        data-albumart="http://img.cdn2.wmgecom.com/media/catalog/product/cache/684/image/600x/9df78eab33525d08d6e5fb8d27136e95/0/9/093624986256.jpg"
-                        data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
-
-                    <a href="#" class="play"
-                        data-id="6"
-                        data-album="The Unforgiving"
-                        data-artist="Within Tempation"
-                        data-title="Faster"
-                        data-albumart="http://www.aceshowbiz.com/images/news/00038227.jpg"
-                        data-url="https://a.tumblr.com/tumblr_lli3gani2F1qetbfso1_r1.mp3"></a>
-
-                    <a href="#" class="play"
-                        data-id="7"
-                        data-album="Californication"
-                        data-artist="Red Hot Chili Peppers"
-                        data-title="Californication"
-                        data-albumart="https://eyespytz.files.wordpress.com/2011/11/6837-gif.jpeg"
-                        data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
-
-                    <a href="#" class="play"
-                        data-id="8"
-                        data-album="V"
-                        data-artist="Maroon 5"
-                        data-title="Sugar"
-                        data-albumart="http://media.fanfire.com/images/product/large/MAR/MAR61934.jpg"
-                        data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
-
-                    <a href="#" class="play"
-                        data-id="9"
-                        data-album="Meteora"
-                        data-artist="Linkin Park"
-                        data-title="Numb"
-                        data-albumart="https://upload.wikimedia.org/wikipedia/en/6/64/MeteoraLP.jpg"
-                        data-url="http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3"></a>
-                </div>
-                <div class="audio"></div>
-                <div class="current-info">
-                    <div class="song-artist"></div>
-                    <div class="song-album"></div>
-                    <div class="song-title"></div>
-                </div>
-                <div class="controls">
-                    <a href="#" class="download-audio" download><i class="fas fa-download"></i></a>
-                    <a href="#" class="toggle-play-list"><i class="fa fa-list-ul"></i></a>
-                    <div class="duration clearfix">
-                        <span class="pull-left play-position"></span>
-                        <span class="pull-right">
-                            <span class="play-current-time">00:00</span> / <span class="play-total-time">00:00</span>
-                        </span>
-                    </div>
-                    <div class="progress">
-                        <div class="bar"></div>
-                    </div>
-                    <div class="action-button">
-                        <a href="#" class="prev"><i class="fa fa-step-backward"></i></a>
-                        <a href="#" class="play-pause"><i class="fa fa-pp"></i></a>
-                        <a href="#" class="stop"><i class="fa fa-stop"></i></a>
-                        <a href="#" class="next"><i class="fa fa-step-forward"></i></a>
-                        <input type="range" class="volume" min="0" max="1" step="0.1" value="0.5" data-css="0.5">
-                    </div>
-                </div>
-            </div>
-            
         </div>
-        <div class="col col-md-4 col-12">
-            <div class="container">
-                <div class="comente">
-                    <div class="comente-corpo">
-                        <h1>Comente</h1>
-                        <form>
+        <div class="col col-md-3 col-12">
+            <div class="row">
+                <!-- <div class="col col-md-2 col-2">
+                    <div class="content-like" align="center">
+                        <div class="action-button-default" align="center">
+                            <div class="row">
+                                <div class="col col-12">
+                                    <a href="#">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </a>
+                                </div>
+                            </div>
                             <hr>
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="txtNome" placeholder="Nome">
+                            <div class="row">
+                                <div class="col col-12">
+                                    <a href="#">
+                                        <i class="fas fa-thumbs-down"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="e-mail">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col col-12">
+                    <div class="mhn-player">
+                        <div class="row">
+                            <div class="col col-md-12 col-12" align="center">
+                                <div class="album-art"></div>
                             </div>
-                            <div class="form-group">
-                                <textarea class="form-control" id="txaComentario" rows="8" placeholder="seu comentário"></textarea>
+                        </div>
+                        <div class="play-list">
+                            <a href="#" class="play"
+                                data-id="1"
+                                data-album="Atento"
+                                data-artist="Luppi"
+                                data-title="Luppi"
+                                data-albumart="./assets/img/logo/luppi.jpg"
+                                data-url="http://104.236.75.12:8000/radio1_96"></a>
+                            <a href="#" class="play"
+                                data-id="2"
+                                data-album=""
+                                data-artist="Wiz Khalifa Ft Charlie Puth"
+                                data-title="See You Again"
+                                data-albumart="./assets/img/music/t1.jpg"
+                                data-url="http://hiphoptxl.com/wp-content/uploads/2015/03/10-Wiz-Khalifa-ft-Charlie-Puth-See-You-Again-DatPiff-Exclusive1.mp3" download></a>
+
+                            <a href="#" class="play"
+                                data-id="3"
+                                data-album="Fifty Shades of Grey"
+                                data-artist="Ellie Goulding"
+                                data-title="Love Me Like You Do"
+                                data-albumart="http://cdnrf.securenetsystems.net/file_radio/album_art/B/1/5/51B2BHP42pDL.jpg"
+                                data-url="http://dl.best-music.biz/Music/Top%20Hits/Best%20Hits%20of%20Jan%202015/Best%20Hits%20of%20Jan%202015%20%5bInternational%20Hits%5d/11-%20Ellie%20Goulding%20-%20Love%20Me%20Like%20You%20Do.mp3"></a>
+
+                            <a href="#" class="play"
+                                data-id="4"
+                                data-album="All I Ever Wanted"
+                                data-artist="Kelly Clarkson"
+                                data-title="Already Gone"
+                                data-albumart="https://3.bp.blogspot.com/_mupIVJbjvuU/TKgPuOEekII/AAAAAAAAHd4/HGTyRWuhw2c/s1600/Made+by+In+For+The+Kill.png"
+                                data-url="http://api.ning.com/files/26eL9oYmcbCURdC4HsmG0ZWw*YLSXgaDBvm5MIxi0gagrr1IPK7OQmHatTYLnx4qqc9BLhStzHfS2WhuNve*pjtmcCiBjZ4p/06AlreadyGone.mp3"></a>
+
+                            <a href="#" class="play"
+                                data-id="5"
+                                data-album="Pure Bs"
+                                data-artist="Blake Shelton"
+                                data-title="Home"
+                                data-albumart="http://img.cdn2.wmgecom.com/media/catalog/product/cache/684/image/600x/9df78eab33525d08d6e5fb8d27136e95/0/9/093624986256.jpg"
+                                data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
+
+                            <a href="#" class="play"
+                                data-id="6"
+                                data-album="The Unforgiving"
+                                data-artist="Within Tempation"
+                                data-title="Faster"
+                                data-albumart="http://www.aceshowbiz.com/images/news/00038227.jpg"
+                                data-url="https://a.tumblr.com/tumblr_lli3gani2F1qetbfso1_r1.mp3"></a>
+
+                            <a href="#" class="play"
+                                data-id="7"
+                                data-album="Californication"
+                                data-artist="Red Hot Chili Peppers"
+                                data-title="Californication"
+                                data-albumart="https://eyespytz.files.wordpress.com/2011/11/6837-gif.jpeg"
+                                data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
+
+                            <a href="#" class="play"
+                                data-id="8"
+                                data-album="V"
+                                data-artist="Maroon 5"
+                                data-title="Sugar"
+                                data-albumart="http://media.fanfire.com/images/product/large/MAR/MAR61934.jpg"
+                                data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
+
+                            <a href="#" class="play"
+                                data-id="9"
+                                data-album="Meteora"
+                                data-artist="Linkin Park"
+                                data-title="Numb"
+                                data-albumart="https://upload.wikimedia.org/wikipedia/en/6/64/MeteoraLP.jpg"
+                                data-url="http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3"></a>
+                        </div>
+                        <div class="audio"></div>
+                        <div class="controls">
+                            <!-- <a href="#" class="download-audio" download><i class="fas fa-download"></i></a> -->
+                            <!-- <a href="#" class="toggle-play-list"><i class="fa fa-list-ul"></i></a> -->
+                            
+                            <div class="progress">
+                                <div class="bar"></div>
                             </div>
-                            <button type="submit" class="btn btn-primary luppi-bg-2">Enviar</button>
-                        </form>
+                            <div class="duration clearfix">
+                                <!-- <span class="pull-left play-position"></span> -->
+                                <span class="pull-left">
+                                    <span class="play-current-time">00:00</span>
+                                </span>
+                                <span class="pull-right">
+                                    <span class="play-total-time">00:00</span>
+                                </span>
+                            </div>
+                            <div class="current-info">
+                                <div class="row">
+                                    <div class="col col-md-12 col-12" align="center">
+                                        <div class="song-artist"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col col-md-12 col-12" align="center">
+                                        <div class="song-album"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col col-md-12 col-12" align="center">
+                                        <div class="song-title"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-button">
+                                <div class="row">
+                                    <div class="col col-md-4 col-4" align="center">
+                                        <a href="#" class="prev">
+                                            <i class="fas fa-step-backward fa-2x"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col col-md-4 col-4" align="center">
+                                        <a href="#" class="play-pause"><i class="fas fa-pp fa-2x"></i></a>
+                                    </div>
+                                    <div class="col col-md-4 col-4" align="center">
+                                        <a href="#" class="next"><i class="fas fa-step-forward fa-2x"></i></a>
+                                    </div>
+                                    <!-- <a href="#" class="stop"><i class="fa fa-stop"></i></a> -->
+                                        
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col col-md-12 col-12" align="center">
+                                    <input type="range" class="volume" min="0" max="1" step="0.1" value="0.5" data-css="0.5">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col col-12">
+                                    <!-- <div class="content-like">
+                                        <div class="action-button-default"> -->
+                                            <div class="row">
+                                                <div class="col col-6">
+                                                    <div data-toggle="tooltip" title="Gostei!">
+                                                        <div class="like-container">
+                                                            <div class="like-cnt unchecked" id="like-cnt">
+                                                                <i class="like-btn fas fa-thumbs-up"></i> 0
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <a href="#" data-toggle="tooltip" title="Gostei!">
+                                                        <i class="fas fa-thumbs-up"></i>
+                                                    </a> -->
+                                                    
+                                                </div>
+                                                <div class="col col-6">
+                                                    <div data-toggle="tooltip" title="Não gostei!">
+                                                        <div class="deslike-container">
+                                                            <div class="deslike-cnt unchecked" id="deslike-cnt">
+                                                                <i class="deslike-btn fas fa-thumbs-down"></i> 0
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <!-- </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-12">
+                    <img src="" alt="">
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-12">
+                    <div class="content-social" align="center">
+                        <div class="action-button-default" align="center">
+                            <div class="row">
+                                <div class="col col-3">
+                                    <a href="#">
+                                        <i class="fas fa-address-book fa-2x"></i>
+                                    </a>
+                                </div>
+                                <div class="col col-3">
+                                    <a href="#">
+                                        <i class="fab fa-android fa-2x"></i>
+                                    </a>
+                                </div>
+                                <div class="col col-3">
+                                    <a href="#">
+                                        <i class="fab fa-apple fa-2x"></i>
+                                    </a>
+                                </div>
+                                <div class="col col-3">
+                                    <a href="#">
+                                        <i class="fab fa-facebook-square fa-2x"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col col-md-4 col-12">
+        <div class="col col-md-3 col-12">
+            <div class="row">
+                <div class="col col-md-12 col-12 ">
+                    <div class="content-play-list">
+                        <div class="row">
+                            <div class="col col-md-12 col-12">
+                                <div class="title-default">
+                                    Podcasts    
+                                </div>
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="row">
+                            <div class="col col-md-12 col-12">
+                                <div class="my-play-list">
+                                    <div class="play-list">
+                                        <a href="#" class="play"
+                                            data-id="1"
+                                            data-album="Atento"
+                                            data-artist="Luppi"
+                                            data-title="Luppi"
+                                            data-albumart="./assets/img/logo/luppi.jpg"
+                                            data-url="http://104.236.75.12:8000/radio1_96"></a>
+                                         <a href="#" class="play"
+                                            data-id="2"
+                                            data-album=""
+                                            data-artist="Wiz Khalifa Ft Charlie Puth"
+                                            data-title="See You Again"
+                                            data-albumart="./assets/img/music/t1.jpg"
+                                            data-url="http://hiphoptxl.com/wp-content/uploads/2015/03/10-Wiz-Khalifa-ft-Charlie-Puth-See-You-Again-DatPiff-Exclusive1.mp3" download></a>
+
+                                        <a href="#" class="play"
+                                            data-id="3"
+                                            data-album="Fifty Shades of Grey"
+                                            data-artist="Ellie Goulding"
+                                            data-title="Love Me Like You Do"
+                                            data-albumart="http://cdnrf.securenetsystems.net/file_radio/album_art/B/1/5/51B2BHP42pDL.jpg"
+                                            data-url="http://dl.best-music.biz/Music/Top%20Hits/Best%20Hits%20of%20Jan%202015/Best%20Hits%20of%20Jan%202015%20%5bInternational%20Hits%5d/11-%20Ellie%20Goulding%20-%20Love%20Me%20Like%20You%20Do.mp3"></a>
+
+                                        <a href="#" class="play"
+                                            data-id="4"
+                                            data-album="All I Ever Wanted"
+                                            data-artist="Kelly Clarkson"
+                                            data-title="Already Gone"
+                                            data-albumart="https://3.bp.blogspot.com/_mupIVJbjvuU/TKgPuOEekII/AAAAAAAAHd4/HGTyRWuhw2c/s1600/Made+by+In+For+The+Kill.png"
+                                            data-url="http://api.ning.com/files/26eL9oYmcbCURdC4HsmG0ZWw*YLSXgaDBvm5MIxi0gagrr1IPK7OQmHatTYLnx4qqc9BLhStzHfS2WhuNve*pjtmcCiBjZ4p/06AlreadyGone.mp3"></a>
+
+                                        <a href="#" class="play"
+                                            data-id="5"
+                                            data-album="Pure Bs"
+                                            data-artist="Blake Shelton"
+                                            data-title="Home"
+                                            data-albumart="http://img.cdn2.wmgecom.com/media/catalog/product/cache/684/image/600x/9df78eab33525d08d6e5fb8d27136e95/0/9/093624986256.jpg"
+                                            data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
+
+                                        <a href="#" class="play"
+                                            data-id="6"
+                                            data-album="The Unforgiving"
+                                            data-artist="Within Tempation"
+                                            data-title="Faster"
+                                            data-albumart="http://www.aceshowbiz.com/images/news/00038227.jpg"
+                                            data-url="https://a.tumblr.com/tumblr_lli3gani2F1qetbfso1_r1.mp3"></a>
+
+                                        <a href="#" class="play"
+                                            data-id="7"
+                                            data-album="Californication"
+                                            data-artist="Red Hot Chili Peppers"
+                                            data-title="Californication"
+                                            data-albumart="https://eyespytz.files.wordpress.com/2011/11/6837-gif.jpeg"
+                                            data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
+
+                                        <a href="#" class="play"
+                                            data-id="8"
+                                            data-album="V"
+                                            data-artist="Maroon 5"
+                                            data-title="Sugar"
+                                            data-albumart="http://media.fanfire.com/images/product/large/MAR/MAR61934.jpg"
+                                            data-url="http://apps.rockyou.com/music/0/0/4/485.mp3"></a>
+
+                                        <a href="#" class="play"
+                                            data-id="9"
+                                            data-album="Meteora"
+                                            data-artist="Linkin Park"
+                                            data-title="Numb"
+                                            data-albumart="https://upload.wikimedia.org/wikipedia/en/6/64/MeteoraLP.jpg"
+                                            data-url="http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3"></a> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+                    <!-- <div class="comente">
+                        <div class="comente-corpo">
+                            <h1>Comente</h1>
+                            <form>
+                                <hr>
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="txtNome" placeholder="Nome">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="e-mail">
+                                </div>
+                                <div class="form-group">
+                                    <textarea class="form-control" id="txaComentario" rows="8" placeholder="seu comentário"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary luppi-bg-2">Enviar</button>
+                            </form>
+                        </div>
+                    </div> -->
+                
+                
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-md-12 col-12">
+                    <img src="" alt="">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col col-md-12 col-12">
+                    <div class="row">
+                        <div class="col col-md-12 col-12 ">
+                            <div class="content-coment">
+                                <div class="row">
+                                    <div class="col col-md-12 col-12">
+                                        <div class="title-default">
+                                            Comentar   
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <form>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <input type="text" class="form-control" id="txtNome" placeholder="Nome">    
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="e-mail">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <textarea class="form-control" id="txaComentario" rows="3" placeholder="Seu comentário"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col" align="right">
+                                            <button type="submit" class="btn btn-primary luppi-bg-2">Enviar</button>  
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-3 col-12">
+        </div>
+        <!--<div class="col col-md-4 col-12">
             <div class="comentarios">
                 <div class="chats">
-                    <div class="chat chat-left"><!-- left -->
+                    <div class="chat chat-left">
                         <div class="chat-body">
                             <div class="chat-content luppi-bg-1">
                                 <time class="chat-time">25/03/2018 14:33</time>
@@ -181,7 +459,7 @@
                 </div>
 
                 <div class="chats">
-                    <div class="chat chat-left"><!-- left -->
+                    <div class="chat chat-left">
                         <div class="chat-body">
                             <div class="chat-content luppi-bg-3">
                                 <time class="chat-time">25/03/2018 14:33</time>
@@ -207,7 +485,7 @@
                 </div>
 
                 <div class="chats">
-                    <div class="chat chat-left"><!-- left -->
+                    <div class="chat chat-left">
                         <div class="chat-body">
                             <div class="chat-content luppi-bg-5">
                                 <time class="chat-time">25/03/2018 14:33</time>
@@ -233,7 +511,7 @@
                 </div>
 
                 <div class="chats">
-                    <div class="chat chat-left"><!-- left -->
+                    <div class="chat chat-left">
                         <div class="chat-body">
                             <div class="chat-content luppi-bg-7">
                                 <time class="chat-time">25/03/2018 14:33</time>
@@ -285,7 +563,7 @@
                 </div>
 
                 <div class="chats">
-                    <div class="chat chat-left"><!-- left -->
+                    <div class="chat chat-left">
                         <div class="chat-body">
                             <div class="chat-content luppi-bg-3">
                                 <time class="chat-time">01/03/2018 14:33</time>
@@ -299,7 +577,7 @@
 
 
                 <div class="chats">
-                    <div class="chat chat-right"> <!-- right -->
+                    <div class="chat chat-right"> 
                         <div class="chat-body">
                             <div class="chat-content luppi-bg-2">
                                 <time class="chat-time">25/03/2018 14:30</time>
@@ -311,16 +589,16 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
+<!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
 <strong>PODCAST'S:</strong> ouças os podcasts clicando no botão de lista! do player.
 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
 <span aria-hidden="true">&times;</span>
 </button>
-<!-- <a href="http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3" download >Download</a> -->
-</div>
+<a href="http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3" download >Download</a>
+</div> -->
       
 
 
@@ -330,6 +608,12 @@
     <script src="./assets/js/enscroll-0.6.2.min.js"></script>
     <script src="./assets/js/player.js"></script>
     <script src="./assets/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+    <!-- <script src="http://cdn.jsdelivr.net/mojs/latest/mo.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
+    <script src="./assets/js/like.js"></script>
+    
+    
+    
 
 <script>
 function meuDownload(url) {
