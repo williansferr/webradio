@@ -169,6 +169,15 @@ body {
   color:#ccc;
 }
 
+.dw-sound {
+  margin: 10px;
+  color: #01426A;
+  cursor: pointer;
+}
+.dw-sound :hover{
+  color:#fff;
+}
+
 .row #main{
 	width: 100%;
 }

@@ -129,7 +129,7 @@
 	background:rgba(0,0,0,.4);
 	padding-right:1px!important;
 }
-.mhn-player .play-list a{
+.mhn-player .play-list a {
 /* .mhn-player { */
 	color:#ccc;
 	display:block;
@@ -370,6 +370,8 @@
 }
 .volume[data-css="0"]::-webkit-slider-runnable-track{background-size:0% 100%}
 .volume[data-css="0"]::-moz-range-track{background-size:0% 100%}
+.volume[data-css="0.05"]::-webkit-slider-runnable-track{background-size:5% 100%}
+.volume[data-css="0.05"]::-moz-range-track{background-size:5% 100%}
 .volume[data-css="0.1"]::-webkit-slider-runnable-track{background-size:10% 100%}
 .volume[data-css="0.1"]::-moz-range-track{background-size:10% 100%}
 .volume[data-css="0.2"]::-webkit-slider-runnable-track{background-size:20% 100%}
