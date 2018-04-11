@@ -43,7 +43,8 @@
 	/* top: 4%; */
 	/* width:90%; */
 	/* max-width: 360px; */
-	height:620px;
+	/* height:620px; */
+	height:850px;
 	padding:15px;
 	position:relative;
 	/* margin:55px auto 0; */
@@ -64,9 +65,11 @@
 .mhn-player .album-art{
 /* .album-art{ */
 	width:80%;
-	height:280px;
+	height:240px;
+	/* height:100%; */
 	overflow:hidden;
-	margin: 25px auto;
+	margin: 5px auto;
+	/* margin-bottom: 45px; */
 	/* position:relative; */
 	/* border:1px solid rgba(0, 95, 140, .8); */
 }
