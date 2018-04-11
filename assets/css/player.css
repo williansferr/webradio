@@ -65,10 +65,10 @@
 .mhn-player .album-art{
 /* .album-art{ */
 	width:80%;
-	height:240px;
+	height:250px;
 	/* height:100%; */
 	overflow:hidden;
-	margin: 5px auto;
+	margin: 25px auto;
 	/* margin-bottom: 45px; */
 	/* position:relative; */
 	/* border:1px solid rgba(0, 95, 140, .8); */
@@ -183,6 +183,7 @@
 .mhn-player .current-info {
 	/* left:30px; */
 	/* right:30px; */
+	margin: 15px auto;
 	color:#ccc;
 	height: 100px;
 	display: block /*for the img inside your div */  
