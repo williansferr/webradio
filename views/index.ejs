@@ -739,10 +739,6 @@
 </button>
 <a href="http://serveurftpnascar.free.fr/%20-%20Linkin%20Park%20-%20Numb.mp3" download >Download</a>
 </div> -->
-      
-
-
-<iframe id="my_iframe" style="display:none;"></iframe>
 
     <script src="/js/jquery-3.3.1.min.js"></script>
     <!-- <script src="/js/core/bootstrap.min.js" type="text/javascript"></script> -->
@@ -758,14 +754,8 @@
 
     
 <script>
-function meuDownload(url) {
-    document.getElementById('my_iframe').src = url;
-};
     
-    // $('.my-play-list').each(function(){
-    //     $(this).perfectScrollbar();
-    // });
-
+    const curtidas = {};
     const ipAddress = {};
     function getIpAddress(){
         
@@ -774,6 +764,7 @@ function meuDownload(url) {
             url: 'https://api.ipify.org?format=json',
             type: 'GET'
         });
+
         request.done(function (msg) {
             console.log('getIpAddress() done');
             console.log(msg);
@@ -791,6 +782,7 @@ function meuDownload(url) {
     }
 
     function getCurtidas(audio){
+
         const request = $.ajax({
             url: '/curtidas/' + audio,
             type: 'GET',
@@ -801,6 +793,7 @@ function meuDownload(url) {
         request.done(function (msg) {
             console.log('getCuritdas() done');
             console.log(msg);
+            curtidas = msg;
         });
 
         request.fail(function (jqXHR, textStatus) {
@@ -817,7 +810,7 @@ function meuDownload(url) {
             audio: "testeUadio.mp3",
             id_podcast: null,
             curtiu: isLike,
-            ip_address: getIpAddress()
+            ip: getIpAddress()
         }
 
         const request = $.ajax({

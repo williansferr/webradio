@@ -23,6 +23,9 @@ Para iniciar inslate abaixo;
 * [MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/) - banco de dados NoSQL 
 * [PM2](https://github.com/Unitech/pm2) - gerenciador de processos
 
+### PM2 comando
+
+* `pm2 start npm -- start -i max`
 
 ## Contribuição
 

@@ -8,8 +8,12 @@ function findById(_id, callback){
     global.db.collection("curtidas").findOne({_id: _id}, callback)
 }
 
+function findByIpAndAudio(ipAddress, audio, callback){
+    global.db.collection("curtidas").findOne({ip: ipAddress, audio: audio}, callback)
+}
+
 function findByAudio(audio, callback){
-    return global.db.collection("curtidas").findOne({audio: audio})
+    return global.db.collection("curtidas").find({audio: audio})
 }
 
 function insert(curitda, callback){
