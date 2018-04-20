@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <% var title = 'Dashboard'; %>
+    <% include partials/head %>
+</head>
+
+<body>
+	<!-- <div class="loader">
+		<svg class="circular" viewBox="25 25 50 50">
+			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
+		</svg>
+	</div> -->
+	<!-- <pre>
+	<%= user.name %>
+	<%= user.password %>
+	<%= user.email %>
+	</pre> -->
+    <div class="wrapper">
+    	<% include sidebar/sidebar %>
+    	<div class="main-panel myScroll">
+    		<% include navbar/navbar %>
+			<div class="main-content">
+			    <div class="container-fluid">
+			        <div class="row">
+			            <div class="col-lg-3 col-md-6 col-sm-6">
+			            </div>
+			            <div class="col-lg-3 col-md-6 col-sm-6">
+			            </div>
+			            <div class="col-lg-3 col-md-6 col-sm-6">
+			            </div>
+			            <div class="col-lg-3 col-md-6 col-sm-6">
+			            </div>
+			        </div>
+
+			        <div class="row">
+			            <div class="col-lg-4 col-md-6">
+			            </div>
+			            <div class="col-lg-4 col-md-6">
+			            </div>
+			            <div class="col-lg-4 col-md-6">
+			            </div>    
+			        </div>
+
+
+			        <div class="row">
+			            <div class="col-md-12">
+			            </div>
+			        </div>
+
+			        <div class="row">
+			            <div class="col-md-4">
+			            </div>
+			            <div class="col-md-4">
+			            </div>
+			            <div class="col-md-4">
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+
+
+	<% include partials/script %>
+	<script>
+		// var ps = new PerfectScrollbar('#myscroll');
+		// $('.sidebar-wrapper').perfectScrollbar();
+		// $('.content-panel').perfectScrollbar();
+
+		$('.myScroll').each(function(){
+		    $(this).perfectScrollbar();
+		});
+		
+		// var ps2 = new PerfectScrollbar('.main-content');
+	</script>
+
+	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
+</body>
+</html>

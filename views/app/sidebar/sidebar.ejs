@@ -1,0 +1,94 @@
+    <div class="sidebar" data-active-color="white" data-background-color="orange" data-image="<%= path %>img/exemplos/img8.jpg">
+        <div class="logo">
+            <div class="logo-normal">
+                <a href="https://www.luppiart.com.br" class="simple-text">
+                    Luppi Art
+                </a>
+            </div>
+
+            <div class="logo-img">
+                <img src="<%= path %>img/logo/luppi.png"/>
+            </div>
+        </div>
+
+
+        <div class="sidebar-wrapper myScroll">
+
+            <div class="user">
+                <div class="photo">
+                    <img src="<%= path %>img/default-avatar.png" />
+                </div>
+                <div class="info">
+                    <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                        <span>
+                            <%= user.name %>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        <ul class="nav">
+                            <li>
+                                <a href="javascript:void(0)">
+                                    <span class="sidebar-mini">EP</span>
+                                    <span class="sidebar-normal">Editar</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-container">
+                <ul class="nav">
+                    <li routerLinkActive="active">
+                        <a  href="/dashboard">
+                            <i class="material-icons">dashboard</i>
+                            <p><%= title %></p>
+                        </a>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a data-toggle="collapse" href="#menuPodcast" <%= classMenu.menu %>>
+                            <i class="material-icons">apps</i>
+                            <p>Podcasts
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="<%= classMenu.submenu.class %>" id="menuPodcast" <%= classMenu.submenu.expanded %>>
+                            <ul class="nav">
+                                <li routerLinkActive="active" class="<%= classMenu.podcast.cadastro %>">
+                                    <a href="/dashboard/podcast">
+                                        <span class="sidebar-mini"></span>
+                                        <span class="sidebar-normal">Cadastro</span>
+                                    </a>
+                                </li>
+                                <li routerLinkActive="active" class="<%= classMenu.podcast.consulta %>">
+                                    <a href="/dashboard/podcast/consulta">
+                                        <span class="sidebar-mini"></span>
+                                        <span class="sidebar-normal">Consulta</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li routerLinkActive="active">
+                        <a data-toggle="collapse" href="#menuComentario" <%= classMenu.menu %>>
+                            <i class="material-icons">apps</i>
+                            <p>Comentários
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="<%= classMenu.submenu.class %>" id="menuComentario" <%= classMenu.submenu.expanded %>>
+                            <ul class="nav">
+                                <li routerLinkActive="active" class="<%= classMenu.comentario.consulta %>">
+                                    <a href="/comentario">
+                                        <span class="sidebar-mini"></span>
+                                        <span class="sidebar-normal">Consulta</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="sidebar-background" style="background-image: url(/img/sidebar-1.jpg)"></div>

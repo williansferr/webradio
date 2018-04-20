@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <% 
+    	var title = 'Podcast'; 
+    	var path = '../';
+    %>
+    <% include partials/head %>
+</head>
+
+<body>
+    <div class="wrapper">
+    	<% include sidebar/sidebar %>
+    	<div class="main-panel myScroll">
+    		<% include navbar/navbar %>
+			<div class="main-content">
+			    <div class="container-fluid">
+			        <div class="row">
+			            <div class="col-md-12">
+			                <div class="card">
+			                	<!-- action="/dashboard/podcast" id="TypeValidation"-->
+			                	<!-- onSubmit="return submit_form_podcast()" -->
+			                    <form id="form-podcast" role="form" class="form-horizontal" >
+			                        <div class="card-header card-header-icon" data-background-color="blue">
+				                        <i class="material-icons">library_books</i>
+				                    </div>
+			                        <div class="card-content">
+			                        	<h4 class="card-title">Cadastro</h4>
+			                            <div class="row">
+			                                <label class="col-sm-2 label-on-left">Autor</label>
+			                                <div class="col-sm-7">
+			                                    <div class="form-group label-floating is-empty">
+			                                        <label class="control-label"></label>
+			                                        <input autocomplete="name" id="input-autor" class="form-control" name="autor" required="true" type="text">
+			                                    <span class="material-input"></span></div>
+			                                </div>
+			                                <label class="col-sm-3 label-on-right">
+			                                    <code>Obrigatório</code>
+			                                </label>
+			                            </div>
+			                            <div class="row">
+			                                <label class="col-sm-2 label-on-left">Título</label>
+			                                <div class="col-sm-7">
+			                                    <div class="form-group label-floating is-empty">
+			                                        <label class="control-label"></label>
+			                                        <input autocomplete="titulo" id="input-titulo" class="form-control" name="titulo" required="true" type="text">
+			                                    <span class="material-input"></span></div>
+			                                </div>
+			                                <label class="col-sm-3 label-on-right">
+			                                    <code>Obrigatório</code>
+			                                </label>
+			                            </div>
+			                            <div class="row">
+			                                <label class="col-sm-2 label-on-left">Sub título</label>
+			                                <div class="col-sm-7">
+			                                    <div class="form-group label-floating is-empty">
+			                                        <label class="control-label"></label>
+			                                        <input id="input-subtitulo" autocomplete="subtitulo" class="form-control" name="subtitulo" required="true" type="text">
+			                                    <span class="material-input"></span></div>
+			                                </div>
+			                                <label class="col-sm-3 label-on-right">
+			                                    <code>Obrigatório</code>
+			                                </label>
+			                            </div>
+			                            <div class="row">
+			                                <label class="col-sm-2 label-on-left">Descrição</label>
+			                                <div class="col-sm-7">
+			                                    <div class="form-group label-floating is-empty">
+			                                        <label class="control-label"></label>
+			                                        <textarea id="input-descricao" class="form-control" name="descricao" required="true" rows="5"></textarea>
+			                                    <span class="material-input"></span></div>
+			                                </div>
+			                                <label class="col-sm-3 label-on-right">
+			                                    <code>Obrigatório</code>
+			                                </label>
+			                            </div>
+										<div class="row">
+											<label class="col-sm-2 label-on-left"></label>
+											<div class="col-md-4 col-sm-4">
+				                                <legend>Capa</legend>
+				                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+				                                    <div class="fileinput-new thumbnail">
+				                                        <img alt="..." src="/img/image_placeholder.jpg">
+				                                    </div>
+				                                    <div class="fileinput-preview fileinput-exists thumbnail" style=""></div>
+				                                    <div>
+				                                        <span class="btn btn-blue btn-round btn-file">
+				                                            <span class="fileinput-new">Selecione a imagem</span>
+				                                            <span class="fileinput-exists">trocar</span>
+				                                            <input type="hidden"><input id="podcast-capa" name="capa" type="file" accept="image/*">
+				                                        <div class="ripple-container"></div></span>
+				                                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput" href="#pablo"><i class="fa fa-times"></i> Remover</a>
+				                                    </div>
+				                                </div>
+				                            </div>
+											<div class="col-md-4 col-sm-4">
+												<legend>Áudio</legend>
+				                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+				                                    <div class="thumbnail" style="max-width: 100px">
+				                                        <img alt="..." src="<%= path %>img/audio-volume.png">
+				                                    </div>
+				                                    <div>
+				                                        <span class="btn btn-blue btn-round btn-file">
+				                                            <span class="fileinput-new">Selecione o áudio</span>
+				                                            <span class="fileinput-exists">Trocar</span>
+				                                            <input type="hidden"><input id="podcast-audio" name="audio" type="file" accept="audio/*">
+				                                        <div class="ripple-container"></div></span>
+				                                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput" href="#pablo"><i class="fa fa-times"></i> Remover</a>
+				                                    </div>
+				                                </div>
+				                                <!-- <label class="col-sm-2 label-on-left">Áudio</label>
+				                                <div class="col-sm-7">
+				                                	<form action="/dashboard/podcast/upload" method="post" enctype="multipart/form-data">
+														<div class="picture-container">
+				                                            <div class="picture">
+				                                                <img class="audio-src" src="<%= path %>img/audio-volume.png" title="">
+				                                                <input type="file"  name="audio" required="true"> accept="audio/*"
+				                                            </div>
+				                                            <button class="btn btn-blue btn-fill" type="submit">Enviar audio</button>
+				                                        </div>
+				                                    </form>
+				                                </div>
+				                                <label class="col-sm-3 label-on-right">
+				                                    <code>required</code>
+				                                </label> -->
+				                            </div>
+				                            <label class="col-sm-3 label-on-right"></label>
+			                            </div>
+			                        </div>
+			                        <div class="card-footer text-center">
+			                        	<button class="btn btn-blue btn-fill" type="button" onclick="submit_form_podcast()">Try</button>
+			                            <button class="btn btn-blue btn-fill" type="submit">Salvar</button>
+			                        </div>
+			                    </form>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
+	<% include partials/script %>
+	<script>
+		// var ps = new PerfectScrollbar('#myscroll');
+		// $('.sidebar-wrapper').perfectScrollbar();
+		// $('.content-panel').perfectScrollbar();
+
+		$('.myScroll').each(function(){
+		    $(this).perfectScrollbar();
+		});
+
+		function submit_form_podcast(){
+			sendAudio();
+		}
+
+		// function directory(){
+		// 	const dir = $('#input-autor').val() + ' - ' + $('#input-titulo').val();
+		// 	console.log('dir:' + dir);
+		// 	const request = $.ajax({
+  //               url: '/dashboard/podcast/directory',
+  //               method: 'POST',
+  //               data: 'titulo=' + dir,
+  //            //    cache: false,
+  //            //    // dataType: 'json', // This replaces dataFilter: function() && JSON.parse( data ).
+	 //            // processData: false, // Don't process the files
+	 //            // contentType: false
+  //           });
+            
+
+  //           request.done(function (msg) {
+  //           	console.log('ajax directory done');
+  //           	// sendAudio();
+  //           });
+
+  //           request.fail(function (jqXHR, textStatus) {
+  //           	console.log('ajax fail directory');
+  //               //swal("Erro!", textoErro1.textStatus, "error");
+  //           });
+		// }
+
+		function sendAudio(){
+			try {
+				// // Get form
+		  //       var form = $('#form-podcast')[0];
+		  //       console.log(form);
+				// // Create an FormData object 
+		  //       var data = new FormData(form);
+				// console.log(data);
+				
+				// const files = $('input[type="file"]');
+				const files = $('#podcast-audio')[0].files;
+				// console.log(files);
+				const formData = new FormData();
+
+				// var data = new FormData();
+				// jQuery.each(jQuery('#file')[0].files, function(i, file) {
+				//     formData.append('file-'+i, file);
+				// });
+
+				jQuery.each( files/*files[0].files*/, function( index, value ) {
+	            	var name = 'file_' + index;
+	            	// console.log(value);
+	            	formData.append( name, value );
+	        	});
+
+				const request = $.ajax({
+	                url: '/dashboard/podcast/upload-audio',
+	                type: 'POST',
+	                method: 'POST',
+	                data: formData,
+	                cache: false,
+	                // dataType: 'json', // This replaces dataFilter: function() && JSON.parse( data ).
+		            processData: false, // Don't process the files
+		            contentType: false
+	            });
+	            
+
+	            request.done(function (msg) {
+	            	console.log('ajax done');
+	            	sendCapa();
+	            });
+
+	            request.fail(function (jqXHR, textStatus) {
+	            	console.log('ajax fail');
+	            });
+
+	        } catch(err) {
+	        	console.log(err);
+	        }
+            // return true;
+		}
+
+		function sendCapa(){
+			const files = $('#podcast-capa')[0].files;
+			const formData = new FormData();
+
+			// var data = new FormData();
+			// jQuery.each(jQuery('#file')[0].files, function(i, file) {
+			//     formData.append('file-'+i, file);
+			// });
+
+			jQuery.each( files, function( index, value ) {
+            	var name = 'file_' + index;
+            	formData.append( name, value );
+        	});
+
+        	// formData.append( "titulo", '{titulo: "teste"}' );
+
+			const request = $.ajax({
+                url: '/dashboard/podcast/upload-capa',
+                type: 'POST',
+                method: 'POST',
+                data: formData,
+                cache: false,
+                // dataType: 'json', // This replaces dataFilter: function() && JSON.parse( data ).
+	            processData: false, // Don't process the files
+	            contentType: false
+            });
+            
+
+            request.done(function (msg) {
+            	console.log('ajax done2');
+            	return sendPodcast();
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+            	console.log('ajax fail2');
+                //swal("Erro!", textoErro1.textStatus, "error");
+            });
+		}
+
+		function sendPodcast(){
+			const autor = $('#input-autor').val();
+			const titulo = $('#input-titulo').val();
+			const subtitulo = $('#input-subtitulo').val();
+			const descricao = $('#input-descricao').val();
+			const audio = $('#podcast-audio').val();
+			const capa = $('#podcast-capa').val();
+
+			data = {
+				autor: autor,
+				titulo: titulo,
+				subtitulo: subtitulo,
+				descricao: descricao,
+				audio: audio.replace('C:\\fakepath\\', ''),
+				capa: capa.replace('C:\\fakepath\\', '')
+			}
+
+			if (autor === ""){
+	            swal('Informe o autor');
+	            return;
+	        }
+			if (titulo === ""){
+	            swal('Informe o título');
+	            return;
+	        }
+	        if (subtitulo === ""){
+	            swal('Informe o subtítulo');
+	            return;
+	        }
+	        if (descricao === ""){
+	            swal('Informe o descrição');
+	            return;
+	        }
+	        if (audio === ""){
+	            swal('Informe o audio');
+	            return;
+	        }
+	        if (capa === ""){
+	            swal('Informe a capa');
+	            return;
+	        }
+
+			const request = $.ajax({
+                url: '/dashboard/podcast',
+                type: 'POST',
+                data: JSON.stringify(data),
+            	contentType: "application/json"
+            });
+
+			console.log(data);
+
+            request.done(function (msg) {
+            	console.log('done');
+            	$('#input-autor').val('');
+				$('#input-titulo').val('');
+				$('#input-subtitulo').val('');
+				$('#input-descricao').val('');
+				$('#podcast-audio').val('');
+				$('#podcast-capa').val('');
+
+            	swal(
+	                'Cadastrado com sucesso!',
+	                '',
+	                'success'
+	            );
+	            location.reload();
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+            	console.log('ajax fail2');
+            	console.log(jqXHR);
+            	console.log(textStatus);
+            	swal(
+	                'Erro ao cadastrar!',
+	                jqXHR + ' - ' + textStatus,
+	                'error'
+	            )
+                //swal("Erro!", textoErro1.textStatus, "error");
+            });
+		}
+		
+		// var ps2 = new PerfectScrollbar('.main-content');
+	</script>
+
+	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
+</body>
+</html>
