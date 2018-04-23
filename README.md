@@ -8,6 +8,10 @@ Além disso terá àrea adminstrativa, para cadastrar podcasts, usuários e visu
 1. Faça o clone deste projeto com `git clone https://github.com/danieldkm/webradio.git`
 2. Entre na pasta do projeto e instale as dependências com `npm install`
 3. Rode a aplicação com `npm start`
+4. npm install -g
+5. npm install node-gyp -g
+6. npm install bcrypt -g
+7. npm install bcrypt --save
 
 ### Testando
 

@@ -2,10 +2,12 @@ const express = require('express');
 const router = express.Router();
 const service_podcast = require('../service/service-podcast');
 const service_curtidas = require('../service/service-curtidas');
+// const os = require('os');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
+	// console.log(os.hostname())
 	
 	service_podcast.findAll(
 		(err, result) => {

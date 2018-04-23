@@ -1,22 +1,24 @@
 const express            = require('express');
 const router 	         = express.Router();
-const service_curtidas = require('../service/service-curtidas');
+const service_curtidas   = require('../service/service-curtidas');
 
 router.get('/:audio', function(req, res, next) {
+	
 	try {
 		const audio = req.params.audio;
 
 		service_podcast.findByAudio(audio,
 			(err, result) => {
-				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
+				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }));
 			
 
-			return res.status(200).end(JSON.stringify(result));
-	
+				return res.status(200).end(JSON.stringify(result));
+			});
 	} catch (e) {
 		// log.warn(e);
 		return res.status(500).end(JSON.stringify({ message: 'post.curtidas/:audio', error: e }));
 	}
+	
 })
 
 
