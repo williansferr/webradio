@@ -1,31 +1,40 @@
 const ObjectId = require('mongodb').ObjectID;
 
 function findAll(){
-    return global.db.collection("curtidas").find({}).toArray()
+    global.db.collection("curtidas").find({}).toArray(callback)
 }
 
 function findById(_id, callback){
-    global.db.collection("curtidas").findOne({_id: _id}, callback)
+    global.db.collection("curtidas").findOne({_id: ObjectId(_id)}, callback)
 }
 
 function findByIpAndAudio(ipAddress, audio, callback){
     global.db.collection("curtidas").findOne({ip: ipAddress, audio: audio}, callback)
 }
 
+function findByUserAndHost(user, host, callback){
+    global.db.collection("curtidas").find({username: user, hostname: host}).toArray(callback)
+}
+
+function findBy(user, host, audio, callback){
+    global.db.collection("curtidas").findOne({username: user, hostname: host, audio: audio}, callback)
+}
+
+
 function findByAudio(audio, callback){
-    return global.db.collection("curtidas").find({audio: audio})
+    global.db.collection("curtidas").find({audio: audio}).toArray(callback)
 }
 
-function insert(curitda, callback){
-    curitda.data_inclusao = new Date()
-    global.db.collection("curtidas").insert(curitda, callback)
+function insert(curtida, callback){
+    curtida.data_inclusao = new Date()
+    global.db.collection("curtidas").insert(curtida, callback)
 }
 
-function update(_id, curitda, callback){
+function update(_id, curtida, callback){
     global.db.collection("curtidas").updateOne(
     	{ _id: ObjectId(_id) },
     	{
-    		$set: curitda
+    		$set: curtida
 	    },
     	callback)
 }
@@ -34,4 +43,4 @@ function remove(_id, callback){
     global.db.collection("curtidas").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, update, remove, findById, findAll }
+module.exports = { insert, update, remove, findById, findAll, findByUserAndHost, findBy, findByAudio }

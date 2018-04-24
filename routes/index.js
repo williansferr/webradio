@@ -1,23 +1,43 @@
-const express = require('express');
-const router = express.Router();
-const service_podcast = require('../service/service-podcast');
+const express          = require('express');
+const router           = express.Router();
+const service_podcast  = require('../service/service-podcast');
 const service_curtidas = require('../service/service-curtidas');
-// const os = require('os');
+const os 			   = require('os');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	// console.log(os.hostname())
-	
-	service_podcast.findAll(
-		(err, result) => {
-			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
+	// console.log('hostname',os.hostname())
+	// console.log('username:',os.userInfo().username)
+	// console.log('homedir:',os.homedir())
+	// console.log('networkInterfaces:',os.networkInterfaces())
+	// console.log('platform:',os.platform())
+	// console.log('userInfo:',os.userInfo())
+
+		service_podcast.findAll(
+			(err, result) => {
+
+				try {
+
+					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
+				
+					// global.podcasts = result;
+					// service_curtidas.findByUserAndHost(os.userInfo().username, os.hostname(),
+					// 	(err, result) => {
+					// 		try {
+					// 			if(err) return res.render('index', { message: null, podcasts: global.podcasts, curtidas: result })
 			
-			global.podcasts = result;	
-		res.render('index', { message: null, podcasts: result, indice_audio: 10 });
+					// 			return res.render('index', { message: null, podcasts: global.podcasts, curtidas: result })
+					// 		} catch (e) {
+					//     		return res.status(500).end(JSON.stringify({ method: "get./service_podcast.findAll" , message: "", error: e}))
+					//     	}
+					// });
 
-	});
-
+					return res.render('index', { message: null, podcasts: result })
+				} catch (e) {
+		    		return res.status(500).end(JSON.stringify({ method: "get./service_podcast.findAll" , message: "", error: e}));
+		    	}
+			});
 })
 
 router.get('/podcast/download/:audio', function(req, res){

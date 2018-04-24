@@ -44,8 +44,9 @@ var Audio = {
 				$(this).html('<div class="album-thumb pull-left">'+albumart+'</div><div class="songs-info pull-left">'+title+'<div class="songs-detail">'+artist+' - '+album+'</div></div></div>');
 			});
 		},
-		load:function(id,album,artist,title,albumart,mp3){
-
+		load: function(id,album,artist,title,albumart,mp3) {
+			this.load.id = id
+			this.load.mp3 = mp3
 			var currentTrack, totalTrack;
 			totalTrack = $('.play-list>a').length;
 			currentTrack = $('.play-list a').index($('.play-list .active'))+1;
@@ -62,6 +63,36 @@ var Audio = {
 			$('.audio').html('<audio class="music" data-id="'+id+'" src="'+mp3+'"></audio>');
 
 		}
+	},
+	updateCurtir:function(id, audio){
+		
+		var audio_aux = audio.substring(audio.lastIndexOf('/') + 1, audio.length);
+
+		console.log('request audio:', audio_aux);
+
+        const request = $.ajax({
+            url: '/curtidas/' + audio_aux,
+            type: 'GET'
+        });
+        
+        request.done(function (msg) {
+            console.log('updateCurtir() done');
+            console.log(msg);
+            var json = JSON.parse(msg);
+            console.log(json.thisuser);
+            if(json.thisuser){
+            	console.log('este usuário curtiu a musica ', json.curtidas[0].audio);
+            } else {
+            	console.log('este usuário não curtiu a musica ', json.curtidas[0].audio);
+            }
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            console.log('erro');
+            console.log(jqXHR);
+            console.log(textStatus);
+        });
+
 	},
 	player:function(){
 		var id, album, artist, albumart, title, mp3;
@@ -81,6 +112,7 @@ var Audio = {
 				Audio.play($('.music'));
 				$('.music').prop('volume',$('.volume').val());
 				Audio.playlist.hide();
+				Audio.updateCurtir(id, mp3);
 			});
 		});
 		$('.play-pause').on('click',function(e){
