@@ -94,16 +94,17 @@ router.post('/', function(req, res, next) {
 				try {
 					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }));
 					
-					if (result.length > 0) {
+					// console.log(result);
+					if (result != null) {
 
-						const obj = result[0]
-						if (curtiu == result[0].curtiu) {
+						const obj = result;
+						if (curtiu == obj.curtiu) {
 							return res.status(200).end(JSON.stringify({ body: result, message: "ja foi curtido pelo usuário" }))
 						} else {
 							service_curtidas.update(obj._id, body, 
 							(err, result) => {
 								try {
-									if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não atualizado", message: "ja foi curtido pelo usuário", error: err }))
+									if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não atualizado", message: "não atualizou a curtida", error: err }))
 								
 									// console.log(result)
 									return res.status(200).end(JSON.stringify({ body: body, message: "atualizado" }))

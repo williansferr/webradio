@@ -76,21 +76,45 @@ var Audio = {
         });
         
         request.done(function (msg) {
-            console.log('updateCurtir() done');
-            console.log(msg);
+            // console.log('updateCurtir() done');
+            // console.log(msg);
             var json = JSON.parse(msg);
-            console.log(json.thisuser);
+            // console.log(json.thisuser);
+
+            // console.log('????',Object.keys(json.curtidas).length);
+            // console.log('????2',json.curtidas[0]);
+            
+
+            var qt_like = 0, qt_deslike = 0;
+            $.each(json.curtidas, function(index, value) {
+			    if(value.curtiu){
+			    	qt_like += 1;
+			    } else {
+			    	qt_deslike += 1;
+			    }
+			});
+
             if(json.thisuser){
-            	console.log('este usuário curtiu a musica ', json.curtidas[0].audio);
+            	// console.log('este usuário curtiu a musica ', json.curtidas[0].audio);
+            	$('#like-cnt').click();
+            	// $('#like-cnt').remove('#qt-like-curtidas');
+            	$('span[id^="qt-like-curtidas"]').remove();
+            	$('#like-cnt').append('<span id="qt-like-curtidas">' + qt_like + '</span>');
+            	$('#ico-deslike-audio').removeAttr("style");
             } else {
-            	console.log('este usuário não curtiu a musica ', json.curtidas[0].audio);
+            	// console.log('este usuário não curtiu a musica ', json.curtidas[0].audio);
+            	$('#deslike-cnt').click();
+            	// $('#deslike-cnt').remove('#qt-deslike-curtidas');
+            	$('span[id^="qt-deslike-curtidas"]').remove();
+            	$('#deslike-cnt').append('<span id="qt-deslike-curtidas">' + qt_deslike + '</span>');
+            	$('#ico-like-audio').removeAttr("style");
             }
         });
 
         request.fail(function (jqXHR, textStatus) {
             console.log('erro');
-            console.log(jqXHR);
-            console.log(textStatus);
+            // console.log(jqXHR);
+            // console.log(textStatus);
         });
 
 	},

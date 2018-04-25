@@ -17,7 +17,7 @@ var like_parent = $(".like-container");
 //   }
 // });
 
-$("#like-cnt").click(function(){
+$("#like-cnt").click(function() {
   var t1 = new TimelineLite();
   var t2 = new TimelineLite();
   if(!check_status){

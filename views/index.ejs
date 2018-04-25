@@ -205,7 +205,7 @@
                                                     <div data-toggle="tooltip" title="Gostei!">
                                                         <div id="like-audio" class="like-container">
                                                             <div class="like-cnt unchecked" id="like-cnt">
-                                                                <i class="like-btn fas fa-thumbs-up"></i> 0
+                                                                <i id="ico-like-audio" class="like-btn fas fa-thumbs-up"></i> <span id="qt-like-curtidas">0</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -218,7 +218,7 @@
                                                     <div data-toggle="tooltip" title="Não gostei!">
                                                         <div id="deslike-audio" class="deslike-container">
                                                             <div class="deslike-cnt unchecked" id="deslike-cnt">
-                                                                <i class="deslike-btn fas fa-thumbs-down"></i> 0
+                                                                <i id="ico-deslike-audio" class="deslike-btn fas fa-thumbs-down"></i> <span id="qt-deslike-curtidas">0</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -837,13 +837,43 @@
     //     });
     // }
 
+    function setPlusQtLike(){
+        var qt_like = parseInt($('#qt-like-curtidas').text());
+        qt_like += 1;
+        $('span[id^="qt-like-curtidas"]').remove();
+        $('#like-cnt').append('<span id="qt-like-curtidas">' + qt_like + '</span>');
+    }
+
+    function setMinusQtLike(){
+        var qt_like = parseInt($('#qt-like-curtidas').text());
+        qt_like -= 1;
+        $('span[id^="qt-like-curtidas"]').remove();
+        $('#like-cnt').append('<span id="qt-like-curtidas">' + qt_like + '</span>'); 
+    }
+
+    function setPlusQtDeslike(){
+        var qt_deslike = parseInt($('#qt-deslike-curtidas').text());
+        qt_deslike += 1;
+        $('span[id^="qt-deslike-curtidas"]').remove();
+        $('#deslike-cnt').append('<span id="qt-deslike-curtidas">' + qt_deslike + '</span>');    
+    }
+
+    function setMinusQtDeslike(){
+        var qt_deslike = parseInt($('#qt-deslike-curtidas').text());
+        qt_deslike -= 1;
+        $('span[id^="qt-deslike-curtidas"]').remove();
+        $('#deslike-cnt').append('<span id="qt-deslike-curtidas">' + qt_deslike + '</span>');   
+    }
+
+    
+
     function sendLike(isLike){
 
         // console.log(Audio);
 
         let idAudio = Audio.info.load.id;
         let audio = '';
-        
+
         if (idAudio != 1) {
             audio = Audio.info.load.mp3;
             audio = audio.substring(audio.lastIndexOf('/') + 1, audio.length);
@@ -871,6 +901,34 @@
             request.done(function (msg) {
                 console.log('sendLike() done');
                 console.log(msg);
+                var json = JSON.parse(msg);
+
+                console.log('json.message:', json.message);
+                console.log('indexof.inserido:', json.message.indexOf('inserido'));
+                console.log('indexof.atualizado:', json.message.indexOf('atualizado'));
+
+                if(json.message.indexOf('inserido') >= 0 ){
+
+                    if (isLike){
+                        setPlusQtLike();
+                        $('#ico-deslike-audio').removeAttr("style");
+                    } else {
+                        setPlusQtDeslike();
+                        $('#ico-like-audio').removeAttr("style");
+                    }
+
+
+                } else if(json.message.indexOf('atualizado') >= 0){
+                    if (isLike){
+                        setPlusQtLike();
+                        setMinusQtDeslike();
+                        $('#ico-deslike-audio').removeAttr("style");
+                    } else {
+                        setPlusQtDeslike();
+                        setMinusQtLike();
+                        $('#ico-like-audio').removeAttr("style");
+                    }
+                }
             });
 
             request.fail(function (jqXHR, textStatus) {
