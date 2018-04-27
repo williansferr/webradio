@@ -264,6 +264,8 @@
 
             request.fail(function (jqXHR, textStatus) {
             	console.log('ajax fail2');
+            	console.log(jqXHR);
+            	console.log(textStatus);
                 //swal("Erro!", textoErro1.textStatus, "error");
             });
 		}
