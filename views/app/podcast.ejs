@@ -222,6 +222,8 @@
 
 	            request.fail(function (jqXHR, textStatus) {
 	            	console.log('ajax fail');
+	            	console.log(jqXHR);
+            		console.log(textStatus);
 	            });
 
 	        } catch(err) {
