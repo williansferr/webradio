@@ -119,50 +119,50 @@ function loopEterno(){
       // req.end();
 
 //----------------------------------------------------------------------------------
-      http.get('http://expressjs.com/en/api.html', (res) => {
+      // http.get('http://expressjs.com/en/api.html', (res) => {
 
-        const { statusCode } = res;
-        const contentType = res.headers['content-type'];
+      //   const { statusCode } = res;
+      //   const contentType = res.headers['content-type'];
 
-        console.log('contentType', contentType);
+      //   console.log('contentType', contentType);
 
-        let error;
-        if (statusCode !== 200) {
-          error = new Error('Request Failed.\n' +
-                            `Status Code: ${statusCode}`);
-        // } else if (!/^application\/json/.test(contentType)) {
-        //   error = new Error('Invalid content-type.\n' +
-        //                     `Expected application/json but received ${contentType}`);
-        }
-        if (error) {
-          console.error(error.message);
-          // consume response data to free up memory
-          res.resume();
-          return;
-        }
+      //   let error;
+      //   if (statusCode !== 200) {
+      //     error = new Error('Request Failed.\n' +
+      //                       `Status Code: ${statusCode}`);
+      //   // } else if (!/^application\/json/.test(contentType)) {
+      //   //   error = new Error('Invalid content-type.\n' +
+      //   //                     `Expected application/json but received ${contentType}`);
+      //   }
+      //   if (error) {
+      //     console.error(error.message);
+      //     // consume response data to free up memory
+      //     res.resume();
+      //     return;
+      //   }
 
-        res.setEncoding('utf8');
-        let rawData = '';
-        // res.on('data', (chunk) => { rawData += chunk; console.log('chunk', chunk)});
-        res.on('data', function (chunk) {
-          // console.log('BODY: ' + chunk);
+      //   res.setEncoding('utf8');
+      //   let rawData = '';
+      //   // res.on('data', (chunk) => { rawData += chunk; console.log('chunk', chunk)});
+      //   res.on('data', function (chunk) {
+      //     // console.log('BODY: ' + chunk);
 
-          console.log(html2json(chunk.substring(chunk.indexOf('<body>'), chunk.indexOf('</body>') )));
-        });
+      //     console.log(html2json(chunk.substring(chunk.indexOf('<body>'), chunk.indexOf('</body>') )));
+      //   });
 
-        // res.on('end', () => {
-        //   try {
-        //     const parsedData = JSON.parse(rawData);
-        //     console.log(parsedData);
-        //   } catch (e) {
-        //     console.error(e.message);
-        //   }
-        // });
-      }).on('error', (e) => {
-        console.error(`Got error: ${e.message}`);
-      });
+      //   // res.on('end', () => {
+      //   //   try {
+      //   //     const parsedData = JSON.parse(rawData);
+      //   //     console.log(parsedData);
+      //   //   } catch (e) {
+      //   //     console.error(e.message);
+      //   //   }
+      //   // });
+      // }).on('error', (e) => {
+      //   console.error(`Got error: ${e.message}`);
+      // });
 
-      loopEterno()
+      // loopEterno()
   }, 10000)
 }
 
