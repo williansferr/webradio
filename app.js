@@ -6,6 +6,8 @@ const passport = require('passport')
 const session = require('express-session')  
 const debug = require('debug')
 const MongoStore = require('connect-mongo')(session)
+const http = require('http');
+const html2json = require('html2json').html2json; //https://github.com/Jxck/html2json
 
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
@@ -16,6 +18,7 @@ const usersRouter = require('./routes/users');
 const dashboardRouter = require('./routes/dashboard');
 const comentarioRouter = require('./routes/comentario');
 const curtidasRouter = require('./routes/curtidas');
+
 
 //testando dois repositorio
 
@@ -78,5 +81,92 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+function loopEterno(){
+  setTimeout(function () {
+      // console.log((new Date).toLocaleString().substr(11))
+      // console.log(new Date)
+
+      // const options = {
+      //   hostname: 'http://177.54.158.150',
+      //   port: 8000,
+      //   path: '/airtime_128',
+      //   method: 'GET',
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded',
+      //     // 'Content-Length': Buffer.byteLength(postData)
+      //   }
+      // };
+
+      // const req = http.request(options, (res) => {
+      //   console.log(`STATUS: ${res.statusCode}`);
+      //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+      //   res.setEncoding('utf8');
+      //   res.on('data', (chunk) => {
+      //     console.log(`BODY: ${chunk}`);
+      //   });
+      //   res.on('end', () => {
+      //     console.log('No more data in response.');
+      //   });
+      // });
+
+      // req.on('error', (e) => {
+      //   console.error(`problem with request: ${e.message}`);
+      // });
+
+      // // write data to request body
+      // // req.write(postData);
+      // req.end();
+
+//----------------------------------------------------------------------------------
+      // http.get('http://expressjs.com/en/api.html', (res) => {
+
+      //   const { statusCode } = res;
+      //   const contentType = res.headers['content-type'];
+
+      //   console.log('contentType', contentType);
+
+      //   let error;
+      //   if (statusCode !== 200) {
+      //     error = new Error('Request Failed.\n' +
+      //                       `Status Code: ${statusCode}`);
+      //   // } else if (!/^application\/json/.test(contentType)) {
+      //   //   error = new Error('Invalid content-type.\n' +
+      //   //                     `Expected application/json but received ${contentType}`);
+      //   }
+      //   if (error) {
+      //     console.error(error.message);
+      //     // consume response data to free up memory
+      //     res.resume();
+      //     return;
+      //   }
+
+      //   res.setEncoding('utf8');
+      //   let rawData = '';
+      //   // res.on('data', (chunk) => { rawData += chunk; console.log('chunk', chunk)});
+      //   res.on('data', function (chunk) {
+      //     // console.log('BODY: ' + chunk);
+
+      //     console.log(html2json(chunk.substring(chunk.indexOf('<body>'), chunk.indexOf('</body>') )));
+      //   });
+
+      //   // res.on('end', () => {
+      //   //   try {
+      //   //     const parsedData = JSON.parse(rawData);
+      //   //     console.log(parsedData);
+      //   //   } catch (e) {
+      //   //     console.error(e.message);
+      //   //   }
+      //   // });
+      // }).on('error', (e) => {
+      //   console.error(`Got error: ${e.message}`);
+      // });
+
+      // loopEterno()
+  }, 10000)
+}
+
+loopEterno();
+
 
 module.exports = app;

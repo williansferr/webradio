@@ -128,8 +128,8 @@
 			                            </div>
 			                        </div>
 			                        <div class="card-footer text-center">
-			                        	<button class="btn btn-blue btn-fill" type="button" onclick="submit_form_podcast()">Try</button>
-			                            <button class="btn btn-blue btn-fill" type="submit">Salvar</button>
+			                        	<button class="btn btn-blue btn-fill" type="button" onclick="submit_form_podcast()">Salvar</button>
+			                            <!-- <button class="btn btn-blue btn-fill" type="submit">Salvar</button> -->
 			                        </div>
 			                    </form>
 			                </div>
@@ -244,7 +244,6 @@
             	formData.append( name, value );
         	});
 
-        	// formData.append( "titulo", '{titulo: "teste"}' );
 
 			const request = $.ajax({
                 url: '/dashboard/podcast/upload-capa',
@@ -318,7 +317,7 @@
             	contentType: "application/json"
             });
 
-			console.log(data);
+			// console.log(data);
 
             request.done(function (msg) {
             	console.log('done');
@@ -346,11 +345,9 @@
 	                jqXHR + ' - ' + textStatus,
 	                'error'
 	            )
-                //swal("Erro!", textoErro1.textStatus, "error");
             });
 		}
 		
-		// var ps2 = new PerfectScrollbar('.main-content');
 	</script>
 
 	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
