@@ -29,7 +29,7 @@ global.classMenu = {
 		class: "collapse in"
 	},
 	dashboard: {
-		expand: global.expand
+		expand: global.expand,
 		main: "active visible"
 	},
 	podcast: { 
