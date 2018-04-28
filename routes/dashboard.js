@@ -11,6 +11,16 @@ const service_comentario = require('../service/service-comentario');
 const bunyan = require('bunyan');
 const log = bunyan.createLogger({name: 'dashboard'});
 
+global.expand = {
+	main: {
+		expanded: "aria-expanded=false",
+		class: "collapsed"
+	},
+	sub: {
+		expanded: "aria-expanded=false",
+		class: "collapse"
+	}
+}
 
 global.classMenu = {
 	menu: "aria-expanded=true",
@@ -18,14 +28,35 @@ global.classMenu = {
 		expanded: "aria-expanded=true",
 		class: "collapse in"
 	},
+	dashboard: {
+		expand: global.expand
+		main: "active visible"
+	},
 	podcast: { 
-		cadastro: "active visible",
-		consulta: "" 
+		expand: global.expand,
+		cadastro: "",
+		consulta: ""
 	},
 	comentario: {
+		expand: global.expand,
 		consulta: ""
 	}
 };
+
+	function setVisiblePodcastCadastro(){
+		classMenu.menu = '';
+		classMenu.submenu.expanded = '';
+		classMenu.submenu.class = '';
+		classMenu.podcast.cadastro = '';
+	}
+
+	function setVisibleComentario(){
+		
+	}
+
+	function setVisibleDashboard(){
+		
+	}
 
 	function authenticationMiddleware () {  
 		return function (req, res, next) {
@@ -40,13 +71,17 @@ global.classMenu = {
 		classMenu.menu = '';
 		classMenu.submenu.expanded = '';
 		classMenu.submenu.class = '';
-		classMenu.podcast.cadastro = '';	
+		classMenu.podcast.cadastro = '';
 	}
 
 	router.get('/', authenticationMiddleware(), function(req, res, next) {
 		// - Buscar comentarios
 		// - Trazer dados para compor os graficos
 		cleanPodcast();
+		classMenu.dashboard.expand.main.class = '';
+		classMenu.dashboard.expand.main.expanded = 'aria-expanded=true';
+		classMenu.dashboard.main = 'active visible';
+		console.log(classMenu);
 		res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''});
 	})
 
