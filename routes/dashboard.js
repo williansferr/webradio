@@ -109,12 +109,6 @@ global.classMenu = {
 		}
 	}
 
-	function cleanPodcast(){
-		classMenu.menu = '';
-		classMenu.submenu.expanded = '';
-		classMenu.submenu.class = '';
-		classMenu.podcast.cadastro = '';
-	}
 
 	router.get('/', authenticationMiddleware(), function(req, res, next) {
 		// - Buscar comentarios
@@ -122,6 +116,7 @@ global.classMenu = {
 		disableExpandAll();
 		enableExpandMenuDashboard();
 		classMenu.dashboard.main = 'active visible';
+		console.log('expanded', classMenu.podcast.expand.main.expanded);
 		res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''});
 	})
 
