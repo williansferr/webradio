@@ -30,7 +30,7 @@ global.classMenu = {
 	},
 	dashboard: {
 		expand: global.expand,
-		main: "active visible"
+		main: ""
 	},
 	podcast: { 
 		expand: global.expand,
@@ -43,19 +43,57 @@ global.classMenu = {
 	}
 };
 
-	function setVisiblePodcastCadastro(){
-		classMenu.menu = '';
-		classMenu.submenu.expanded = '';
-		classMenu.submenu.class = '';
-		classMenu.podcast.cadastro = '';
+	global.enableExpandMenuDashboard = function (){
+		classMenu.dashboard.expand.main.class = '';
+		classMenu.dashboard.expand.main.expanded = 'aria-expanded=true';
+		classMenu.dashboard.expand.sub.class = 'collapse in';
+		classMenu.dashboard.expand.sub.expanded = 'aria-expanded=true';
 	}
 
-	function setVisibleComentario(){
-		
+	global.disableExpandMenuDashboard = function(){
+		classMenu.dashboard.expand.main.class = 'collapsed';
+		classMenu.dashboard.expand.main.expanded = 'aria-expanded=false';
+		classMenu.dashboard.expand.sub.class = 'collapse';
+		classMenu.dashboard.expand.sub.expanded = 'aria-expanded=false';
+		classMenu.dashboard.main = '';
 	}
 
-	function setVisibleDashboard(){
-		
+	global.enableExpandMenuComentario = function(){
+		classMenu.comentario.expand.main.class = '';
+		classMenu.comentario.expand.main.expanded = 'aria-expanded=true';
+		classMenu.comentario.expand.sub.class = 'collapse in';
+		classMenu.comentario.expand.sub.expanded = 'aria-expanded=true';
+		// classMenu.comentario.consulta = 'active visible';
+	}
+
+	global.disableExpandMenuComentario = function(){
+		classMenu.comentario.expand.main.class = 'collapsed';
+		classMenu.comentario.expand.main.expanded = 'aria-expanded=false';
+		classMenu.comentario.expand.sub.class = 'collapse';
+		classMenu.comentario.expand.sub.expanded = 'aria-expanded=false';
+		classMenu.comentario.consulta = '';
+	}
+
+	global.enableExpandMenuPodcast = function(){
+		classMenu.podcast.expand.main.class = '';
+		classMenu.podcast.expand.main.expanded = 'aria-expanded=true';
+		classMenu.podcast.expand.sub.class = 'collapse in';
+		classMenu.podcast.expand.sub.expanded = 'aria-expanded=true';
+	}
+
+	global.disableExpandMenuPodcast = function(){
+		classMenu.podcast.expand.main.class = 'collapsed';
+		classMenu.podcast.expand.main.expanded = 'aria-expanded=false';
+		classMenu.podcast.expand.sub.class = 'collapse';
+		classMenu.podcast.expand.sub.expanded = 'aria-expanded=false';
+		classMenu.podcast.consulta = ''
+		classMenu.podcast.cadastro = ''
+	}
+
+	global.disableExpandAll = function(){
+		disableExpandMenuComentario();
+		disableExpandMenuPodcast();
+		disableExpandMenuDashboard();
 	}
 
 	function authenticationMiddleware () {  
@@ -77,29 +115,26 @@ global.classMenu = {
 	router.get('/', authenticationMiddleware(), function(req, res, next) {
 		// - Buscar comentarios
 		// - Trazer dados para compor os graficos
-		cleanPodcast();
-		classMenu.dashboard.expand.main.class = '';
-		classMenu.dashboard.expand.main.expanded = 'aria-expanded=true';
+		disableExpandAll();
+		enableExpandMenuDashboard();
 		classMenu.dashboard.main = 'active visible';
-		console.log(classMenu);
-		console.log('expanded', classMenu.dashboard.expand.main.expanded);
 		res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''});
 	})
 
 	router.get('/podcast', authenticationMiddleware(), function(req, res, next) {
 		
-		classMenu.podcast.cadastro = "active visible";
-		classMenu.podcast.consulta = "";
-		classMenu.comentario.consulta = "";
+		disableExpandAll();
+		enableExpandMenuPodcast();
+		classMenu.podcast.cadastro = 'active visible';
 
   		res.render('app/podcast', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
 	})
 
 	router.get('/podcast/consulta', authenticationMiddleware(), function(req, res, next) {
 		
-		classMenu.podcast.cadastro = "";
-		classMenu.podcast.consulta = "active visible";
-		classMenu.comentario.consulta = "";
+		disableExpandAll();
+		enableExpandMenuPodcast();
+		classMenu.podcast.consulta = 'active visible';
 
 		const header_podcast = [{name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}];
 		service_podcast.findAll(
