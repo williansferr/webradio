@@ -39,20 +39,20 @@
             </div>
             <div class="nav-container">
                 <ul class="nav">
-                    <li routerLinkActive="active">
-                        <a  href="/dashboard">
+                    <li routerLinkActive="active" class="<%= classMenu.dashboard.main %>">
+                        <a  href="/dashboard" class="<%= classMenu.dashboard.expand.main.class %>" <%= classMenu.dashboard.expand.main.expanded %>>
                             <i class="material-icons">dashboard</i>
                             <p>Dashboard</p>
                         </a>
                     </li>
                     <li routerLinkActive="active">
-                        <a data-toggle="collapse" href="#menuPodcast" <%= classMenu.menu %>>
+                        <a data-toggle="collapse" href="#menuPodcast" class="<%= classMenu.podcast.expand.main.class %>" <%= classMenu.podcast.expand.main.expanded %>>
                             <i class="material-icons">apps</i>
                             <p>Podcasts
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="<%= classMenu.submenu.class %>" id="menuPodcast" <%= classMenu.submenu.expanded %>>
+                        <div id="menuPodcast" class="<%= classMenu.podcast.expand.sub.class %>" <%= classMenu.podcast.expand.sub.expanded %>>
                             <ul class="nav">
                                 <li routerLinkActive="active" class="<%= classMenu.podcast.cadastro %>">
                                     <a href="/dashboard/podcast">
@@ -70,13 +70,13 @@
                         </div>
                     </li>
                     <li routerLinkActive="active">
-                        <a data-toggle="collapse" href="#menuComentario" <%= classMenu.menu %>>
+                        <a data-toggle="collapse" href="#menuComentario" class="<%= classMenu.comentario.expand.main.class %>" <%= classMenu.comentario.expand.main.expanded %>>
                             <i class="material-icons">apps</i>
                             <p>Comentários
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="<%= classMenu.submenu.class %>" id="menuComentario" <%= classMenu.submenu.expanded %>>
+                        <div id="menuComentario" class="<%= classMenu.comentario.expand.sub.class %>" <%= classMenu.comentario.expand.sub.expanded %>>
                             <ul class="nav">
                                 <li routerLinkActive="active" class="<%= classMenu.comentario.consulta %>">
                                     <a href="/comentario">
