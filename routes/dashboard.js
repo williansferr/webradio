@@ -11,7 +11,18 @@ const service_comentario = require('../service/service-comentario');
 const bunyan = require('bunyan');
 const log = bunyan.createLogger({name: 'dashboard'});
 
-global.expand = {
+global.expanded = {
+	main: {
+		expanded: "aria-expanded=true",
+		class: ""
+	},
+	sub: {
+		expanded: "aria-expanded=true",
+		class: "collapse in"
+	}
+}
+
+global.notexpanded = {
 	main: {
 		expanded: "aria-expanded=false",
 		class: "collapsed"
@@ -22,9 +33,6 @@ global.expand = {
 	}
 }
 
-var de = expand;
-var pc = expand;
-var cm = expand;
 
 global.classMenu = {
 	menu: "aria-expanded=true",
@@ -33,63 +41,65 @@ global.classMenu = {
 		class: "collapse in"
 	},
 	dashboard: {
-		expand: de,
+		expand: null,
 		main: ""
 	},
 	podcast: { 
-		expand: pc,
+		expand: null,
 		cadastro: "",
 		consulta: ""
 	},
 	comentario: {
-		expand: cm,
+		expand: null,
 		consulta: ""
 	}
 };
 
 	global.enableExpandMenuDashboard = function (){
-		classMenu.dashboard.expand.main.class = '';
-		classMenu.dashboard.expand.main.expanded = 'aria-expanded=true';
-		classMenu.dashboard.expand.sub.class = 'collapse in';
-		classMenu.dashboard.expand.sub.expanded = 'aria-expanded=true';
+		classMenu.dashboard.expand = expanded;
 	}
 
 	global.disableExpandMenuDashboard = function(){
-		classMenu.dashboard.expand.main.class = 'collapsed';
-		classMenu.dashboard.expand.main.expanded = 'aria-expanded=false';
-		classMenu.dashboard.expand.sub.class = 'collapse';
-		classMenu.dashboard.expand.sub.expanded = 'aria-expanded=false';
+		classMenu.dashboard.expand = notexpanded;
+		// classMenu.dashboard.expand.main.class = 'collapsed';
+		// classMenu.dashboard.expand.main.expanded = 'aria-expanded=false';
+		// classMenu.dashboard.expand.sub.class = 'collapse';
+		// classMenu.dashboard.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.dashboard.main = '';
 	}
 
 	global.enableExpandMenuComentario = function(){
-		classMenu.comentario.expand.main.class = '';
-		classMenu.comentario.expand.main.expanded = 'aria-expanded=true';
-		classMenu.comentario.expand.sub.class = 'collapse in';
-		classMenu.comentario.expand.sub.expanded = 'aria-expanded=true';
-		// classMenu.comentario.consulta = 'active visible';
+		classMenu.comentario.expand = expanded;
+		// classMenu.comentario.expand.main.class = '';
+		// classMenu.comentario.expand.main.expanded = 'aria-expanded=true';
+		// classMenu.comentario.expand.sub.class = 'collapse in';
+		// classMenu.comentario.expand.sub.expanded = 'aria-expanded=true';
+
 	}
 
 	global.disableExpandMenuComentario = function(){
-		classMenu.comentario.expand.main.class = 'collapsed';
-		classMenu.comentario.expand.main.expanded = 'aria-expanded=false';
-		classMenu.comentario.expand.sub.class = 'collapse';
-		classMenu.comentario.expand.sub.expanded = 'aria-expanded=false';
+		classMenu.comentario.expand = notexpanded;
+		// classMenu.comentario.expand.main.class = 'collapsed';
+		// classMenu.comentario.expand.main.expanded = 'aria-expanded=false';
+		// classMenu.comentario.expand.sub.class = 'collapse';
+		// classMenu.comentario.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.comentario.consulta = '';
 	}
 
 	global.enableExpandMenuPodcast = function(){
-		classMenu.podcast.expand.main.class = '';
-		classMenu.podcast.expand.main.expanded = 'aria-expanded=true';
-		classMenu.podcast.expand.sub.class = 'collapse in';
-		classMenu.podcast.expand.sub.expanded = 'aria-expanded=true';
+		classMenu.podcast.expand = expanded;
+		// classMenu.podcast.expand.main.class = '';
+		// classMenu.podcast.expand.main.expanded = 'aria-expanded=true';
+		// classMenu.podcast.expand.sub.class = 'collapse in';
+		// classMenu.podcast.expand.sub.expanded = 'aria-expanded=true';
 	}
 
 	global.disableExpandMenuPodcast = function(){
-		classMenu.podcast.expand.main.class = 'collapsed';
-		classMenu.podcast.expand.main.expanded = 'aria-expanded=false';
-		classMenu.podcast.expand.sub.class = 'collapse';
-		classMenu.podcast.expand.sub.expanded = 'aria-expanded=false';
+		classMenu.podcast.expand = notexpanded;
+		// classMenu.podcast.expand.main.class = 'collapsed';
+		// classMenu.podcast.expand.main.expanded = 'aria-expanded=false';
+		// classMenu.podcast.expand.sub.class = 'collapse';
+		// classMenu.podcast.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.podcast.consulta = ''
 		classMenu.podcast.cadastro = ''
 	}
