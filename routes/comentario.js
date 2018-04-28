@@ -12,9 +12,9 @@ function authenticationMiddleware () {
 }
 
 router.get('/', authenticationMiddleware (), function(req, res, next) {
-	classMenu.podcast.cadastro = "";
-	classMenu.podcast.consulta = "";
-	classMenu.comentario.consulta = "active visible";
+	disableExpandAll();
+	enableExpandMenuComentario();
+	classMenu.comentario.consulta = 'active visible';
 
 	const header_comentario = [{name: "Nome"}, {name: "E-mail"}, {name: "Comentario"}];
 	service_comentario.findAll(
