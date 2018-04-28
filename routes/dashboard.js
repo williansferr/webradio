@@ -22,6 +22,10 @@ global.expand = {
 	}
 }
 
+var de = expand;
+var pc = expand;
+var cm = expand;
+
 global.classMenu = {
 	menu: "aria-expanded=true",
 	submenu: {
@@ -29,16 +33,16 @@ global.classMenu = {
 		class: "collapse in"
 	},
 	dashboard: {
-		expand: global.expand,
+		expand: de,
 		main: ""
 	},
 	podcast: { 
-		expand: global.expand,
+		expand: pc,
 		cadastro: "",
 		consulta: ""
 	},
 	comentario: {
-		expand: global.expand,
+		expand: cm,
 		consulta: ""
 	}
 };
