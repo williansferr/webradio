@@ -82,6 +82,7 @@ global.classMenu = {
 		classMenu.dashboard.expand.main.expanded = 'aria-expanded=true';
 		classMenu.dashboard.main = 'active visible';
 		console.log(classMenu);
+		console.log('expanded', classMenu.dashboard.expand.main.expanded);
 		res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''});
 	})
 
