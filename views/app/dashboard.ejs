@@ -11,15 +11,15 @@
 			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
 		</svg>
 	</div> -->
-	<!--<pre>
-	<%= user.name %>
-	<%= user.password %>
-	<%= user.email %>
+	<pre>
+	<%= comentarios_hoje.length %>
+	<%= charts.charts %>
+
 	<%= notification %>
 	<% if (notification) { %>
 		<teste><%= notification %></teste>
 	<%}%>
-	</pre> -->
+	</pre> 
     <div class="wrapper">
     	<% include sidebar/sidebar %>
     	<div class="main-panel myScroll">
@@ -30,16 +30,17 @@
 			            <div class="col-lg-3 col-md-6 col-sm-6">
 			                <div class="card card-stats">
 			                    <div class="card-header" data-background-color="red">
-			                        <i class="material-icons">weekend</i>
+			                        <i class="material-icons">question_answer</i>
 			                    </div>
 			                    <div class="card-content">
-			                        <p class="category">Bookings</p>
-			                        <h3 class="card-title">184</h3>
+			                        <p class="category">Comentários hoje</p>
+			                        <h3 class="card-title"><%= comentarios_hoje.length %></h3>
 			                    </div>
 			                    <div class="card-footer">
 			                        <div class="stats">
-			                            <i class="material-icons text-danger">warning</i>
-			                            <a href="#pablo">Get More Space...</a>
+			                            <!-- <i class="material-icons text-danger">warning</i> -->
+			                            <i class="material-icons">description</i>
+			                            <a href="/comentario/consulta">ver comentários</a>
 			                        </div>
 			                    </div>
 			                </div>
@@ -47,23 +48,24 @@
 			            <div class="col-lg-3 col-md-6 col-sm-6">
 			                <div class="card card-stats">
 			                    <div class="card-header" data-background-color="red">
-			                        <i class="material-icons">equalizer</i>
+			                        <i class="material-icons">audiotrack</i>
 			                    </div>
 			                    <div class="card-content">
-			                        <p class="category">Views</p>
-			                        <h3 class="card-title">75.521</h3>
+			                        <p class="category">Ouvintes</p>
+			                        <h3 class="card-title">0</h3>
 			                    </div>
 			                    <div class="card-footer">
 			                        <div class="stats">
-			                            <i class="material-icons">local_offer</i> Google Analytics
+			                            <i class="material-icons">queue_music</i>
+			                            Pico ouvintes 0
 			                        </div>
 			                    </div>
 			                </div>
 			            </div>
 			            <div class="col-lg-3 col-md-6 col-sm-6">
 			                <div class="card card-stats">
-			                    <div class="card-header" data-background-color="green">
-			                        <i class="material-icons">store</i>
+			                    <!-- <div class="card-header" data-background-color="green">
+			                        <i class="material-icons">audiotrack</i>
 			                    </div>
 			                    <div class="card-content">
 			                        <p class="category">Revenue</p>
@@ -73,12 +75,12 @@
 			                        <div class="stats">
 			                            <i class="material-icons">date_range</i> Last 24 Hours
 			                        </div>
-			                    </div>
+			                    </div> -->
 			                </div>
 			            </div>
 			            <div class="col-lg-3 col-md-6 col-sm-6">
 			                <div class="card card-stats">
-			                    <div class="card-header" data-background-color="blue">
+			                    <!-- <div class="card-header" data-background-color="blue">
 			                        <i class="fa fa-twitter"></i>
 			                    </div>
 			                    <div class="card-content">
@@ -89,238 +91,7 @@
 			                        <div class="stats">
 			                            <i class="material-icons">update</i> Just Updated
 			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-
-			        <div class="row">
-			            <div class="col-lg-4 col-md-6">
-			                <div class="card card-product">
-			                    <div class="card-image" data-header-animation="true">
-			                        <a href="#pablo">
-			                            <img class="img" src="/img/card-2.jpeg">
-			                        </a>
-			                    </div>
-			                    <div class="card-content">
-			                        <div class="card-actions">
-			                            <button type="button" class="btn btn-danger btn-simple fix-broken-card">
-			                                <i class="material-icons">build</i> Fix Header!
-			                            </button>
-			                            <button type="button" class="btn btn-default btn-simple" rel="tooltip" data-placement="bottom" title="View">
-			                                <i class="material-icons">art_track</i>
-			                            </button>
-			                            <button type="button" class="btn btn-success btn-simple" rel="tooltip" data-placement="bottom" title="Edit">
-			                                <i class="material-icons">edit</i>
-			                            </button>
-			                            <button type="button" class="btn btn-danger btn-simple" rel="tooltip" data-placement="bottom" title="Remove">
-			                                <i class="material-icons">close</i>
-			                            </button>
-			                        </div>
-			                        <h4 class="card-title">
-			                            <a href="#pablo">Cozy 5 Stars Apartment</a>
-			                        </h4>
-			                        <div class="card-description">
-			                            The place is close to Barceloneta Beach and bus stop just 2 min by walk and...
-			                        </div>
-			                    </div>
-			                    <div class="card-footer">
-			                        <div class="price">
-			                            <h4>$899/night</h4>
-			                        </div>
-			                        <div class="stats pull-right">
-			                            <p class="category"><i class="material-icons">place</i> Barcelona, Spain</p>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			            <div class="col-lg-4 col-md-6">
-			                <div class="card card-product">
-			                    <div class="card-image" data-header-animation="true">
-			                        <a href="#pablo">
-			                            <img class="img" src="img/card-3.jpeg">
-			                        </a>
-			                    </div>
-			                    <div class="card-content">
-			                        <div class="card-actions">
-			                            <button type="button" class="btn btn-danger btn-simple fix-broken-card">
-			                                <i class="material-icons">build</i> Fix Header!
-			                            </button>
-			                            <button type="button" class="btn btn-default btn-simple" rel="tooltip" data-placement="bottom" title="View">
-			                                <i class="material-icons">art_track</i>
-			                            </button>
-			                            <button type="button" class="btn btn-success btn-simple" rel="tooltip" data-placement="bottom" title="Edit">
-			                                <i class="material-icons">edit</i>
-			                            </button>
-			                            <button type="button" class="btn btn-danger btn-simple" rel="tooltip" data-placement="bottom" title="Remove">
-			                                <i class="material-icons">close</i>
-			                            </button>
-			                        </div>
-			                        <h4 class="card-title">
-			                            <a href="#pablo">Office Studio</a>
-			                        </h4>
-			                        <div class="card-description">
-			                            The place is close to Metro Station and bus stop just 2 min by walk and near...
-			                        </div>
-			                    </div>
-			                    <div class="card-footer">
-			                        <div class="price">
-			                            <h4>$1.119/night</h4>
-			                        </div>
-			                        <div class="stats pull-right">
-			                            <p class="category"><i class="material-icons">place</i> London, UK</p>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			            <div class="col-lg-4 col-md-6">
-			                <div class="card card-product">
-			                    <div class="card-image" data-header-animation="true">
-			                        <a href="#pablo">
-			                            <img class="img" src="img/card-1.jpeg">
-			                        </a>
-			                    </div>
-			                    <div class="card-content">
-			                        <div class="card-actions">
-			                            <button type="button" class="btn btn-danger btn-simple fix-broken-card">
-			                                <i class="material-icons">build</i> Fix Header!
-			                            </button>
-			                            <button type="button" class="btn btn-default btn-simple" rel="tooltip" data-placement="bottom" title="View">
-			                                <i class="material-icons">art_track</i>
-			                            </button>
-			                            <button type="button" class="btn btn-success btn-simple" rel="tooltip" data-placement="bottom" title="Edit">
-			                                <i class="material-icons">edit</i>
-			                            </button>
-			                            <button type="button" class="btn btn-danger btn-simple" rel="tooltip" data-placement="bottom" title="Remove">
-			                                <i class="material-icons">close</i>
-			                            </button>
-			                        </div>
-			                        <h4 class="card-title">
-			                            <a href="#pablo">Beautiful Castle</a>
-			                        </h4>
-			                        <div class="card-description">
-			                            The place is close to Metro Station and bus stop just 2 min by walk and near...
-			                        </div>
-			                    </div>
-			                    <div class="card-footer">
-			                        <div class="price">
-			                            <h4>$459/night</h4>
-			                        </div>
-			                        <div class="stats pull-right">
-			                            <p class="category"><i class="material-icons">place</i> Milan, Italy</p>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-
-
-			        <div class="row">
-			            <div class="col-md-12">
-			                <div class="card">
-			                    <div class="card-header card-header-icon" data-background-color="red">
-			                        <i class="material-icons">language</i>
-			                    </div>
-			                    <div class="card-content">
-			                        <h4 class="card-title">Global Sales by Top Locations</h4>
-			                        <div class="row">
-			                            <div class="col-md-5">
-			                                <div class="table-responsive table-sales">
-			                                    <table class="table">
-			                                        <tbody>
-			                                            <tr>
-			                                                <td>
-			                                                    <div class="flag">
-			                                                        <img src="img/flags/US.png">
-			                                                    </div>
-			                                                </td>
-			                                                <td>USA</td>
-			                                                <td class="text-right">
-			                                                    2.920
-			                                                </td>
-			                                                <td class="text-right">
-			                                                    53.23%
-			                                                </td>
-			                                            </tr>
-			                                            <tr>
-			                                                <td>
-			                                                    <div class="flag">
-			                                                        <img src="img/flags/DE.png">
-			                                                    </div>
-			                                                </td>
-			                                                <td>Germany</td>
-			                                                <td class="text-right">
-			                                                    1.300
-			                                                </td>
-			                                                <td class="text-right">
-			                                                    20.43%
-			                                                </td>
-			                                            </tr>
-			                                            <tr>
-			                                                <td>
-			                                                    <div class="flag">
-			                                                        <img src="img/flags/AU.png">
-			                                                    </div>
-			                                                </td>
-			                                                <td>Australia</td>
-			                                                <td class="text-right">
-			                                                    760
-			                                                </td>
-			                                                <td class="text-right">
-			                                                    10.35%
-			                                                </td>
-			                                            </tr>
-			                                            <tr>
-			                                                <td>
-			                                                    <div class="flag">
-			                                                        <img src="img/flags/GB.png">
-			                                                    </div>
-			                                                </td>
-			                                                <td>United Kingdom</td>
-			                                                <td class="text-right">
-			                                                    690
-			                                                </td>
-			                                                <td class="text-right">
-			                                                    7.87%
-			                                                </td>
-			                                            </tr>
-			                                            <tr>
-			                                                <td>
-			                                                    <div class="flag">
-			                                                        <img src="img/flags/RO.png">
-			                                                    </div>
-			                                                </td>
-			                                                <td>Romania</td>
-			                                                <td class="text-right">
-			                                                    600
-			                                                </td>
-			                                                <td class="text-right">
-			                                                    5.94%
-			                                                </td>
-			                                            </tr>
-			                                            <tr>
-			                                                <td>
-			                                                    <div class="flag">
-			                                                        <img src="img/flags/BR.png">
-			                                                    </div>
-			                                                </td>
-			                                                <td>Brasil</td>
-			                                                <td class="text-right">
-			                                                    550
-			                                                </td>
-			                                                <td class="text-right">
-			                                                    4.34%
-			                                                </td>
-			                                            </tr>
-			                                        </tbody>
-			                                    </table>
-			                                </div>
-			                            </div>
-			                            <div class="col-md-6 col-md-offset-1">
-			                                <div id="worldMap" class="map"></div>
-			                            </div>
-			                        </div>
-			                    </div>
+			                    </div> -->
 			                </div>
 			            </div>
 			        </div>
@@ -417,6 +188,9 @@
 
 	<% include partials/script %>
 	<script>
+		<%- charts %>
+	</script>
+	<script>
 		// var ps = new PerfectScrollbar('#myscroll');
 		// $('.sidebar-wrapper').perfectScrollbar();
 		// $('.content-panel').perfectScrollbar();
@@ -424,6 +198,15 @@
 		$('.myScroll').each(function(){
 		    $(this).perfectScrollbar();
 		});
+
+		$( document ).ready(function() {
+			initCharts();
+		});
+
+
+		
+
+		
 		
 		// var ps2 = new PerfectScrollbar('.main-content');
 	</script>

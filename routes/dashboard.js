@@ -126,8 +126,17 @@ global.classMenu = {
 		disableExpandAll();
 		enableExpandMenuDashboard();
 		classMenu.dashboard.main = 'active visible';
-		console.log('expanded', classMenu.podcast.expand.main.expanded);
-		res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''});
+		// console.log('expanded', classMenu.podcast.expand.main.expanded);
+		var charts = require('../public/js/init/charts.js');
+
+		service_comentario.findByDataInclusao(null, 
+			(err, result) => {
+    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
+    		
+    		console.log(result);
+			res.render('app/dashboard', { charts: charts, comentarios_hoje: result, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+  		});
+		// res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
 	})
 
 	router.get('/podcast', authenticationMiddleware(), function(req, res, next) {

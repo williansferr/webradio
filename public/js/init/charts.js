@@ -1,4 +1,4 @@
-if ('undefined' !== typeof module) {
+// if ('undefined' !== typeof module) {
 
     module.exports = function initCharts(){
         /* ----------==========     Daily Sales Chart initialization    ==========---------- */
@@ -82,4 +82,4 @@ if ('undefined' !== typeof module) {
         md.startAnimationForBarChart(websiteViewsChart);
     }
 
-}
+// }
