@@ -40,38 +40,39 @@
 			                            	<div class="row">
 			                            		<div class="col-sm-12">
 			                            			<table class="table table-striped table-no-bordered table-hover dataTable dtr-inline" id="datatables">
-					                                <thead>
-					                                    <tr role="row">
-															<% header_comentario.forEach(function(c){ %>
-																<th><%= c.name %></th>
+						                                <thead>
+						                                    <tr role="row">
+																<% header_comentario.forEach(function(c){ %>
+																	<th><%= c.name %></th>
+																<% }); %>
+						                                    </tr>
+						                                </thead>
+						                                <tfoot>
+						                                    <tr>
+						                                    	<% header_comentario.forEach(function(c){ %>
+																	<th><%= c.name %></th>
+																<% }); %>
+						                                    </tr>
+						                                </tfoot>
+						                                <tbody>
+						                                	<% comentarios.forEach(function(comentario){ %>
+						                                		<tr>
+																	<td><%= comentario.nome %></td>
+																	<td><%= comentario.email %></td>
+																	<td><%= comentario.comentario %></td>
+																</tr>
 															<% }); %>
-					                                    </tr>
-					                                </thead>
-					                                <tfoot>
-					                                    <tr>
-					                                    	<% header_comentario.forEach(function(c){ %>
-																<th><%= c.name %></th>
-															<% }); %>
-					                                    </tr>
-					                                </tfoot>
-					                                <tbody>
-					                                	<% comentarios.forEach(function(comentario){ %>
-					                                		<tr>
-																<td><%= comentario.nome %></td>
-																<td><%= comentario.email %></td>
-																<td><%= comentario.comentario %></td>
-															</tr>
-														<% }); %>
-					                                </tbody>
-					                            </table>
-			                        		</div>
-			                        	</div>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-    			</div>
+						                                </tbody>
+						                            </table>
+				                        		</div>
+				                        	</div>
+				                        </div>
+				                    </div>
+				                </div>
+				            </div>
+				        </div>
+	    			</div>
+				</div>
 			</div>
 		</div>
 	</div>
