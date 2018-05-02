@@ -11,7 +11,7 @@ function authenticationMiddleware () {
   }
 }
 
-router.get('/', authenticationMiddleware (), function(req, res, next) {
+router.get('/consulta', authenticationMiddleware (), function(req, res, next) {
 	disableExpandAll();
 	enableExpandMenuComentario();
 	classMenu.comentario.consulta = 'active visible';
@@ -21,7 +21,7 @@ router.get('/', authenticationMiddleware (), function(req, res, next) {
 		(err, result) => {
 			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
 		
-			res.render('app/comentario', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email}, comentarios: result, header_comentario: header_comentario })
+			res.render('app/comentario-consulta', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email}, comentarios: result, header_comentario: header_comentario })
 		});
 })
 
