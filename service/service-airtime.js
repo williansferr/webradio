@@ -14,6 +14,11 @@ function findById(_id, callback){
     global.db.collection("airtimes").findOne({_id: _id}, callback)
 }
 
+//gte = greater than or equals
+function findByDataInclusaoGTE(date, callback) {
+    global.db.collection("airtimes").find({data_inclusao: {$gte: date}}).toArray(callback)
+}
+
 function insert(airtime, callback){
     airtime.data_inclusao = new Date();
     global.db.collection("airtimes").insert(airtime, callback)
@@ -45,4 +50,4 @@ function remove(_id, callback){
     global.db.collection("airtimes").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, update, remove, findById, findByDataInclusao, findAll }
+module.exports = { insert, upsert,  update, remove, findById, findByDataInclusao, findByDataInclusaoGTE, findAll }

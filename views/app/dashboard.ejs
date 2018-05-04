@@ -126,6 +126,22 @@
 			        </div>
 
 			        <div class="row">
+			            <div class="col-12">
+			                <div class="card">
+			                    <div class="card-header card-header-icon" data-background-color="blue">
+			                        <i class="material-icons">insert_chart</i>
+			                    </div>
+			                    <div class="card-content">
+			                        <h4 class="card-title">Ranking
+			                            <small>- musicas curtidas</small>
+			                        </h4>
+			                    </div>
+			                    <div id="curtidasCharts" class="ct-chart"></div>
+			                </div>
+			            </div>
+			        </div>
+
+			        <div class="row">
 			            <div class="col-md-4">
 			                <div class="card card-chart">
 			                    <div class="card-header" data-background-color="green" data-header-animation="true">
@@ -229,9 +245,28 @@
 		    $(this).perfectScrollbar();
 		});
 
+		function initChartsCurtidas(){
+			dataCurtidasChart = JSON.parse('<%- JSON.stringify(curtidaCharts) %>');
+
+	        optionsDailySalesChart = {
+	        	lineSmooth: Chartist.Interpolation.cardinal({
+	                tension: 0
+	            }),
+	            low: 0,
+	            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+	            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+	        }
+
+	        var curtidasCharts = new Chartist.Bar('#curtidasCharts', dataCurtidasChart, optionsDailySalesChart);
+
+	        md.startAnimationForLineChart(curtidasCharts);
+
+		}
+
 		$( document ).ready(function() {
-			initCharts();
+			// initCharts();
 			initChartsPage();
+			initChartsCurtidas();
 		});
 
 
