@@ -20,9 +20,25 @@ function findBy(user, host, audio, callback){
     global.db.collection("curtidas").findOne({username: user, hostname: host, audio: audio}, callback)
 }
 
-
 function findByAudio(audio, callback){
     global.db.collection("curtidas").find({audio: audio}).toArray(callback)
+}
+
+function findForCharts(callback){
+    global.db.aggregate([
+                            { 
+                                $group: { _id: "$audio",
+                                    count: { 
+                                        $sum: 1 
+                                    } 
+                                },
+                            },
+                            {
+                                $sort: { 
+                                    count: -1 
+                                } 
+                            }
+                        ])
 }
 
 function insert(curtida, callback){

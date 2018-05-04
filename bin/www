@@ -95,4 +95,154 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       : 'port ' + addr.port;
     debug('Listening on ' + bind);
   }
+
+
+  function loopEterno(){
+    setTimeout(function () {
+      // const http = require('http');
+      // const html2json = require('html2json').html2json; //https://github.com/Jxck/html2json
+      const request = require('request');
+
+      request('http://177.54.158.150/api/live-info/?callback'
+                                ,function (error, response, body) {
+        console.log('body', body);
+        if(body != undefined){  
+          var live_info = JSON.parse( body.replace('(', '').replace(')', '') );
+          console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+          var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+          console.log('live_info', live_info);
+          console.log('live_date', live_date);
+          console.log('hours', live_date.getHours());
+          console.log('minutes', live_date.getMinutes());
+          console.log('seconds', live_date.getSeconds());
+          
+          // if (live_date.getHours() == 23 && live_date.getMinutes() > 55 && live_date.getMinutes() < 59) {
+          if (live_date.getHours() > 15 && live_date.getMinutes() > 0) {
+            console.log('salvar dados da live-info airtime');
+            request('http://177.54.158.150:8000/admin/stats'
+                                                       ,{
+                                                          'auth': {
+                                                            'user': 'admin',
+                                                            'pass': '31ypq8X18LSR',
+                                                            'sendImmediately': false
+                                                        }}
+                                      ,function (error, response, body) {
+                // console.log('error:', error); // Print the error if one occurred and handle it
+                // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+
+                if (response.statusCode == 200){
+                    const parseString = require('xml2js').parseString;
+                    console.log('body2', body);
+                    parseString(body, function (err, result) {
+                      console.dir('parse xml to object');
+                      var obj = result;
+                      console.dir(obj);
+                      console.dir(obj.icestats.source[0].listener_peak[0]);
+                      var airtime_service = require('../service/service-airtime');
+                      var airtime = {
+                        listener_peak: obj.icestats.source[0].listener_peak[0],
+                        mount: 'airtime_128'
+                      };
+                      airtime_service.upsert(airtime);
+                      // console.dir('listener_peak',result.source.listener_peak);
+                  });
+                }
+                  // res.send(body)
+            });
+          } else {
+            loopEterno();
+          }
+        } else {
+          loopEterno();
+        }
+      });
+
+      
+
+      
+
+
+      // console.log((new Date).toLocaleString().substr(11))
+      // console.log(new Date)
+
+      // const options = {
+      //   hostname: 'http://177.54.158.150',
+      //   port: 8000,
+      //   path: '/airtime_128',
+      //   method: 'GET',
+      //   headers: {
+      //     'Content-Type': 'application/x-www-form-urlencoded',
+      //     // 'Content-Length': Buffer.byteLength(postData)
+      //   }
+      // };
+
+      // const req = http.request(options, (res) => {
+      //   console.log(`STATUS: ${res.statusCode}`);
+      //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+      //   res.setEncoding('utf8');
+      //   res.on('data', (chunk) => {
+      //     console.log(`BODY: ${chunk}`);
+      //   });
+      //   res.on('end', () => {
+      //     console.log('No more data in response.');
+      //   });
+      // });
+
+      // req.on('error', (e) => {
+      //   console.error(`problem with request: ${e.message}`);
+      // });
+
+      // // write data to request body
+      // // req.write(postData);
+      // req.end();
+
+//----------------------------------------------------------------------------------
+      // http.get('http://expressjs.com/en/api.html', (res) => {
+
+      //   const { statusCode } = res;
+      //   const contentType = res.headers['content-type'];
+
+      //   console.log('contentType', contentType);
+
+      //   let error;
+      //   if (statusCode !== 200) {
+      //     error = new Error('Request Failed.\n' +
+      //                       `Status Code: ${statusCode}`);
+      //   // } else if (!/^application\/json/.test(contentType)) {
+      //   //   error = new Error('Invalid content-type.\n' +
+      //   //                     `Expected application/json but received ${contentType}`);
+      //   }
+      //   if (error) {
+      //     console.error(error.message);
+      //     // consume response data to free up memory
+      //     res.resume();
+      //     return;
+      //   }
+
+      //   res.setEncoding('utf8');
+      //   let rawData = '';
+      //   // res.on('data', (chunk) => { rawData += chunk; console.log('chunk', chunk)});
+      //   res.on('data', function (chunk) {
+      //     // console.log('BODY: ' + chunk);
+
+      //     console.log(html2json(chunk.substring(chunk.indexOf('<body>'), chunk.indexOf('</body>') )));
+      //   });
+
+      //   // res.on('end', () => {
+      //   //   try {
+      //   //     const parsedData = JSON.parse(rawData);
+      //   //     console.log(parsedData);
+      //   //   } catch (e) {
+      //   //     console.error(e.message);
+      //   //   }
+      //   // });
+      // }).on('error', (e) => {
+      //   console.error(`Got error: ${e.message}`);
+      // });
+
+      
+  }, 1000)
+}
+
+loopEterno();
 })

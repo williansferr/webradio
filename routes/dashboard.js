@@ -1,15 +1,16 @@
-const express    = require('express');
-const router   = express.Router();
+const express = require('express');
+const router  = express.Router();
+const request = require('request');
 const formidable = require('formidable'),
     	    http = require('http'),
     		util = require('util');
 const fs = require('fs');
-// const multer = require('multer');
-// const upload = multer();
 const service_podcast 	 = require('../service/service-podcast');
 const service_comentario = require('../service/service-comentario');
+const service_curtida = require('../service/service-curtidas');
 const bunyan = require('bunyan');
 const log = bunyan.createLogger({name: 'dashboard'});
+// const parseString = require('xml2js').parseString;
 
 global.expanded = {
 	main: {
@@ -61,45 +62,24 @@ global.classMenu = {
 
 	global.disableExpandMenuDashboard = function(){
 		classMenu.dashboard.expand = notexpanded;
-		// classMenu.dashboard.expand.main.class = 'collapsed';
-		// classMenu.dashboard.expand.main.expanded = 'aria-expanded=false';
-		// classMenu.dashboard.expand.sub.class = 'collapse';
-		// classMenu.dashboard.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.dashboard.main = '';
 	}
 
 	global.enableExpandMenuComentario = function(){
 		classMenu.comentario.expand = expanded;
-		// classMenu.comentario.expand.main.class = '';
-		// classMenu.comentario.expand.main.expanded = 'aria-expanded=true';
-		// classMenu.comentario.expand.sub.class = 'collapse in';
-		// classMenu.comentario.expand.sub.expanded = 'aria-expanded=true';
-
 	}
 
 	global.disableExpandMenuComentario = function(){
 		classMenu.comentario.expand = notexpanded;
-		// classMenu.comentario.expand.main.class = 'collapsed';
-		// classMenu.comentario.expand.main.expanded = 'aria-expanded=false';
-		// classMenu.comentario.expand.sub.class = 'collapse';
-		// classMenu.comentario.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.comentario.consulta = '';
 	}
 
 	global.enableExpandMenuPodcast = function(){
 		classMenu.podcast.expand = expanded;
-		// classMenu.podcast.expand.main.class = '';
-		// classMenu.podcast.expand.main.expanded = 'aria-expanded=true';
-		// classMenu.podcast.expand.sub.class = 'collapse in';
-		// classMenu.podcast.expand.sub.expanded = 'aria-expanded=true';
 	}
 
 	global.disableExpandMenuPodcast = function(){
 		classMenu.podcast.expand = notexpanded;
-		// classMenu.podcast.expand.main.class = 'collapsed';
-		// classMenu.podcast.expand.main.expanded = 'aria-expanded=false';
-		// classMenu.podcast.expand.sub.class = 'collapse';
-		// classMenu.podcast.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.podcast.consulta = ''
 		classMenu.podcast.cadastro = ''
 	}
@@ -128,13 +108,50 @@ global.classMenu = {
 		classMenu.dashboard.main = 'active visible';
 		// console.log('expanded', classMenu.podcast.expand.main.expanded);
 		var charts = require('../public/js/init/charts.js');
+		var charts2 = require('../public/js/init/initChartsPage.js');
 
 		service_comentario.findByDataInclusao(null, 
 			(err, result) => {
-    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
-    		
-    		console.log(result);
-			res.render('app/dashboard', { charts: charts, comentarios_hoje: result, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_comentario.findByDataInclusao", error: err }))
+
+
+    			var comentarios = result;
+    			service_curtida.findForCharts((err, result) => {
+    				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_curtida.findForCharts", error: err }))
+
+    				var tmp_curtidas = JSON.parse(result);
+    				var curtidas = {};
+    				for (var i = 0, len = tmp_curtidas.length; i < len; i++) {
+  						curtidas.label = tmp_curtidas[i]._id;
+  						curtidas.qtd = tmp_curtidas[i].count;
+					}
+
+					console.log('curtidas', curtidas);
+
+    				res.render('app/dashboard', { curtidas: curtidas, charts2: charts2, charts: charts, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+    			})
+
+   //  		request('http://177.54.158.150:8000/admin/stats'
+   //  			                                           ,{
+			// 												  'auth': {
+			// 												    'user': 'admin',
+			// 												    'pass': '31ypq8X18LSR',
+			// 												    'sendImmediately': false
+			// 												}}
+			// 												  ,function (error, response, body) {
+			//     console.log('error:', error); // Print the error if one occurred and handle it
+			//     console.log('body', body);
+			//     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+
+			//     if (response.statusCode == 200){
+			//       	console.log('fazer algo agora');
+			//   //     	parseString(xml, function (err, result) {
+			//   //     		console.dir('parse xml to obbjet');
+   //  	// 				console.dir(result);
+			// 		// });
+			//     }
+			// });
+			// res.render('app/dashboard', { charts2: charts2, charts: charts, comentarios_hoje: result, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
   		});
 		// res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
 	})
@@ -214,7 +231,7 @@ global.classMenu = {
     // 			req.body.notification = 'qualquer coisa'	
 				// // res.redirect('/dashboard?classMenu=' + classMenu + '&notification=Podcast%20cadastrado%20com%20sucesso')
 				// res.redirect('/dashboard')
-				console.log(result);
+				// console.log(result);
 				return res.status(200).end(JSON.stringify({ podcast: result.ops[0], message: "inserido" }));
   		});
 		// global.db.collection("podcasts").insert({ autor: req.body.autor, titulo: req.body.titulo, subtitulo: req.body.subtitulo, descricao: req.body.descricao, audio: req.body.audio, capa: req.body.capa}, function(err, result){

@@ -11,7 +11,7 @@
 			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
 		</svg>
 	</div> -->
-	<pre>
+	<!-- <pre>
 	<%= comentarios_hoje.length %>
 	<%= charts.charts %>
 
@@ -19,7 +19,7 @@
 	<% if (notification) { %>
 		<teste><%= notification %></teste>
 	<%}%>
-	</pre> 
+	</pre>  -->
     <div class="wrapper">
     	<% include sidebar/sidebar %>
     	<div class="main-panel myScroll">
@@ -92,6 +92,35 @@
 			                            <i class="material-icons">update</i> Just Updated
 			                        </div>
 			                    </div> -->
+			                </div>
+			            </div>
+			        </div>
+
+			        <div class="row">
+			            <div class="col-md-6">
+			                <div class="card">
+			                    <div class="card-header card-header-icon" data-background-color="blue">
+			                        <i class="material-icons">timeline</i>
+			                    </div>
+			                    <div class="card-content">
+			                        <h4 class="card-title">Quantidade semanal
+			                            <small> - Ouvintes</small>
+			                        </h4>
+			                    </div>
+			                    <div id="colouredRoundedLineChart" class="ct-chart"></div>
+			                </div>
+			            </div>
+			            <div class="col-md-6">
+			                <div class="card">
+			                    <div class="card-header card-header-icon" data-background-color="rose">
+			                        <i class="material-icons">insert_chart</i>
+			                    </div>
+			                    <div class="card-content">
+			                        <h4 class="card-title">Quantidade mensal
+			                            <small>- Ouvintes</small>
+			                        </h4>
+			                    </div>
+			                    <div id="multipleBarsChart" class="ct-chart"></div>
 			                </div>
 			            </div>
 			        </div>
@@ -189,6 +218,7 @@
 	<% include partials/script %>
 	<script>
 		<%- charts %>
+		<%- charts2 %>
 	</script>
 	<script>
 		// var ps = new PerfectScrollbar('#myscroll');
@@ -201,6 +231,7 @@
 
 		$( document ).ready(function() {
 			initCharts();
+			initChartsPage();
 		});
 
 
