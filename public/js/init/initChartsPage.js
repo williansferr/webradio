@@ -1,6 +1,6 @@
-if ('undefined' !== typeof module) {
+// if ('undefined' !== typeof module) {
 
-    module.exports = function initChartsPage(){
+    module.exports = function initChartsPage() {
         /* ----------==========    Rounded Line Chart initialization    ==========---------- */
 
         dataRoundedLineChart = {
@@ -202,4 +202,4 @@ if ('undefined' !== typeof module) {
         //start animation for the Emails Subscription Chart
         md.startAnimationForBarChart(multipleBarsChart);
     }
-}
+// }

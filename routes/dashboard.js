@@ -1,15 +1,17 @@
-const express    = require('express');
-const router   = express.Router();
+const express = require('express');
+const router  = express.Router();
+const request = require('request');
 const formidable = require('formidable'),
     	    http = require('http'),
     		util = require('util');
 const fs = require('fs');
-// const multer = require('multer');
-// const upload = multer();
 const service_podcast 	 = require('../service/service-podcast');
 const service_comentario = require('../service/service-comentario');
+const service_curtida = require('../service/service-curtidas');
+const service_airtime = require('../service/service-airtime');
 const bunyan = require('bunyan');
 const log = bunyan.createLogger({name: 'dashboard'});
+// const parseString = require('xml2js').parseString;
 
 global.expanded = {
 	main: {
@@ -61,45 +63,24 @@ global.classMenu = {
 
 	global.disableExpandMenuDashboard = function(){
 		classMenu.dashboard.expand = notexpanded;
-		// classMenu.dashboard.expand.main.class = 'collapsed';
-		// classMenu.dashboard.expand.main.expanded = 'aria-expanded=false';
-		// classMenu.dashboard.expand.sub.class = 'collapse';
-		// classMenu.dashboard.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.dashboard.main = '';
 	}
 
 	global.enableExpandMenuComentario = function(){
 		classMenu.comentario.expand = expanded;
-		// classMenu.comentario.expand.main.class = '';
-		// classMenu.comentario.expand.main.expanded = 'aria-expanded=true';
-		// classMenu.comentario.expand.sub.class = 'collapse in';
-		// classMenu.comentario.expand.sub.expanded = 'aria-expanded=true';
-
 	}
 
 	global.disableExpandMenuComentario = function(){
 		classMenu.comentario.expand = notexpanded;
-		// classMenu.comentario.expand.main.class = 'collapsed';
-		// classMenu.comentario.expand.main.expanded = 'aria-expanded=false';
-		// classMenu.comentario.expand.sub.class = 'collapse';
-		// classMenu.comentario.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.comentario.consulta = '';
 	}
 
 	global.enableExpandMenuPodcast = function(){
 		classMenu.podcast.expand = expanded;
-		// classMenu.podcast.expand.main.class = '';
-		// classMenu.podcast.expand.main.expanded = 'aria-expanded=true';
-		// classMenu.podcast.expand.sub.class = 'collapse in';
-		// classMenu.podcast.expand.sub.expanded = 'aria-expanded=true';
 	}
 
 	global.disableExpandMenuPodcast = function(){
 		classMenu.podcast.expand = notexpanded;
-		// classMenu.podcast.expand.main.class = 'collapsed';
-		// classMenu.podcast.expand.main.expanded = 'aria-expanded=false';
-		// classMenu.podcast.expand.sub.class = 'collapse';
-		// classMenu.podcast.expand.sub.expanded = 'aria-expanded=false';
 		classMenu.podcast.consulta = ''
 		classMenu.podcast.cadastro = ''
 	}
@@ -126,8 +107,106 @@ global.classMenu = {
 		disableExpandAll();
 		enableExpandMenuDashboard();
 		classMenu.dashboard.main = 'active visible';
-		console.log('expanded', classMenu.podcast.expand.main.expanded);
-		res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''});
+		// console.log('expanded', classMenu.podcast.expand.main.expanded);
+		var charts = require('../public/js/init/charts.js');
+		var charts2 = require('../public/js/init/initChartsPage.js');
+
+
+		service_comentario.findByDataInclusao(null, 
+			(err, result) => {
+    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_comentario.findByDataInclusao", error: err }))
+
+				
+
+    			var comentarios = result;
+    			service_curtida.findForCharts((err, result) => {
+    				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_curtida.findForCharts", error: err }))
+
+    				var tmp_curtidas = result;
+    				var curtida = {};
+    				var labels = [];
+    				var series = [];
+    				for (var i = 0, len = tmp_curtidas.length; i < len; i++) {
+    					labels.push(tmp_curtidas[i]._id);
+    					series.push(tmp_curtidas[i].count);
+					}
+
+					curtida.labels = labels;
+					curtida.series = [];
+					curtida.series.push(series);
+
+					
+					var hoje = new Date();
+					console.log('hoje', hoje);
+					console.log('hoje: dia da semana', hoje.getDay());
+					var segunda = new Date();
+					segunda.setDate(hoje.getDate() - (hoje.getDay()));
+					console.log('segunda', segunda);
+					console.log('segunda: dia da semana', segunda.getDay());
+					// console.log;('segunda: dia da semana', segunda.getDay());
+					// service_airtime.findByDataInclusaoGTE(date, (err, result) => {
+    	// 				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoGTE", error: err }))
+
+
+    	// 			});
+
+					// request('http://177.54.158.150:8000/admin/listmounts'
+     //                                                   ,{
+     //                                                      'auth': {
+     //                                                        'user': 'admin',
+     //                                                        'pass': '31ypq8X18LSR',
+     //                                                        'sendImmediately': false
+     //                                                    }}
+	    //                                   ,function (error, response, body) {
+		   //              // console.log('error:', error); // Print the error if one occurred and handle it
+		   //              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+
+		   //              if (response.statusCode == 200){
+		   //                  const parseString = require('xml2js').parseString;
+		   //                  console.log('body2', body);
+		   //                  console.dir('parse xml to object');
+		   //                  parseString(body, function (err, result) {
+		   //                    var obj = result;
+		   //                    console.dir(obj);
+		   //                    // console.dir(obj.icestats.source[0].listener_peak[0]);
+		   //                    // var airtime_service = require('../service/service-airtime');
+		   //                    // var airtime = {
+		   //                    //   listener_peak: obj.icestats.source[0].listener_peak[0],
+		   //                    //   mount: 'airtime_128'
+		   //                    // };
+		   //                    // airtime_service.upsert(airtime);
+		   //                    // console.dir('listener_peak',result.source.listener_peak);
+		   //                });
+		   //              }
+		   //                // res.send(body)
+		   //          });
+
+    				res.render('app/dashboard', { curtidaCharts: curtida, charts2: charts2, charts: charts, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+    			})
+
+   //  		request('http://177.54.158.150:8000/admin/stats'
+   //  			                                           ,{
+			// 												  'auth': {
+			// 												    'user': 'admin',
+			// 												    'pass': '31ypq8X18LSR',
+			// 												    'sendImmediately': false
+			// 												}}
+			// 												  ,function (error, response, body) {
+			//     console.log('error:', error); // Print the error if one occurred and handle it
+			//     console.log('body', body);
+			//     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+
+			//     if (response.statusCode == 200){
+			//       	console.log('fazer algo agora');
+			//   //     	parseString(xml, function (err, result) {
+			//   //     		console.dir('parse xml to obbjet');
+   //  	// 				console.dir(result);
+			// 		// });
+			//     }
+			// });
+			// res.render('app/dashboard', { charts2: charts2, charts: charts, comentarios_hoje: result, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+  		});
+		// res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
 	})
 
 	router.get('/podcast', authenticationMiddleware(), function(req, res, next) {
@@ -205,7 +284,7 @@ global.classMenu = {
     // 			req.body.notification = 'qualquer coisa'	
 				// // res.redirect('/dashboard?classMenu=' + classMenu + '&notification=Podcast%20cadastrado%20com%20sucesso')
 				// res.redirect('/dashboard')
-				console.log(result);
+				// console.log(result);
 				return res.status(200).end(JSON.stringify({ podcast: result.ops[0], message: "inserido" }));
   		});
 		// global.db.collection("podcasts").insert({ autor: req.body.autor, titulo: req.body.titulo, subtitulo: req.body.subtitulo, descricao: req.body.descricao, audio: req.body.audio, capa: req.body.capa}, function(err, result){

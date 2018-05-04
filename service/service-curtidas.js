@@ -20,9 +20,25 @@ function findBy(user, host, audio, callback){
     global.db.collection("curtidas").findOne({username: user, hostname: host, audio: audio}, callback)
 }
 
-
 function findByAudio(audio, callback){
     global.db.collection("curtidas").find({audio: audio}).toArray(callback)
+}
+
+function findForCharts(callback) {
+    global.db.collection("curtidas").aggregate([
+                            { 
+                                $group: { _id: "$audio",
+                                    count: { 
+                                        $sum: 1 
+                                    } 
+                                },
+                            },
+                            {
+                                $sort: { 
+                                    count: -1 
+                                } 
+                            }
+                        ]).toArray(callback)
 }
 
 function insert(curtida, callback){
@@ -43,4 +59,4 @@ function remove(_id, callback){
     global.db.collection("curtidas").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, update, remove, findById, findAll, findByUserAndHost, findBy, findByAudio }
+module.exports = { insert, update, remove, findById, findAll, findByUserAndHost, findForCharts, findBy, findByAudio }

@@ -60,6 +60,7 @@
 																	<td><%= comentario.nome %></td>
 																	<td><%= comentario.email %></td>
 																	<td><%= comentario.comentario %></td>
+																	<td><%= new Date(comentario.data_inclusao).getDate() + "/" + (new Date(comentario.data_inclusao).getMonth() + 1) + "/" + new Date(comentario.data_inclusao).getFullYear() + " - " + comentario.data_inclusao %></td>
 																</tr>
 															<% }); %>
 						                                </tbody>

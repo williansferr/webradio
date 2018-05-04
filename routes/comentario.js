@@ -16,7 +16,7 @@ router.get('/consulta', authenticationMiddleware (), function(req, res, next) {
 	enableExpandMenuComentario();
 	classMenu.comentario.consulta = 'active visible';
 
-	const header_comentario = [{name: "Nome"}, {name: "E-mail"}, {name: "Comentario"}];
+	const header_comentario = [{name: "Nome"}, {name: "E-mail"}, {name: "Comentario"}, {name: "Data"}];
 	service_comentario.findAll(
 		(err, result) => {
 			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
@@ -52,7 +52,7 @@ router.post('/', function(req, res, next) {
 			(err, result) => {
 				if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))
 				
-				console.log(result);
+				// console.log(result);
 				return res.status(200).end(JSON.stringify({ podcast: result.ops[0], message: "inserido" }));
 			});
 	} catch (e) {
