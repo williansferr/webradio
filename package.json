@@ -27,11 +27,8 @@
     "npm": "^5.8.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-<<<<<<< HEAD
     "pdfmake": "^0.1.36",
-=======
     "request": "^2.85.0",
->>>>>>> 4e32d53d8d5e3e60dff1f5adefb42a9742484bb0
     "serve-favicon": "^2.5.0",
     "sweetalert2": "^7.19.1",
     "to": "^0.2.9",
