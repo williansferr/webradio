@@ -139,16 +139,16 @@ global.classMenu = {
 					var hoje = new Date();
 					console.log('hoje', hoje);
 					console.log('hoje: dia da semana', hoje.getDay());
-					var segunda = new Date();
-					segunda.setDate(hoje.getDate() - (hoje.getDay()));
-					console.log('segunda', segunda);
-					console.log('segunda: dia da semana', segunda.getDay());
-					// console.log;('segunda: dia da semana', segunda.getDay());
-					// service_airtime.findByDataInclusaoGTE(date, (err, result) => {
-    	// 				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoGTE", error: err }))
+					var domingo = new Date();
+					domingo.setDate(hoje.getDate() - (hoje.getDay()));
+					console.log('domingo', domingo);
+					console.log('domingo: dia da semana', domingo.getDay());
+					service_airtime.findByDataInclusaoGTE(domingo, (err, result) => {
+    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoGTE", error: err }))
 
+    					console.log('findByDataInclusaoGTE', result);
 
-    	// 			});
+    				});
 
 					// request('http://177.54.158.150:8000/admin/listmounts'
      //                                                   ,{
