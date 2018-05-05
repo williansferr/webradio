@@ -141,7 +141,8 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                       var airtime_service = require('../service/service-airtime');
                       var airtime = {
                         listener_peak: obj.icestats.source[0].listener_peak[0],
-                        mount: 'airtime_128'
+                        mount: 'airtime_128',
+                        data_inclusao: null
                       };
                       airtime_service.upsert(airtime);
                       // console.dir('listener_peak',result.source.listener_peak);
