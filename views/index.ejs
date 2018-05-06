@@ -1100,7 +1100,7 @@
         // socket.emit('airtime-info', ''); //envia mensagem ao servidor
         socket.on('airtime-info', function(msg){
             console.log(msg);
-            $('txt-artist').text(msg.current.name);
+            $('#txt-artist').text(msg.current.name);
         });
     }   
     
