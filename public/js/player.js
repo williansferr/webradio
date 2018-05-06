@@ -77,7 +77,7 @@ var Audio = {
         
         request.done(function (msg) {
             // console.log('updateCurtir() done');
-            // console.log(msg);
+            console.log('updateCurtir', msg);
             var json = JSON.parse(msg);
             // console.log(json.thisuser);
 
@@ -136,7 +136,7 @@ var Audio = {
 				Audio.play($('.music'));
 				$('.music').prop('volume',$('.volume').val());
 				Audio.playlist.hide();
-				Audio.updateCurtir(id, mp3);
+				// Audio.updateCurtir(id, mp3);
 			});
 		});
 		$('.play-pause').on('click',function(e){
