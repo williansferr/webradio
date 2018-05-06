@@ -1100,7 +1100,13 @@
         // socket.emit('airtime-info', ''); //envia mensagem ao servidor
         socket.on('airtime-info', function(msg){
             console.log(msg);
-            $('#txt-artist').text(msg.current.name);
+            var artista = msg.current.name;
+            artista = artista.substring(artista.indexOf("-") + 2, artista.length);
+            var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
+            artista = artista.substring(0, artista.indexOf("-") - 1);
+            $('#txt-artist').text('<i class="fas fa-user"></i>' + artista);
+            $('#txt-album').text('<i class="fas fa-music"></i>');
+            $('#txt-title').text('<i class="fas fa-headphones"></i>' + musica);
         });
     }   
     
