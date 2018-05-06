@@ -1104,9 +1104,12 @@
             artista = artista.substring(artista.indexOf("-") + 2, artista.length);
             var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
             artista = artista.substring(0, artista.indexOf("-") - 1);
-            $('#txt-artist').text('<i class="fas fa-user"></i>' + artista);
-            $('#txt-album').text('<i class="fas fa-music"></i>');
-            $('#txt-title').text('<i class="fas fa-headphones"></i>' + musica);
+            $('#txt-artist').append('<i class="fas fa-user"></i>');
+            $('#txt-artist').text(artista);
+            $('#txt-album').append('<i class="fas fa-music"></i>');
+            $('#txt-album').text('');
+            $('#txt-title').append('<i class="fas fa-headphones"></i>');
+            $('#txt-title').text(musica);
         });
     }   
     
