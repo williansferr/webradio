@@ -119,16 +119,26 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
         if(body != undefined){  
           var tmp = body.replace('(', '');
           tmp = body.replace(')', '');
-          var live_info = JSON.parse( tmp );
-          console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-          var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-          console.log('live_info', live_info);
-          console.log('live_date', live_date);
-          console.log('hours', live_date.getHours());
-          console.log('minutes', live_date.getMinutes());
-          console.log('seconds', live_date.getSeconds());
+          var live_info = {};
+          var hasErro = false;
+          
+          try {
+            live_info = JSON.parse( tmp );
+          } catch(e){
+            hasErro = true;
+          }
 
-          io.emit('airtime-info', live_info);
+          if (!hasErro) {
+            console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+            var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+            console.log('live_info', live_info);
+            console.log('live_date', live_date);
+            console.log('hours', live_date.getHours());
+            console.log('minutes', live_date.getMinutes());
+            console.log('seconds', live_date.getSeconds());
+
+            io.emit('airtime-info', live_info);
+          }
           
           // // if (live_date.getHours() == 23 && live_date.getMinutes() > 55 && live_date.getMinutes() < 59) {
           // if (live_date.getHours() > 15 && live_date.getMinutes() > 0) {
