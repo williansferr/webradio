@@ -117,7 +117,9 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
 
         console.log('body', body);
         if(body != undefined){  
-          var live_info = JSON.parse( body.replace('(', '').replace(')', '') );
+          var tmp = body.replace('(', '');
+          tmp = body.replace(')', '');
+          var live_info = JSON.parse( tmp );
           console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
           var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
           console.log('live_info', live_info);
