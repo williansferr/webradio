@@ -1096,7 +1096,7 @@
 <script>
     var socket = io();
 
-    function initAirtimeInfo(){
+    function initAirtimeInfo() {
         // socket.emit('airtime-info', ''); //envia mensagem ao servidor
         socket.on('airtime-info', function(msg){
             console.log(msg);
