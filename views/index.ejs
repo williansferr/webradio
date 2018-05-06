@@ -151,18 +151,18 @@
                             <div class="current-info">
                                 <div class="row">
                                     <div class="col col-md-12 col-12" align="center">
-                                        <div class="song-artist"></div>
+                                        <div id="txt-artist" class="song-artist"></div>
                                     </div>
                                 </div>
                                 
                                 <div class="row">
                                     <div class="col col-md-12 col-12" align="center">
-                                        <div class="song-album"></div>
+                                        <div id="txt-album" class="song-album"></div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col col-md-12 col-12" align="center">
-                                        <div class="song-title"></div>
+                                        <div id="txt-title" class="song-title"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1100,6 +1100,7 @@
         // socket.emit('airtime-info', ''); //envia mensagem ao servidor
         socket.on('airtime-info', function(msg){
             console.log(msg);
+            $('txt-artist').val() = msg.current.name;
         });
     }   
     

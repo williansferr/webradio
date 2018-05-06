@@ -126,7 +126,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           console.log('minutes', live_date.getMinutes());
           console.log('seconds', live_date.getSeconds());
 
-          io.emit('airtime-info', body);
+          io.emit('airtime-info', live_info);
           
           // // if (live_date.getHours() == 23 && live_date.getMinutes() > 55 && live_date.getMinutes() < 59) {
           // if (live_date.getHours() > 15 && live_date.getMinutes() > 0) {
