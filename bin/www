@@ -96,6 +96,11 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
     debug('Listening on ' + bind);
   }
 
+  var io = require('socket.io')(server);
+  io.on('connection', function(socket){
+    console.log('a user connected');
+  });
+
 
   function loopEterno(){
     setTimeout(function () {
