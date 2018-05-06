@@ -122,12 +122,13 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           var live_info = {};
           var hasErro = false;
 
+          console.log('tmp', tmp);
           try {
             live_info = JSON.parse( tmp );
           } catch(e){
             hasErro = true;
           }
-          console.log('hasErro', hasErro)
+          console.log('hasErro', hasErro);
           if (!hasErro) {
             console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
             var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
