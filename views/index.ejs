@@ -1093,7 +1093,15 @@
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io();
+    var socket = io();
+
+    function initAirtimeInfo(){
+        // socket.emit('airtime-info', ''); //envia mensagem ao servidor
+        socket.on('airtime-info', function(msg){
+            console.log(msg);
+        });
+    }   
+    
 </script>
 </body>
 </html>
