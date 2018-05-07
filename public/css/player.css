@@ -134,7 +134,7 @@
 }
 .mhn-player .play-list a {
 /* .mhn-player { */
-	color:#ccc;
+	color:#fff;
 	display:block;
 	overflow:hidden;
 	padding:6px 10px;
@@ -184,7 +184,7 @@
 	/* left:30px; */
 	/* right:30px; */
 	margin: 15px auto;
-	color:#ccc;
+	color:#fff;
 	height: 100px;
 	display: block /*for the img inside your div */  
 	margin-left: auto 
@@ -217,7 +217,7 @@
 .mhn-player .controls .toggle-play-list {
 	right:5px;
 	width:40px;
-	color:#ccc;
+	color:#fff;
 	height:40px;
 	bottom:100%;
 	border-radius:50%;
@@ -230,7 +230,7 @@
 .mhn-player .controls .download-audio{
 	left:5px;
 	width:40px;
-	color:#ccc;
+	color:#fff;
 	height:40px;
 	bottom:100%;
 	border-radius:50%;
@@ -253,7 +253,7 @@
 	background: #01426A;
 }
 .mhn-player .controls .duration{
-	color:#ccc;
+	color:#fff;
 	font-size:14px;
 }
 .mhn-player .controls .progress .bar{
@@ -278,7 +278,7 @@
 }
 .mhn-player .controls .action-button a:hover,
 .mhn-player .controls .action-button a.active{
-	color:#ccc;
+	color:#fff;
 }
 .mhn-player .controls .action-button a .fa{
 	font-size:inherit;
