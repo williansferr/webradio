@@ -35,6 +35,7 @@
 
 .radio-on {
 	cursor: pointer;
+	font-size: 24px;
 }
 .radio-on:hover {
 	color: #01426A;
