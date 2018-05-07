@@ -884,7 +884,7 @@
             audio = Audio.info.load.mp3;
             audio = audio.substring(audio.lastIndexOf('/') + 1, audio.length);
         } else {
-            if($('#txt-album').text() != undefined){
+            if($('#txt-album').text() != ''){
                 audio = $('#txt-artist').text() + ' - ' + $('#txt-album').text() + ' - ' + $('#txt-title').text();
             } else {
                 audio = $('#txt-artist').text() + ' - ' + $('#txt-title').text();
