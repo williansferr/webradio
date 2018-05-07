@@ -174,12 +174,12 @@ var Audio = {
 			$(this).attr('data-css',vol);
 			$('.music').prop('volume',vol);
 		});
-		$('.fa-volume-down').on('change',function(){
+		$('.fa-volume-down').on('click',function(){
 			$(this).attr('data-css',0);
 			$('.music').prop('volume',0);
 		});
 
-		$('.fa-volume-up').on('change',function(){
+		$('.fa-volume-up').on('click',function(){
 			$(this).attr('data-css',1);
 			$('.music').prop('volume',1);
 		});
