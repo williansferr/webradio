@@ -175,15 +175,13 @@ var Audio = {
 			$('.music').prop('volume',vol);
 		});
 		$('.fa-volume-down').on('click',function(){
-			console.log($(this));
-			$(this).val(0);
-			$(this).attr('data-css',0);
+			// console.log($(this));
+			$('volume').attr('data-css',0);
 			$('.music').prop('volume',0);
 		});
 
 		$('.fa-volume-up').on('click',function(){
-			$(this).val(1);
-			$(this).attr('data-css',1);
+			$('volume').attr('data-css',1);
 			$('.music').prop('volume',1);
 		});
 		$('.prev').on('click',function(e){
