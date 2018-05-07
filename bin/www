@@ -123,6 +123,12 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           var hasErro = false;
 
           try {
+            if (tmp.contains(')')){
+              tmp = tmp.replace(')','');
+            } 
+            if(tmp.contains('(')){
+              tmp = tmp.replace('(','');
+            }
             console.log('tmp', tmp);
             live_info = JSON.parse( tmp );
           } catch(e){
