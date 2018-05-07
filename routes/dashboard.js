@@ -224,7 +224,7 @@ global.classMenu = {
 		enableExpandMenuPodcast();
 		classMenu.podcast.consulta = 'active visible';
 
-		const header_podcast = [{name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}];
+		const header_podcast = [{name: "id"}, {name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}];
 		service_podcast.findAll(
 			(err, result) => {
     			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
@@ -303,14 +303,42 @@ global.classMenu = {
 				// log.warn("id não informado");
 				return res.status(400).end(JSON.stringify({ _id: id , message: "informe o id", error: "id não informado" }));
 			} else {
-				service_podcast.remove(id, (err, result) => {
+				console.log('id', id);
+				service_podcast.findById(id, (err, result) => {
 					if(err) {
-						// log.warn(err);
-						return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+						return res.status(204).end(JSON.stringify({ _id: id , message: "id não existe", error: err }));
 					}
-					// log.info(result);
-					return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
-				})	
+
+					var podcast = result;
+					try {
+						fs.unlink('./public/podcasts/capa/' + podcast.capa, function(error) {
+						    
+						    if (error) {
+						    	// console.log('capa Deleted error', error);
+						    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "capa não deletado", error: err }));
+						    }
+						    // console.log('capa Deleted!!' + podcast.capa);
+						    fs.unlink('./public/podcasts/audio/' + podcast.audio, function(error) {
+							    if (error) {
+							    	// console.log('audio Deleted error', error);
+							    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "audio não deletado", error: err }));
+							    }
+							    // console.log('audio Deleted !!' + podcast.audio);
+							    service_podcast.remove(id, (err, result) => {
+									if(err) {
+										// log.warn(err);
+										return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+									}
+									// console.log('service_podcast.remove', result);
+									return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
+								})
+							});	
+						});
+					} catch (e) {
+						// console.log('erro : /podcast/:id', e);
+						return res.status(400).end(JSON.stringify({ erro: e , message: "erro" }));
+					}
+				})
 			}
 		} catch (e) {
 			// log.warn(e);

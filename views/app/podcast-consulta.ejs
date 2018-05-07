@@ -40,6 +40,7 @@
 																<% header_podcast.forEach(function(hp){ %>
 																	<th><%= hp.name %></th>
 																<% }); %>
+																<th>Ação</th>
 						                                    </tr>
 						                                </thead>
 						                                <tfoot>
@@ -47,17 +48,27 @@
 						                                    	<% header_podcast.forEach(function(hp){ %>
 																	<th><%= hp.name %></th>
 																<% }); %>
+																<th>Ação</th>
 						                                    </tr>
 						                                </tfoot>
 						                                <tbody>
 						                                	<% podcasts.forEach(function(podcast){ %>
 						                                		<tr>
+						                                			<td><%= podcast._id %></td>
 																	<td><%= podcast.autor %></td>
 																	<td><%= podcast.titulo %></td>
 																	<td><%= podcast.subtitulo %></td>
 																	<td><%= podcast.descricao %></td>
-																	<td><%= podcast.capa %></td>
-																	<td><%= podcast.audio %></td>
+																	<td><img src="/podcasts/capa/<%= podcast.capa %>" alt="<%= podcast.capa %>"  style="width: 73px; height: 73px;"></td>
+																	<td><audio src="/podcasts/audio/<%= podcast.audio %>" controls></audio></td>
+																	<td>
+																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="podcast.requestDel(mytable.row($(this).parents('tr')).data()[0], mytable.row($(this).parents('tr')).data()[2]), $(this).parents('tr')">
+																			<i class="material-icons">close</i>
+																		</button>
+																		<!-- <button class="btn btn-simple btn-warning btn-icon edit" onclick="">
+																			<i class="material-icons">dvr</i>
+																		</button> -->
+																	</td>
 																</tr>
 															<% }); %>
 						                                </tbody>
@@ -75,16 +86,14 @@
 		</div>
 	</div>
 	<% include partials/script %>
+	<script src="/js/podcast.js"></script>
 	<script>
-		// var ps = new PerfectScrollbar('#myscroll');
-		// $('.sidebar-wrapper').perfectScrollbar();
-		// $('.content-panel').perfectScrollbar();
 
 		$('.myScroll').each(function(){
 		    $(this).perfectScrollbar();
 		});
 
-		$('#datatables').DataTable({
+		var mytable = $('#datatables').DataTable({
 			responsive: true,
 			oLanguage: {
 				sSearch: "Filtro:",
@@ -96,12 +105,23 @@
 					sNext: "Próximo",
 					sPrevious: "Anterior"
 				}
-			}
+			},
+			columnDefs: [
+	            {
+	                "targets": [ 0 ],
+	                "visible": false,
+	                "searchable": false
+	            }
+        	]
 		});
-		
-		// var ps2 = new PerfectScrollbar('.main-content');
+
+		$('#datatables').on( 'click', 'tbody td', function () {
+			console.log(mytable.cell( this ));
+			$('#datatables').inline( this );
+		    // mytable.cell( this ).edit('bubble');
+		} );
+
 	</script>
 
-	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
 </body>
 </html>

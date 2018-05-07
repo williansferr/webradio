@@ -87,8 +87,10 @@
 				                                        <span class="btn btn-blue btn-round btn-file">
 				                                            <span class="fileinput-new">Selecione a imagem</span>
 				                                            <span class="fileinput-exists">trocar</span>
-				                                            <input type="hidden"><input id="podcast-capa" name="capa" type="file" accept="image/*">
-				                                        <div class="ripple-container"></div></span>
+				                                            <input type="hidden">
+				                                            <input id="podcast-capa" name="capa" type="file" accept="image/*">
+				                                        	<div class="ripple-container"></div>
+				                                        </span>
 				                                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput" href="#pablo"><i class="fa fa-times"></i> Remover</a>
 				                                    </div>
 				                                </div>
@@ -103,8 +105,10 @@
 				                                        <span class="btn btn-blue btn-round btn-file">
 				                                            <span class="fileinput-new">Selecione o áudio</span>
 				                                            <span class="fileinput-exists">Trocar</span>
-				                                            <input type="hidden"><input id="podcast-audio" name="audio" type="file" accept="audio/*">
-				                                        <div class="ripple-container"></div></span>
+				                                            <input type="hidden">
+				                                            <input id="podcast-audio" name="audio" type="file" accept="audio/*">
+				                                        	<div class="ripple-container"></div>
+				                                       	</span>
 				                                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput" href="#pablo"><i class="fa fa-times"></i> Remover</a>
 				                                    </div>
 				                                </div>
@@ -128,7 +132,7 @@
 			                            </div>
 			                        </div>
 			                        <div class="card-footer text-center">
-			                        	<button class="btn btn-blue btn-fill" type="button" onclick="submit_form_podcast()">Salvar</button>
+			                        	<button class="btn btn-blue btn-fill" type="button" onclick="podcast.save()">Salvar</button>
 			                            <!-- <button class="btn btn-blue btn-fill" type="submit">Salvar</button> -->
 			                        </div>
 			                    </form>
@@ -140,220 +144,12 @@
 		</div>
 	</div>
 	<% include partials/script %>
+	<script src="/js/podcast.js"></script>
 	<script>
-		// var ps = new PerfectScrollbar('#myscroll');
-		// $('.sidebar-wrapper').perfectScrollbar();
-		// $('.content-panel').perfectScrollbar();
-
 		$('.myScroll').each(function(){
 		    $(this).perfectScrollbar();
-		});
-
-		function submit_form_podcast(){
-			sendAudio();
-		}
-
-		// function directory(){
-		// 	const dir = $('#input-autor').val() + ' - ' + $('#input-titulo').val();
-		// 	console.log('dir:' + dir);
-		// 	const request = $.ajax({
-  //               url: '/dashboard/podcast/directory',
-  //               method: 'POST',
-  //               data: 'titulo=' + dir,
-  //            //    cache: false,
-  //            //    // dataType: 'json', // This replaces dataFilter: function() && JSON.parse( data ).
-	 //            // processData: false, // Don't process the files
-	 //            // contentType: false
-  //           });
-            
-
-  //           request.done(function (msg) {
-  //           	console.log('ajax directory done');
-  //           	// sendAudio();
-  //           });
-
-  //           request.fail(function (jqXHR, textStatus) {
-  //           	console.log('ajax fail directory');
-  //               //swal("Erro!", textoErro1.textStatus, "error");
-  //           });
-		// }
-
-		function sendAudio(){
-			try {
-				// // Get form
-		  //       var form = $('#form-podcast')[0];
-		  //       console.log(form);
-				// // Create an FormData object 
-		  //       var data = new FormData(form);
-				// console.log(data);
-				
-				// const files = $('input[type="file"]');
-				const files = $('#podcast-audio')[0].files;
-				// console.log(files);
-				const formData = new FormData();
-
-				// var data = new FormData();
-				// jQuery.each(jQuery('#file')[0].files, function(i, file) {
-				//     formData.append('file-'+i, file);
-				// });
-
-				jQuery.each( files/*files[0].files*/, function( index, value ) {
-	            	var name = 'file_' + index;
-	            	// console.log(value);
-	            	formData.append( name, value );
-	        	});
-
-				const request = $.ajax({
-	                url: '/dashboard/podcast/upload-audio',
-	                type: 'POST',
-	                method: 'POST',
-	                data: formData,
-	                cache: false,
-	                // dataType: 'json', // This replaces dataFilter: function() && JSON.parse( data ).
-		            processData: false, // Don't process the files
-		            contentType: false
-	            });
-	            
-
-	            request.done(function (msg) {
-	            	console.log('ajax done');
-	            	sendCapa();
-	            });
-
-	            request.fail(function (jqXHR, textStatus) {
-	            	console.log('ajax fail');
-	            	console.log(jqXHR);
-            		console.log(textStatus);
-	            });
-
-	        } catch(err) {
-	        	console.log(err);
-	        }
-            // return true;
-		}
-
-		function sendCapa(){
-			const files = $('#podcast-capa')[0].files;
-			const formData = new FormData();
-
-			// var data = new FormData();
-			// jQuery.each(jQuery('#file')[0].files, function(i, file) {
-			//     formData.append('file-'+i, file);
-			// });
-
-			jQuery.each( files, function( index, value ) {
-            	var name = 'file_' + index;
-            	formData.append( name, value );
-        	});
-
-
-			const request = $.ajax({
-                url: '/dashboard/podcast/upload-capa',
-                type: 'POST',
-                method: 'POST',
-                data: formData,
-                cache: false,
-                // dataType: 'json', // This replaces dataFilter: function() && JSON.parse( data ).
-	            processData: false, // Don't process the files
-	            contentType: false
-            });
-            
-
-            request.done(function (msg) {
-            	console.log('ajax done2');
-            	return sendPodcast();
-            });
-
-            request.fail(function (jqXHR, textStatus) {
-            	console.log('ajax fail2');
-            	console.log(jqXHR);
-            	console.log(textStatus);
-                //swal("Erro!", textoErro1.textStatus, "error");
-            });
-		}
-
-		function sendPodcast(){
-			const autor = $('#input-autor').val();
-			const titulo = $('#input-titulo').val();
-			const subtitulo = $('#input-subtitulo').val();
-			const descricao = $('#input-descricao').val();
-			const audio = $('#podcast-audio').val();
-			const capa = $('#podcast-capa').val();
-
-			data = {
-				autor: autor,
-				titulo: titulo,
-				subtitulo: subtitulo,
-				descricao: descricao,
-				audio: audio.replace('C:\\fakepath\\', ''),
-				capa: capa.replace('C:\\fakepath\\', '')
-			}
-
-			if (autor === ""){
-	            swal('Informe o autor');
-	            return;
-	        }
-			if (titulo === ""){
-	            swal('Informe o título');
-	            return;
-	        }
-	        if (subtitulo === ""){
-	            swal('Informe o subtítulo');
-	            return;
-	        }
-	        if (descricao === ""){
-	            swal('Informe o descrição');
-	            return;
-	        }
-	        if (audio === ""){
-	            swal('Informe o audio');
-	            return;
-	        }
-	        if (capa === ""){
-	            swal('Informe a capa');
-	            return;
-	        }
-
-			const request = $.ajax({
-                url: '/dashboard/podcast',
-                type: 'POST',
-                data: JSON.stringify(data),
-            	contentType: "application/json"
-            });
-
-			// console.log(data);
-
-            request.done(function (msg) {
-            	console.log('done');
-            	$('#input-autor').val('');
-				$('#input-titulo').val('');
-				$('#input-subtitulo').val('');
-				$('#input-descricao').val('');
-				$('#podcast-audio').val('');
-				$('#podcast-capa').val('');
-
-            	swal(
-	                'Cadastrado com sucesso!',
-	                '',
-	                'success'
-	            );
-	            location.reload();
-            });
-
-            request.fail(function (jqXHR, textStatus) {
-            	console.log('ajax fail2');
-            	console.log(jqXHR);
-            	console.log(textStatus);
-            	swal(
-	                'Erro ao cadastrar!',
-	                jqXHR + ' - ' + textStatus,
-	                'error'
-	            )
-            });
-		}
-		
+		});		
 	</script>
 
-	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
 </body>
 </html>

@@ -9,7 +9,7 @@ function findAll2(){
 }
 
 function findById(_id, callback){
-    global.db.collection("podcasts").findOne({_id: _id}, callback)
+    global.db.collection("podcasts").findOne({_id: ObjectId(_id)}, callback)
 }
 
 function insert(podcast, callback){

@@ -302,7 +302,7 @@ var Audio = {
 	prev:function(){
 		var curr = $('.music').data('id');
 		var prev = $('a[data-id="'+curr+'"]').prev();
-		if(curr && prev){
+		if(curr && prev && prev.data().id != 1){
 			prev.click();
 		}
 		var musica = $('.music');

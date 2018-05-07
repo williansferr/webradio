@@ -105,12 +105,14 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
     loopEterno();
   });
 
+  const request = require('request');
+  const service_curtidas = require('../service/service-curtidas');
+
   function loopEterno(){
     
     setTimeout(function () {
       // const http = require('http');
       // const html2json = require('html2json').html2json; //https://github.com/Jxck/html2json
-      const request = require('request');
 
       request('http://177.54.158.150/api/live-info/?callback'
                                 ,function (error, response, body) {
@@ -143,8 +145,21 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
             // console.log('hours', live_date.getHours());
             // console.log('minutes', live_date.getMinutes());
             // console.log('seconds', live_date.getSeconds());
+            
 
-            io.emit('airtime-info', live_info);
+            var artista = live_info.current.name;
+            artista = artista.substring(artista.indexOf("-") + 2, artista.length);
+            var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
+            artista = artista.substring(0, artista.indexOf("-") - 1);
+            // console.log('buscar audio por', (artista + ' - ' + musica));
+            service_curtidas.findByAudio(artista + ' - ' + musica,
+                  (err, result) => {
+                    if(err) io.emit('airtime-info', live_info);
+                  
+                  live_info.curtidas = result;
+                  io.emit('airtime-info', live_info);                    
+            });
+            
           }
           
           // // if (live_date.getHours() == 23 && live_date.getMinutes() > 55 && live_date.getMinutes() < 59) {
