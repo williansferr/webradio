@@ -1108,7 +1108,7 @@
         socket.on('airtime-info', function(msg){
             console.log($('.play-list a.active'));
             console.log($('.play-list a.active').data());
-            if (msg != null){
+            if (msg != null && $('.play-list a.active').data().id == 1){
                 var artista = msg.current.name;
                 artista = artista.substring(artista.indexOf("-") + 2, artista.length);
                 var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
