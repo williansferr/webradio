@@ -176,11 +176,13 @@ var Audio = {
 		});
 		$('.fa-volume-down').on('click',function(){
 			// console.log($(this));
+			$('.volume').val(0);
 			$('.volume').attr('data-css',0);
 			$('.music').prop('volume',0);
 		});
 
 		$('.fa-volume-up').on('click',function(){
+			$('.volume').val(1);
 			$('.volume').attr('data-css',1);
 			$('.music').prop('volume',1);
 		});
