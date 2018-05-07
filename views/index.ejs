@@ -769,9 +769,6 @@
 <script>
 
     window.onload = function () {
-        if ($('.play-list a.active').data().id == 1){
-            $('.action-button').css('display: none;');
-        }
         initAirtimeInfo();
         // console.log('txtEmail:',$('#txtEmail').val());
         // var url_tmp = '/curtidas/';
@@ -1112,6 +1109,7 @@
             console.log($('.play-list a.active'));
             console.log($('.play-list a.active').data());
             if (msg != null && $('.play-list a.active').data().id == 1){
+                $('.action-button').css('display: none');
                 var artista = msg.current.name;
                 artista = artista.substring(artista.indexOf("-") + 2, artista.length);
                 var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
