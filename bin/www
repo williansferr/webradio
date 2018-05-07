@@ -118,11 +118,17 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
         console.log('body', body);
         if(body != undefined){  
           var tmp = body.replace('(', '');
-          tmp = tmp.replace(/)$/, '');
+          tmp = tmp.replace(')', '');
           var live_info = {};
           var hasErro = false;
 
           try {
+            
+            var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
+            console.log('fechaPare', fechaPare);
+            if (fechaPare == ')') {
+              tmp = tmp.substring(0, tmp.length - 1);
+            }
             console.log('tmp', tmp);
             live_info = JSON.parse( tmp );
           } catch(e){
