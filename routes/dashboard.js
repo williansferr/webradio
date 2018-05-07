@@ -215,6 +215,8 @@ global.classMenu = {
 		enableExpandMenuPodcast();
 		classMenu.podcast.cadastro = 'active visible';
 
+		console.log(req.body);
+
   		res.render('app/podcast', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
 	})
 

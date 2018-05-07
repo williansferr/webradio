@@ -17,9 +17,6 @@ const dashboardRouter = require('./routes/dashboard');
 const comentarioRouter = require('./routes/comentario');
 const curtidasRouter = require('./routes/curtidas');
 
-
-//testando dois repositorio
-
 const app = express();
 
 // view engine setup
@@ -42,7 +39,7 @@ app.use(session({
     db: global.db,
     ttl: 30 * 60 // = 30 minutos de sessão
   }),
-  secret: '123',//configure um segredo seu aqui
+  secret: 'Y7QUjEM8z122',//configure um segredo seu aqui //123 old
   resave: false,
   saveUninitialized: false
 }))

@@ -1,6 +1,46 @@
 var podcast = {
 		save:function(){
-			this.sendAudio();
+			const autor     = $('#input-autor').val();
+			const titulo    = $('#input-titulo').val();
+			const subtitulo = $('#input-subtitulo').val();
+			const descricao = $('#input-descricao').val();
+			const audio     = $('#podcast-audio').val();
+			const capa      = $('#podcast-capa').val();
+
+
+			if (autor === ""){
+	            // swal('Informe o autor');
+	            $("#input-autor").focus();
+	            return false;
+	        } 
+			if (titulo === ""){
+	            // swal('Informe o título');
+	            $("#input-titulo").focus();
+	            return false;
+	        } 
+	        if (subtitulo === ""){
+	            // swal('Informe o subtítulo');
+	            $("#input-subtitulo").focus();
+	            return false;
+	        } 
+	        if (descricao === ""){
+	            // swal('Informe o descrição');
+	            $("#input-descricao").focus();
+	            return false;
+	        } 
+	        if (audio === ""){
+	            swal('Informe o audio');
+	            // $("#input-audio").focus();
+	            return false;
+	        } 
+	        if (capa === ""){
+	            swal('Informe a capa');
+	            // $("#input-capa").focus();
+	            return false;
+	        } 
+
+	        this.sendAudio();	
+
 		},
 		sendAudio:function(){
 			try {
@@ -173,11 +213,71 @@ var podcast = {
 		},
 		edit:function(row){
 			var table = $('#datatables').DataTable();
+
+			const curtida = {
+				id: table.row(row).data()[0],
+				autor: table.row(row).data()[1],
+				titulo: table.row(row).data()[2],
+				subtitulo: table.row(row).data()[3],
+				descricao: table.row(row).data()[4],
+				capa: table.row(row).data()[5],
+				audio: table.row(row).data()[6]
+			}
+			
+
+			swal({ 	title: 'Editar podcast?'
+	                ,text: 'Deseja editar este podcast? (' + curtida.id + ' - ' + curtida.titulo + ')'
+	                ,type: 'info'
+	                ,showCancelButton: true
+	                ,confirmButtonText: 'Sim'
+	                ,cancelButtonColor: '#DD6B55'
+	                ,cancelButtonText: 'Não'
+	                ,showConfirmButton: true
+	            }).then(function(){
+	            	location.href = '/dashboard/podcast/';
+	            //     var request = $.ajax({
+	            //         url: '/dashboard/podcast/' + id,
+	            //         type: 'GET'
+	            //     });
+
+	            //     request.done(function (msg) {
+	            //     	// console.log(msg);
+	            //         if(msg.indexOf("deletado") > 0) {
+	            //         	var table = $('#datatables').DataTable();
+	            //         	table
+					        // .row( row )
+					        // .remove()
+					        // .draw();
+	            //             swal({
+	            //                 title: "Sucesso!",
+	            //                 text: "Deletado com sucesso",
+	            //                 type: "success",
+	            //                 showConfirmButton: true
+	            //             }).then (function() {
+	            //                 // if (isUpdate) {
+	            //                 //     window.location.replace(aux_urlf);
+	            //                 // } else {
+	            //                 //     cleanForm($("#"+btnP)[0]);
+	            //                 // }
+	            //             });
+	            //         }
+	            //     });
+
+	            //     request.fail(function (jqXHR, textStatus) {
+	            //     	console.log(textStatus);
+	            //     	console.log(jqXHR);
+	            //         swal("Erro!", jqXHR + ' - ' + textStatus, "error");
+	            //     });
+	            }, function (dismiss){
+
+	                swal('Cancelado!', '', 'warning');
+	            }
+	        );
 		},
-		requestDel:function(id, dado, row){
-			console.log('row', row);
+		del:function(id, dado, row){
+
 			swal({ 	title: 'Deletar podcast?'
-	                ,text: 'Deseja deletar este podcast? (' + id + ' - ' +dado + ')'
+	                ,text: 'Deseja deletar este podcast? (' + id + ' - ' + dado + ')'
 	                ,type: 'info'
 	                ,showCancelButton: true
 	                ,confirmButtonText: 'Sim'

@@ -62,12 +62,12 @@
 																	<td><img src="/podcasts/capa/<%= podcast.capa %>" alt="<%= podcast.capa %>"  style="width: 73px; height: 73px;"></td>
 																	<td><audio src="/podcasts/audio/<%= podcast.audio %>" controls></audio></td>
 																	<td>
-																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="podcast.requestDel(mytable.row($(this).parents('tr')).data()[0], mytable.row($(this).parents('tr')).data()[2]), $(this).parents('tr')">
+																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="podcast.del(mytable.row($(this).parents('tr')).data()[0], mytable.row($(this).parents('tr')).data()[2]), $(this).parents('tr')">
 																			<i class="material-icons">close</i>
 																		</button>
-																		<!-- <button class="btn btn-simple btn-warning btn-icon edit" onclick="">
+																		<button class="btn btn-simple btn-warning btn-icon edit" onclick="podcast.edit($(this).parents('tr'))">
 																			<i class="material-icons">dvr</i>
-																		</button> -->
+																		</button>
 																	</td>
 																</tr>
 															<% }); %>
@@ -86,6 +86,10 @@
 		</div>
 	</div>
 	<% include partials/script %>
+	<!--  DataTables.net Plugin    -->
+	<script src="/js/plugins/jquery.datatables.js"></script>
+	<!-- Sweet Alert 2 plugin -->
+	<script src="/js/plugins/sweetalert2.min.js"></script>
 	<script src="/js/podcast.js"></script>
 	<script>
 
@@ -115,11 +119,12 @@
         	]
 		});
 
-		$('#datatables').on( 'click', 'tbody td', function () {
-			console.log(mytable.cell( this ));
-			$('#datatables').inline( this );
-		    // mytable.cell( this ).edit('bubble');
-		} );
+		//try edit table
+		// $('#datatables').on( 'click', 'tbody td', function () {
+		// 	console.log(mytable.cell( this ));
+		// 	$('#datatables').inline( this );
+		//     // mytable.cell( this ).edit('bubble');
+		// } );
 
 	</script>
 
