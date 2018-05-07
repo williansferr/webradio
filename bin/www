@@ -123,10 +123,10 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           var hasErro = false;
 
           try {
-            if (tmp.contains(')')){
+            if (tmp.indexOf(')') == -1){
               tmp = tmp.replace(')','');
             } 
-            if(tmp.contains('(')){
+            if(tmp.indexOf('(') == -1){
               tmp = tmp.replace('(','');
             }
             console.log('tmp', tmp);
