@@ -118,17 +118,11 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
         console.log('body', body);
         if(body != undefined){  
           var tmp = body.replace('(', '');
-          tmp = tmp.replace(')', '');
+          tmp = tmp.replace(/)$/, '');
           var live_info = {};
           var hasErro = false;
 
           try {
-            if (tmp.indexOf(')') == -1){
-              tmp = tmp.replace(')','');
-            } 
-            if(tmp.indexOf('(') == -1){
-              tmp = tmp.replace('(','');
-            }
             console.log('tmp', tmp);
             live_info = JSON.parse( tmp );
           } catch(e){
