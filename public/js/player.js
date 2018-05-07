@@ -124,6 +124,7 @@ var Audio = {
 			$(this).on('click',function(e){
 				e.preventDefault();
 				$(this).siblings().removeClass('active');
+				$('.play-list a.active').removeClass('active');
 				$(this).addClass('active');
 				clearInterval(intval);
 				id = $(this).data('id');
@@ -135,7 +136,7 @@ var Audio = {
 				Audio.info.load(id,album,artist,title,albumart,mp3);
 				Audio.play($('.music'));
 				$('.music').prop('volume',$('.volume').val());
-				Audio.playlist.hide();
+				// Audio.playlist.hide();
 				// Audio.updateCurtir(id, mp3);
 			});
 		});
