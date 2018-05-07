@@ -769,6 +769,9 @@
 <script>
 
     window.onload = function () {
+        if ($('.play-list a.active').data().id == 1){
+            $('.action-button').css('display: none;');
+        }
         initAirtimeInfo();
         // console.log('txtEmail:',$('#txtEmail').val());
         // var url_tmp = '/curtidas/';
