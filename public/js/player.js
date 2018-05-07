@@ -174,6 +174,15 @@ var Audio = {
 			$(this).attr('data-css',vol);
 			$('.music').prop('volume',vol);
 		});
+		$('.fa-volume-down').on('change',function(){
+			$(this).attr('data-css',0);
+			$('.music').prop('volume',0);
+		});
+
+		$('.fa-volume-up').on('change',function(){
+			$(this).attr('data-css',1);
+			$('.music').prop('volume',1);
+		});
 		$('.prev').on('click',function(e){
 			var index, firstIndex;
 			e.preventDefault();

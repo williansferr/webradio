@@ -56,7 +56,7 @@
                                 data-album="Atento"
                                 data-artist="Luppi"
                                 data-title="Luppi"
-                                data-albumart="/img/logo/logo.jpg"
+                                data-albumart="/img/logo/logo.png"
                                 data-url="http://177.54.158.150:8000/airtime_128"></a>
                             <% podcasts.forEach(function(pc){ %>
                                 <a href="#" class="play"
@@ -196,11 +196,16 @@
                                     <!-- <a href="#" class="stop"><i class="fa fa-stop"></i></a> -->  
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="content-volume">
+                                <i class="fas fa-volume-down"></i>
+                                <input type="range" class="volume" min="0" max="1" step="0.1" value="0.5" data-css="0.5">
+                                <i class="fas fa-volume-up"></i>
+                            </div>
+                            <!-- <div class="row">
                                 <div class="col col-md-12 col-12" align="center">
                                     <input type="range" class="volume" min="0" max="1" step="0.1" value="0.5" data-css="0.5">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="row">
                                 <div class="col col-12">
                                     <div class="content-like">

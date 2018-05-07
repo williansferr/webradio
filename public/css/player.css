@@ -16,6 +16,23 @@
 	}
 }
 
+.content-volume .fa-volume-down {
+	cursor: pointer;
+	color: #fff;
+}
+.content-volume .fa-volume-up {
+	cursor: pointer;
+	color: #fff;
+}
+
+.content-volume .fa-volume-down:hover {
+	color: #01426A;
+}
+
+.content-volume .fa-volume-up:hover {
+	color: #01426A;
+}
+
 .radio-on {
 	cursor: pointer;
 }
