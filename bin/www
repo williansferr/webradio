@@ -115,7 +115,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       request('http://177.54.158.150/api/live-info/?callback'
                                 ,function (error, response, body) {
 
-        console.log('body', body);
+        // console.log('body', body);
         if(body != undefined){  
           var tmp = body.replace('(', '');
           tmp = tmp.replace(')', '');
@@ -125,24 +125,24 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           try {
             
             var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
-            console.log('fechaPare', fechaPare);
+            // console.log('fechaPare', fechaPare);
             if (fechaPare == ')') {
               tmp = tmp.substring(0, tmp.length - 1);
             }
-            console.log('tmp', tmp);
+            // console.log('tmp', tmp);
             live_info = JSON.parse( tmp );
           } catch(e){
             hasErro = true;
             console.log(e);
           }
           if (!hasErro) {
-            console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+            // console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
             var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-            console.log('live_info', live_info);
-            console.log('live_date', live_date);
-            console.log('hours', live_date.getHours());
-            console.log('minutes', live_date.getMinutes());
-            console.log('seconds', live_date.getSeconds());
+            // console.log('live_info', live_info);
+            // console.log('live_date', live_date);
+            // console.log('hours', live_date.getHours());
+            // console.log('minutes', live_date.getMinutes());
+            // console.log('seconds', live_date.getSeconds());
 
             io.emit('airtime-info', live_info);
           }
