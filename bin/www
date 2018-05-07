@@ -123,6 +123,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           var hasErro = false;
 
           try {
+            console.log('tmp', tmp);
             live_info = JSON.parse( tmp );
           } catch(e){
             hasErro = true;
