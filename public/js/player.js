@@ -136,6 +136,9 @@ var Audio = {
 				Audio.info.load(id,album,artist,title,albumart,mp3);
 				Audio.play($('.music'));
 				$('.music').prop('volume',$('.volume').val());
+				if(id != 1){
+					$('.action-button').css('display', '');
+				}
 				// Audio.playlist.hide();
 				// Audio.updateCurtir(id, mp3);
 			});
