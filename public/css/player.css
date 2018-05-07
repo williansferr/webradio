@@ -16,6 +16,13 @@
 	}
 }
 
+.radio-on {
+	cursor: pointer;
+}
+.radio-on:hover {
+	color: #01426A;
+}
+
 .track{
     width:2px;
     margin-right:5px;

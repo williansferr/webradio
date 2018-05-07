@@ -87,7 +87,7 @@ body {
 }
 
 .my-play-list a{
-  color:#ccc;
+  color:#fff;
   display:block;
   overflow:hidden;
   padding:6px 10px;
@@ -128,7 +128,7 @@ body {
 .songs-info{
   max-width:240px;
   text-shadow:0 2px 2px #000;
-  color: #ccc;
+  color: #fff;
 }
 .songs-info .song-title{
   font-size:16px;
@@ -183,7 +183,7 @@ body {
 }
 .action-button-default a:hover,
 .action-button-default a.active{
-  color:#ccc;
+  color:#fff;
 }
 
 .dw-sound {

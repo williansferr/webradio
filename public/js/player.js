@@ -202,6 +202,9 @@ var Audio = {
 				Audio.playlist.show();
 			}
 		});
+		$('.radio-on').on('click',function(e){
+			$('.play-list a:first-child')[0].click();
+		});
 	},
 	playlist:{
 		show:function(){
