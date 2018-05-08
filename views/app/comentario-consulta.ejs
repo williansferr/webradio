@@ -44,6 +44,7 @@
 																<% header_comentario.forEach(function(c){ %>
 																	<th><%= c.name %></th>
 																<% }); %>
+																<th>Ação</th>
 						                                    </tr>
 						                                </thead>
 						                                <tfoot>
@@ -51,15 +52,22 @@
 						                                    	<% header_comentario.forEach(function(c){ %>
 																	<th><%= c.name %></th>
 																<% }); %>
+																<th>Ação</th>
 						                                    </tr>
 						                                </tfoot>
 						                                <tbody>
 						                                	<% comentarios.forEach(function(comentario){ %>
 						                                		<tr>
+						                                			<td><%= comentario._id %></td>
 																	<td><%= comentario.nome %></td>
 																	<td><%= comentario.email %></td>
 																	<td><%= comentario.comentario %></td>
 																	<td><%= new Date(comentario.data_inclusao).getDate() + "/" + (new Date(comentario.data_inclusao).getMonth() + 1) + "/" + new Date(comentario.data_inclusao).getFullYear() + " - " + comentario.data_inclusao %></td>
+																	<td>
+																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="Comentario.del('<%= comentario._id %>', '<%= comentario.comentario %>', this)">
+																			<i class="material-icons">close</i>
+																		</button>
+																	</td>
 																</tr>
 															<% }); %>
 						                                </tbody>
@@ -88,6 +96,7 @@
 	<script src="/js/jszip.min.js"></script>
 	<script src="/js/pdfmake.min.js"></script>
 	<script src="/js/vfs_fonts.js"></script>
+	<script src="/js/comentario.js"></script>
 
 	<script>
 		// var ps = new PerfectScrollbar('#myscroll');
@@ -114,7 +123,14 @@
 			dom: 'Bfrtip',
 	        buttons: [
 	            'copy', 'csv', 'excel', 'pdf', 'print'
-	        ]
+	        ],
+			columnDefs: [
+	            {
+	                "targets": [ 0 ],
+	                "visible": false,
+	                "searchable": false
+	            }
+        	]
 		});
 		
 		// var ps2 = new PerfectScrollbar('.main-content');

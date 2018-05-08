@@ -62,10 +62,10 @@
 																	<td><img src="/podcasts/capa/<%= podcast.capa %>" alt="<%= podcast.capa %>"  style="width: 73px; height: 73px;"></td>
 																	<td><audio src="/podcasts/audio/<%= podcast.audio %>" controls></audio></td>
 																	<td>
-																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="podcast.del(mytable.row($(this).parents('tr')).data()[0], mytable.row($(this).parents('tr')).data()[2]), $(this).parents('tr')">
+																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="Podcast.del('<%= podcast._id %>', '<%= podcast.titulo %>', this)">
 																			<i class="material-icons">close</i>
 																		</button>
-																		<button class="btn btn-simple btn-warning btn-icon edit" onclick="podcast.edit($(this).parents('tr'))">
+																		<button class="btn btn-simple btn-warning btn-icon edit" onclick="Podcast.callEdit('<%= podcast._id %>', '<%= podcast.titulo %>')">
 																			<i class="material-icons">dvr</i>
 																		</button>
 																	</td>

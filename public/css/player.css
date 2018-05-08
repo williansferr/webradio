@@ -33,6 +33,12 @@
 	color: #01426A;
 }
 
+.content-volume .content {
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+}
+
 .radio-on {
 	cursor: pointer;
 	font-size: 24px;
@@ -69,7 +75,7 @@
 	/* width:90%; */
 	/* max-width: 360px; */
 	/* height:620px; */
-	height:650px;
+	height:700px;
 	padding:15px;
 	position:relative;
 	/* margin:55px auto 0; */
@@ -312,7 +318,7 @@
 .volume{
 	height:10px;
 	/* width:100px; */
-	width: 80%;
+	width: 100%;
 	margin:0 10px;
 	font-size:14px;
 	cursor:pointer;

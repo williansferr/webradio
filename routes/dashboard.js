@@ -54,6 +54,10 @@ global.classMenu = {
 	comentario: {
 		expand: null,
 		consulta: ""
+	},
+	user: {
+		expand: notexpanded,
+		sair: ""
 	}
 };
 
@@ -88,6 +92,7 @@ global.classMenu = {
 	global.disableExpandAll = function(){
 		disableExpandMenuComentario();
 		disableExpandMenuPodcast();
+		disableExpandMenuDashboard();
 		disableExpandMenuDashboard();
 	}
 
@@ -209,15 +214,39 @@ global.classMenu = {
 		// res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
 	})
 
-	router.get('/podcast', authenticationMiddleware(), function(req, res, next) {
+	router.get('/podcast/', authenticationMiddleware(), function(req, res, next) {
 		
 		disableExpandAll();
 		enableExpandMenuPodcast();
 		classMenu.podcast.cadastro = 'active visible';
+		// console.log(req.body);
 
-		console.log(req.body);
+  		res.render('app/podcast', {path: "../", editPodcast: "{}", podcast: {}, classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
+	})
 
-  		res.render('app/podcast', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
+	router.get('/podcast/edit/:id', authenticationMiddleware(), function(req, res, next) {
+		
+		disableExpandAll();
+		enableExpandMenuPodcast();
+		classMenu.podcast.cadastro = 'active visible';
+		const id = req.params.id;
+		console.log('id', id);
+		
+
+		service_podcast.findById(id, 
+			(err, result) => {
+    			if(err) return res.status(204).end(JSON.stringify({ message: "service_podcast.findById(" + id + ") não localizado", error: err }))
+    		
+    		try {
+	    		result.capa = '/podcasts/capa/' + result.capa;
+	    		result.audio = '/podcasts/audio/' + result.audio;
+	    		console.log('podcast', result);
+	    		var podcast = JSON.stringify(result);
+				res.render('app/podcast', {path: "../../../", editPodcast: podcast, podcast: result, classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
+			} catch(e) {
+				return res.status(500).end(JSON.stringify({ message: "get - '/podcast/edit/:id'", error: e }));
+			}
+  		});
 	})
 
 	router.get('/podcast/consulta', authenticationMiddleware(), function(req, res, next) {
@@ -297,15 +326,14 @@ global.classMenu = {
 	})
 
 	router.delete('/podcast/:id', authenticationMiddleware(), function(req, res, next) {
-		log.info("delete.dashboard/podcast/:id");
-		log.info(req.params.id);
+		// console.log("delete.dashboard/podcast/:id");
+		// console.log(req.params.id);
 		try {
 			const id = req.params.id;
 			if (typeof id === "undefined") {
 				// log.warn("id não informado");
 				return res.status(400).end(JSON.stringify({ _id: id , message: "informe o id", error: "id não informado" }));
 			} else {
-				console.log('id', id);
 				service_podcast.findById(id, (err, result) => {
 					if(err) {
 						return res.status(204).end(JSON.stringify({ _id: id , message: "id não existe", error: err }));
@@ -313,29 +341,80 @@ global.classMenu = {
 
 					var podcast = result;
 					try {
-						fs.unlink('./public/podcasts/capa/' + podcast.capa, function(error) {
-						    
-						    if (error) {
-						    	// console.log('capa Deleted error', error);
-						    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "capa não deletado", error: err }));
-						    }
-						    // console.log('capa Deleted!!' + podcast.capa);
-						    fs.unlink('./public/podcasts/audio/' + podcast.audio, function(error) {
-							    if (error) {
-							    	// console.log('audio Deleted error', error);
-							    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "audio não deletado", error: err }));
-							    }
-							    // console.log('audio Deleted !!' + podcast.audio);
-							    service_podcast.remove(id, (err, result) => {
-									if(err) {
-										// log.warn(err);
-										return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+						service_podcast.findByCapa(podcast.capa, (err, result) => {
+							if (err) {
+					    		return res.status(204).end(JSON.stringify({ podcast: podcast , message: "error: service_podcast.findByCapa", error: err }));
+					    	}
+
+					    	console.log('findByCapa', result.length);
+							if (result.length === 1) {
+								fs.unlink('./public/podcasts/capa/' + podcast.capa, function(error) {
+								    if (error) {
+								    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "capa não deletado", error: err }));
+								    }
+								    service_podcast.findByAudio(podcast.audio, (err, result) => {
+								    	if (err) {
+								    		return res.status(204).end(JSON.stringify({ podcast: podcast , message: "error: service_podcast.findByAudio ", error: err }));
+								    	}
+								    	console.log('findByAudio0', result.length);
+								    	if (result.length === 1) {
+										    fs.unlink('./public/podcasts/audio/' + podcast.audio, function(error) {
+											    if (error) {
+											    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "audio não deletado", error: err }));
+											    }
+											    service_podcast.remove(id, (err, result) => {
+													if(err) {
+														return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+													}
+													return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
+												})
+											});	
+										} else {
+											service_podcast.remove(id, (err, result) => {
+												if(err) {
+													// log.warn(err);
+													return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+												}
+												// console.log('service_podcast.remove', result);
+												return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
+											})
+										}
+
+									});
+								});
+							} else {
+								service_podcast.findByAudio(podcast.audio, (err, result) => {
+							    	if (err) {
+							    		return res.status(204).end(JSON.stringify({ podcast: podcast , message: "error: service_podcast.findByAudio ", error: err }));
+							    	}
+
+							    	console.log('findByAudio', result.length);
+							    	if (result.length === 1) {
+									    fs.unlink('./public/podcasts/audio/' + podcast.audio, function(error) {
+										    if (error) {
+										    	return res.status(204).end(JSON.stringify({ podcast: podcast , message: "audio não deletado", error: err }));
+										    }
+										    service_podcast.remove(id, (err, result) => {
+												if(err) {
+													return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+												}
+												return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
+											})
+										});	
+									} else {
+										service_podcast.remove(id, (err, result) => {
+											if(err) {
+												// log.warn(err);
+												return res.status(204).end(JSON.stringify({ _id: id , message: "não deletado", error: err }));
+											}
+											// console.log('service_podcast.remove', result);
+											return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
+										})
 									}
-									// console.log('service_podcast.remove', result);
-									return res.status(200).end(JSON.stringify({ _id: id , message: "deletado" }));
-								})
-							});	
-						});
+
+								});
+							}
+						})
 					} catch (e) {
 						// console.log('erro : /podcast/:id', e);
 						return res.status(400).end(JSON.stringify({ erro: e , message: "erro" }));
@@ -349,9 +428,9 @@ global.classMenu = {
 	})
 
 	router.put('/podcast/:id', authenticationMiddleware(), function(req, res, next) {
-		log.info("put.dashboard/podcast/:id");
-		log.info(req.params.id);
-		log.info(req.body);
+		// log.info("put.dashboard/podcast/:id");
+		console.log('id', req.params.id);
+		console.log('body',req.body);
 		const id = req.params.id,
 		    body = req.body;
 		try {
@@ -361,9 +440,9 @@ global.classMenu = {
 				return res.status(400).end(JSON.stringify({ _id: id , message: "informe o objeto podcast", error: "Objeto(podcast) não informado" }));
 			} else {
 				service_podcast.update(req.params.id, req.body, (err, result) => {
-					if(err) return res.status(204).end(JSON.stringify({ _id: id , message: "não atualizado", error: err }))
+					if(err) return res.status(204).end(JSON.stringify({podcast: req.body, _id: id , message: "não atualizado", error: err }))
 
-					return res.status(200).end(JSON.stringify({ _id: id , message: "atualizado" }));
+					return res.status(200).end(JSON.stringify({ podcast: result, _id: id , message: "atualizado" }));
 				})	
 			}		
 		} catch (e){

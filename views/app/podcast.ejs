@@ -3,7 +3,6 @@
 <head>
     <% 
     	var title = 'Podcast'; 
-    	var path = '../';
     %>
     <% include partials/head %>
 </head>
@@ -21,6 +20,9 @@
 			                	<!-- action="/dashboard/podcast" id="TypeValidation"-->
 			                	<!-- onSubmit="return submit_form_podcast()" -->
 			                    <form id="form-podcast" role="form" class="form-horizontal" >
+			                    	<% if (podcast._id !== undefined && podcast._id != null) { %>
+										<input type="hidden" value="<%= podcast._id %>"/>
+			                    	<%}%>
 			                        <div class="card-header card-header-icon" data-background-color="blue">
 				                        <i class="material-icons">library_books</i>
 				                    </div>
@@ -31,7 +33,11 @@
 			                                <div class="col-sm-7">
 			                                    <div class="form-group label-floating is-empty">
 			                                        <label class="control-label"></label>
-			                                        <input autocomplete="name" id="input-autor" class="form-control" name="autor" required="true" type="text">
+			                                        <% if (podcast.autor !== undefined && podcast.autor != null) { %>
+			                                        	<input autocomplete="name" value="<%= podcast.autor %>" id="input-autor" class="form-control" name="autor" required="true" type="text">
+			                                        <%} else {%>
+			                                        	<input autocomplete="name" id="input-autor" class="form-control" name="autor" required="true" type="text">
+			                                        <%}%>
 			                                    <span class="material-input"></span></div>
 			                                </div>
 			                                <label class="col-sm-3 label-on-right">
@@ -43,7 +49,11 @@
 			                                <div class="col-sm-7">
 			                                    <div class="form-group label-floating is-empty">
 			                                        <label class="control-label"></label>
-			                                        <input autocomplete="titulo" id="input-titulo" class="form-control" name="titulo" required="true" type="text">
+			                                        <% if (podcast.titulo !== undefined && podcast.titulo != null) { %>
+			                                        	<input autocomplete="titulo" value="<%= podcast.titulo %>" id="input-titulo" class="form-control" name="titulo" required="true" type="text">
+			                                        <%} else {%>
+			                                        	<input autocomplete="titulo" id="input-titulo" class="form-control" name="titulo" required="true" type="text">
+			                                        <%}%>
 			                                    <span class="material-input"></span></div>
 			                                </div>
 			                                <label class="col-sm-3 label-on-right">
@@ -55,7 +65,11 @@
 			                                <div class="col-sm-7">
 			                                    <div class="form-group label-floating is-empty">
 			                                        <label class="control-label"></label>
-			                                        <input id="input-subtitulo" autocomplete="subtitulo" class="form-control" name="subtitulo" required="true" type="text">
+			                                        <% if (podcast.subtitulo !== undefined && podcast.subtitulo != null) { %>
+			                                        	<input id="input-subtitulo" value="<%= podcast.subtitulo %>" autocomplete="subtitulo" class="form-control" name="subtitulo" required="true" type="text">
+			                                        <%} else {%>
+			                                        	<input id="input-subtitulo" autocomplete="subtitulo" class="form-control" name="subtitulo" required="true" type="text">
+			                                        <%}%>
 			                                    <span class="material-input"></span></div>
 			                                </div>
 			                                <label class="col-sm-3 label-on-right">
@@ -67,7 +81,11 @@
 			                                <div class="col-sm-7">
 			                                    <div class="form-group label-floating is-empty">
 			                                        <label class="control-label"></label>
-			                                        <textarea id="input-descricao" class="form-control" name="descricao" required="true" rows="5"></textarea>
+			                                        <% if (podcast.descricao !== undefined && podcast.descricao != null) { %>
+			                                        	<textarea id="input-descricao" class="form-control" name="descricao" required="true" rows="5"><%= podcast.descricao %></textarea>
+			                                        <%} else {%>
+			                                        	<textarea id="input-descricao" class="form-control" name="descricao" required="true" rows="5"></textarea>
+			                                        <%}%>
 			                                    <span class="material-input"></span></div>
 			                                </div>
 			                                <label class="col-sm-3 label-on-right">
@@ -78,17 +96,31 @@
 											<label class="col-sm-2 label-on-left"></label>
 											<div class="col-md-4 col-sm-4">
 				                                <legend>Capa</legend>
-				                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+				                                <% if (podcast.capa !== undefined && podcast.capa != null) { %>
+				                                <div class="fileinput text-center fileinput-exists" data-provides="fileinput">
 				                                    <div class="fileinput-new thumbnail">
 				                                        <img alt="..." src="/img/image_placeholder.jpg">
 				                                    </div>
+				                                    <div class="fileinput-preview fileinput-exists thumbnail" style="">
+				                                    	<img alt="..." src="<%= podcast.capa %>">
+				                                    </div>
+												<%} else {%>
+												<div class="fileinput fileinput-new text-center" data-provides="fileinput">
+													<div class="fileinput-new thumbnail">
+														<img alt="..." src="/img/image_placeholder.jpg">	
+				                                    </div>
 				                                    <div class="fileinput-preview fileinput-exists thumbnail" style=""></div>
+				                                <%}%>
 				                                    <div>
 				                                        <span class="btn btn-blue btn-round btn-file">
 				                                            <span class="fileinput-new">Selecione a imagem</span>
 				                                            <span class="fileinput-exists">trocar</span>
 				                                            <input type="hidden">
-				                                            <input id="podcast-capa" name="capa" type="file" accept="image/*">
+				                                            <% if (podcast.capa !== undefined && podcast.capa != null) { %>
+					                                        	<input id="podcast-capa" value="<%= podcast.capa %>" name="capa" type="file" accept="image/jpeg">
+															<%} else {%>
+																<input id="podcast-capa" name="capa" type="file" accept="image/jpeg">
+															<%}%>
 				                                        	<div class="ripple-container"></div>
 				                                        </span>
 				                                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput" href="#pablo"><i class="fa fa-times"></i> Remover</a>
@@ -97,7 +129,11 @@
 				                            </div>
 											<div class="col-md-4 col-sm-4">
 												<legend>Áudio</legend>
-				                                <div class="fileinput fileinput-new text-center" data-provides="fileinput">
+											<% if (podcast.capa !== undefined && podcast.capa != null) { %>
+				                                <div class="fileinput text-center fileinput-exists" data-provides="fileinput">
+			                                <%} else {%>
+			                                	<div class="fileinput fileinput-new text-center" data-provides="fileinput">
+			                                <%}%>
 				                                    <div class="thumbnail" style="max-width: 100px">
 				                                        <img alt="..." src="<%= path %>img/audio-volume.png">
 				                                    </div>
@@ -106,12 +142,17 @@
 				                                            <span class="fileinput-new">Selecione o áudio</span>
 				                                            <span class="fileinput-exists">Trocar</span>
 				                                            <input type="hidden">
-				                                            <input id="podcast-audio" name="audio" type="file" accept="audio/*">
+				                                            <% if (podcast.audio !== undefined && podcast.audio != null) { %>
+					                                        	<input id="podcast-audio" value="<%= podcast.audio %>" name="audio" type="file" accept="audio/*">
+															<%} else {%>
+																<input id="podcast-audio" name="audio" type="file" accept="audio/*">
+															<%}%>
 				                                        	<div class="ripple-container"></div>
 				                                       	</span>
 				                                        <a class="btn btn-danger btn-round fileinput-exists" data-dismiss="fileinput" href="#pablo"><i class="fa fa-times"></i> Remover</a>
 				                                    </div>
 				                                </div>
+
 				                                <!-- <label class="col-sm-2 label-on-left">Áudio</label>
 				                                <div class="col-sm-7">
 				                                	<form action="/dashboard/podcast/upload" method="post" enctype="multipart/form-data">
@@ -132,7 +173,11 @@
 			                            </div>
 			                        </div>
 			                        <div class="card-footer text-center">
-			                        	<button class="btn btn-blue btn-fill" type="button" onclick="podcast.save()">Salvar</button>
+			                        	<% if (podcast._id !== undefined && podcast._id != null) { %>
+			                        		<button class="btn btn-blue btn-fill" type="button" onclick="Podcast.edit(editPodcast)">Atualizar</button>
+			                        	<%} else {%>
+			                        		<button class="btn btn-blue btn-fill" type="button" onclick="Podcast.save()">Salvar</button>
+			                        	<%}%>
 			                            <!-- <button class="btn btn-blue btn-fill" type="submit">Salvar</button> -->
 			                        </div>
 			                    </form>
@@ -144,6 +189,8 @@
 		</div>
 	</div>
 	<% include partials/script %>
+	<!--	Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+	<script src="/js/plugins/jasny-bootstrap.min.js"></script>
 	<!-- Sweet Alert 2 plugin -->
 	<script src="/js/plugins/sweetalert2.min.js"></script>
 	<!-- Forms Validations Plugin -->
@@ -152,7 +199,11 @@
 	<script>
 		$('.myScroll').each(function(){
 		    $(this).perfectScrollbar();
-		});		
+		});
+
+		
+		var editPodcast = JSON.parse('<%- editPodcast %>');
+		console.log('podcast',editPodcast);
 	</script>
 
 </body>

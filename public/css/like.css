@@ -1,5 +1,8 @@
 /* body{background: #333;} */
-.like-container{filter: url('#filter'); margin: 10px 20px 10px 20px;}
+.like-container{
+  /* filter: url('#filter');  */
+  margin: 10px 20px 10px 20px;
+}
 .like-cnt{  
   /* position: absolute;  */
   cursor: pointer;
@@ -19,7 +22,10 @@
   color: #fff;
 }
 
-.deslike-container{filter: url('#filter'); margin: 10px 20px 10px 20px;}
+.deslike-container{
+  /* filter: url('#filter');  */
+  margin: 10px 20px 10px 20px;
+}
 .deslike-cnt{
   cursor: pointer;
 }

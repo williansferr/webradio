@@ -16,7 +16,7 @@ router.get('/consulta', authenticationMiddleware (), function(req, res, next) {
 	enableExpandMenuComentario();
 	classMenu.comentario.consulta = 'active visible';
 
-	const header_comentario = [{name: "Nome"}, {name: "E-mail"}, {name: "Comentario"}, {name: "Data"}];
+	const header_comentario = [{name: "id"}, {name: "Nome"}, {name: "E-mail"}, {name: "Comentario"}, {name: "Data"}];
 	service_comentario.findAll(
 		(err, result) => {
 			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
@@ -62,8 +62,7 @@ router.post('/', function(req, res, next) {
 })
 
 router.delete('/:id', authenticationMiddleware(), function(req, res, next) {
-	log.info("delete.comentario/:id");
-	log.info(req.params.id);
+	
 	try {
 		const id = req.params.id;
 		if (typeof id === "undefined") {
@@ -86,9 +85,7 @@ router.delete('/:id', authenticationMiddleware(), function(req, res, next) {
 })
 
 router.put('/:id', authenticationMiddleware(), function(req, res, next) {
-	log.info("put.comentario/:id");
-	log.info(req.params.id);
-	log.info(req.body);
+	
 	const id = req.params.id,
 	    body = req.body;
 	try {

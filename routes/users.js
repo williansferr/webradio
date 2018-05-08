@@ -63,7 +63,7 @@ router.get('/lock', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
   req.logout();
-  res.redirect('/')
+  res.redirect('/users/login')
 })
 
 

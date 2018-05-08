@@ -12,6 +12,14 @@ function findById(_id, callback){
     global.db.collection("podcasts").findOne({_id: ObjectId(_id)}, callback)
 }
 
+function findByCapa(capa, callback){
+    global.db.collection("podcasts").find({capa: capa}).toArray(callback)
+}
+
+function findByAudio(audio, callback){
+    global.db.collection("podcasts").find({audio: audio}).toArray(callback)
+}
+
 function insert(podcast, callback){
 	podcast.data_inclusao = new Date()
     global.db.collection("podcasts").insert(podcast, callback)
@@ -38,4 +46,4 @@ function remove(_id, callback){
     global.db.collection("podcasts").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, update, remove, findById, findAll, findAll2 }
+module.exports = { insert, update, remove, findById, findByCapa, findByAudio, findAll, findAll2 }
