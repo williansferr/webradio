@@ -1,6 +1,6 @@
 // if ('undefined' !== typeof module) {
 
-    module.exports = function initChartsPage() {
+    /*module.exports = */function initChartsPage() {
         /* ----------==========    Rounded Line Chart initialization    ==========---------- */
 
         dataRoundedLineChart = {

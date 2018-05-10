@@ -16,6 +16,7 @@ const usersRouter = require('./routes/users');
 const dashboardRouter = require('./routes/dashboard');
 const comentarioRouter = require('./routes/comentario');
 const curtidasRouter = require('./routes/curtidas');
+const airtimeRouter = require('./routes/airtime');
 
 const app = express();
 
@@ -29,10 +30,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/scripts', express.static(__dirname + '/node_modules/sweetalert2/dist/'));
-app.use('/scripts', express.static(__dirname + '/node_modules/datatables.net/js/'));
-app.use('/css', express.static(__dirname + '/node_modules/datatables.net-dt/css/'));
-app.use('/images', express.static(__dirname + '/node_modules/datatables.net-dt/images/'));
+// app.use('/scripts', express.static(__dirname + '/node_modules/sweetalert2/dist/'));
+// app.use('/scripts', express.static(__dirname + '/node_modules/datatables.net/js/'));
+// app.use('/css', express.static(__dirname + '/node_modules/datatables.net-dt/css/'));
+// app.use('/images', express.static(__dirname + '/node_modules/datatables.net-dt/images/'));
+
 require('./auth')(passport);
 app.use(session({  
   store: new MongoStore({
@@ -52,8 +54,7 @@ app.use('/users', usersRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/comentario', comentarioRouter);
 app.use('/curtidas', curtidasRouter);
-
-
+app.use('/airtime', airtimeRouter);
 
 //Diretorios estaticos
 // app.use(express.static('public/uploads/'));

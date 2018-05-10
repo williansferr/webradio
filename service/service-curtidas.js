@@ -27,7 +27,8 @@ function findByAudio(audio, callback){
 function findForCharts(callback) {
     global.db.collection("curtidas").aggregate([
                             { 
-                                $group: { _id: "$audio",
+                                $group: { 
+                                    _id: "$audio",
                                     count: { 
                                         $sum: 1 
                                     } 

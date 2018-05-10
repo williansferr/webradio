@@ -61,7 +61,16 @@
 						                                			<td><%= comentario._id %></td>
 																	<td><%= comentario.nome %></td>
 																	<td><%= comentario.email %></td>
-																	<td><%= comentario.comentario %></td>
+																	<%  var indice = 50;
+																		var tmp = comentario.comentario.substring(0, indice);
+																	   	var quebra = '';
+																		while(tmp !== ''){
+																			quebra += '<p>' + tmp + '</p>';
+																			tmp = comentario.comentario.substring(indice, indice + 50);
+																			indice += 50;
+																		}
+																	%>
+																	<td><%- quebra %></td>
 																	<td><%= new Date(comentario.data_inclusao).getDate() + "/" + (new Date(comentario.data_inclusao).getMonth() + 1) + "/" + new Date(comentario.data_inclusao).getFullYear() + " - " + comentario.data_inclusao %></td>
 																	<td>
 																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="Comentario.del('<%= comentario._id %>', '<%= comentario.comentario %>', this)">

@@ -113,8 +113,8 @@ global.classMenu = {
 		enableExpandMenuDashboard();
 		classMenu.dashboard.main = 'active visible';
 		// console.log('expanded', classMenu.podcast.expand.main.expanded);
-		var charts = require('../public/js/init/charts.js');
-		var charts2 = require('../public/js/init/initChartsPage.js');
+		// var charts = require('../public/js/init/charts.js');
+		// var charts2 = require('../public/js/init/initChartsPage.js');
 
 
 		service_comentario.findByDataInclusao(null, 
@@ -128,30 +128,67 @@ global.classMenu = {
     				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_curtida.findForCharts", error: err }))
 
     				var tmp_curtidas = result;
-    				var curtida = {};
-    				var labels = [];
-    				var series = [];
-    				for (var i = 0, len = tmp_curtidas.length; i < len; i++) {
+    				let curtida = {};
+    				let labels = [];
+    				let series = [];
+    				let tamanho = 10;
+    				let maxCurtidas = 0;
+    				if (tmp_curtidas.length < tamanho){
+    					tamanho = tmp_curtidas.length;
+    				}
+    				for (var i = 0, len = tamanho; i < len; i++) {
     					labels.push(tmp_curtidas[i]._id);
     					series.push(tmp_curtidas[i].count);
+    					if(tmp_curtidas[i].count > maxCurtidas){
+    						maxCurtidas = tmp_curtidas[i].count;
+    					}
 					}
 
 					curtida.labels = labels;
 					curtida.series = [];
 					curtida.series.push(series);
+					curtida.high = maxCurtidas;
 
-					
 					var hoje = new Date();
-					console.log('hoje', hoje);
-					console.log('hoje: dia da semana', hoje.getDay());
-					var domingo = new Date();
-					domingo.setDate(hoje.getDate() - (hoje.getDay()));
-					console.log('domingo', domingo);
-					console.log('domingo: dia da semana', domingo.getDay());
-					service_airtime.findByDataInclusaoGTE(domingo, (err, result) => {
-    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoGTE", error: err }))
+					var dia1 = new Date();
+					dia1.setDate(1);
 
-    					console.log('findByDataInclusaoGTE', result);
+					let data_inicial = {
+						dia: dia1.getDate(),
+						mes: dia1.getMonth(),
+						ano: dia1.getFullYear()
+					}
+
+					let data_final = {
+						dia: hoje.getDate(),
+						mes: hoje.getMonth(),
+						ano: hoje.getFullYear()
+					}
+
+
+					service_airtime.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
+    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoBetween", error: err }))
+
+    					var airtimes = result;
+    					var airtime = {};
+    					labels = [];
+    					series = [];
+    					let maxList = 0;
+    					for (var i = 0, len = airtimes.length; i < len; i++) {
+	    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+	    					series.push(airtimes[i].listenersMax);
+	    					if(airtimes[i].listenersMax > maxList){
+	    						maxList = airtimes[i].listenersMax;
+	    					}
+						}
+						airtime.labels = labels;
+						airtime.series = [];
+						airtime.series.push(series);
+						airtime.high = maxList;
+						airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+						airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+
+						res.render('app/dashboard', { airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
 
     				});
 
@@ -185,33 +222,10 @@ global.classMenu = {
 		   //              }
 		   //                // res.send(body)
 		   //          });
-
-    				res.render('app/dashboard', { curtidaCharts: curtida, charts2: charts2, charts: charts, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+		   			//charts2: charts2, charts: charts,
+    				
     			})
-
-   //  		request('http://177.54.158.150:8000/admin/stats'
-   //  			                                           ,{
-			// 												  'auth': {
-			// 												    'user': 'admin',
-			// 												    'pass': '31ypq8X18LSR',
-			// 												    'sendImmediately': false
-			// 												}}
-			// 												  ,function (error, response, body) {
-			//     console.log('error:', error); // Print the error if one occurred and handle it
-			//     console.log('body', body);
-			//     console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-
-			//     if (response.statusCode == 200){
-			//       	console.log('fazer algo agora');
-			//   //     	parseString(xml, function (err, result) {
-			//   //     		console.dir('parse xml to obbjet');
-   //  	// 				console.dir(result);
-			// 		// });
-			//     }
-			// });
-			// res.render('app/dashboard', { charts2: charts2, charts: charts, comentarios_hoje: result, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
   		});
-		// res.render('app/dashboard', { classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
 	})
 
 	router.get('/podcast/', authenticationMiddleware(), function(req, res, next) {
@@ -219,7 +233,6 @@ global.classMenu = {
 		disableExpandAll();
 		enableExpandMenuPodcast();
 		classMenu.podcast.cadastro = 'active visible';
-		// console.log(req.body);
 
   		res.render('app/podcast', {path: "../", editPodcast: "{}", podcast: {}, classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
 	})
@@ -229,9 +242,7 @@ global.classMenu = {
 		disableExpandAll();
 		enableExpandMenuPodcast();
 		classMenu.podcast.cadastro = 'active visible';
-		const id = req.params.id;
-		console.log('id', id);
-		
+		const id = req.params.id;		
 
 		service_podcast.findById(id, 
 			(err, result) => {
@@ -240,7 +251,6 @@ global.classMenu = {
     		try {
 	    		result.capa = '/podcasts/capa/' + result.capa;
 	    		result.audio = '/podcasts/audio/' + result.audio;
-	    		console.log('podcast', result);
 	    		var podcast = JSON.stringify(result);
 				res.render('app/podcast', {path: "../../../", editPodcast: podcast, podcast: result, classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
 			} catch(e) {
@@ -268,13 +278,7 @@ global.classMenu = {
 	})
 
 	router.post('/podcast', authenticationMiddleware(), function(req, res, next) {
-		// debug('autor', req.body.autor);
-		// console.log(req.body.titulo);
-		// console.log(req.body.subtitulo);
-		// console.log(req.body.descricao);
-		// console.log(req.body.audio);
-		log.info("post.dashboard/podcast");
-		log.info(req.body);
+
 		const body = req.body;
 		const autor = req.body.autor,
 		     titulo = req.body.titulo,
@@ -331,7 +335,6 @@ global.classMenu = {
 		try {
 			const id = req.params.id;
 			if (typeof id === "undefined") {
-				// log.warn("id não informado");
 				return res.status(400).end(JSON.stringify({ _id: id , message: "informe o id", error: "id não informado" }));
 			} else {
 				service_podcast.findById(id, (err, result) => {
@@ -346,7 +349,6 @@ global.classMenu = {
 					    		return res.status(204).end(JSON.stringify({ podcast: podcast , message: "error: service_podcast.findByCapa", error: err }));
 					    	}
 
-					    	console.log('findByCapa', result.length);
 							if (result.length === 1) {
 								fs.unlink('./public/podcasts/capa/' + podcast.capa, function(error) {
 								    if (error) {
@@ -356,7 +358,7 @@ global.classMenu = {
 								    	if (err) {
 								    		return res.status(204).end(JSON.stringify({ podcast: podcast , message: "error: service_podcast.findByAudio ", error: err }));
 								    	}
-								    	console.log('findByAudio0', result.length);
+
 								    	if (result.length === 1) {
 										    fs.unlink('./public/podcasts/audio/' + podcast.audio, function(error) {
 											    if (error) {
@@ -388,7 +390,6 @@ global.classMenu = {
 							    		return res.status(204).end(JSON.stringify({ podcast: podcast , message: "error: service_podcast.findByAudio ", error: err }));
 							    	}
 
-							    	console.log('findByAudio', result.length);
 							    	if (result.length === 1) {
 									    fs.unlink('./public/podcasts/audio/' + podcast.audio, function(error) {
 										    if (error) {

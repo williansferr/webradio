@@ -1,6 +1,6 @@
 // if ('undefined' !== typeof module) {
 
-    module.exports = function initCharts(){
+    /*module.exports = */function initCharts(){
         /* ----------==========     Daily Sales Chart initialization    ==========---------- */
 
         dataDailySalesChart = {

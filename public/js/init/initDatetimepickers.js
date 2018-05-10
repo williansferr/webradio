@@ -1,6 +1,6 @@
-if ('undefined' !== typeof module) {
+// if ('undefined' !== typeof module) {
 
-    module.exports = function initDatetimepickers(){
+    function initDatetimepickers(){
             $('.datetimepicker').datetimepicker({
                 icons: {
                     time: "fa fa-clock-o",
@@ -16,20 +16,22 @@ if ('undefined' !== typeof module) {
                 }
              });
 
+
              $('.datepicker').datetimepicker({
-                format: 'MM/DD/YYYY',
-                icons: {
-                    time: "fa fa-clock-o",
-                    date: "fa fa-calendar",
-                    up: "fa fa-chevron-up",
-                    down: "fa fa-chevron-down",
-                    previous: 'fa fa-chevron-left',
-                    next: 'fa fa-chevron-right',
-                    today: 'fa fa-screenshot',
-                    clear: 'fa fa-trash',
-                    close: 'fa fa-remove',
-                    inline: true
-                }
+                format: 'DD/MM/YYYY',
+                locale: 'pt-br',
+                // icons: {
+                //     time: "fa fa-clock-o",
+                //     date: "fa fa-calendar",
+                //     up: "fa fa-chevron-up",
+                //     down: "fa fa-chevron-down",
+                //     previous: 'fa fa-chevron-left',
+                //     next: 'fa fa-chevron-right',
+                //     today: 'fa fa-screenshot',
+                //     clear: 'fa fa-trash',
+                //     close: 'fa fa-remove',
+                //     inline: true
+                // }                
              });
 
              $('.timepicker').datetimepicker({
@@ -46,8 +48,7 @@ if ('undefined' !== typeof module) {
                     clear: 'fa fa-trash',
                     close: 'fa fa-remove',
                     inline: true
-
                 }
              });
     }
-}
+// }

@@ -2,7 +2,7 @@ const express            = require('express');
 const router 	         = express.Router();
 const service_comentario = require('../service/service-comentario');
 
-function authenticationMiddleware () {  
+function authenticationMiddleware () {
   return function (req, res, next) {
     if (req.isAuthenticated()) {
       return next()
@@ -53,7 +53,8 @@ router.post('/', function(req, res, next) {
 				if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))
 				
 				// console.log(result);
-				return res.status(200).end(JSON.stringify({ podcast: result.ops[0], message: "inserido" }));
+				req.app.io.emit('comentario-io', result.ops[0]);
+				return res.status(200).end(JSON.stringify({ comentario: result.ops[0], message: "inserido" }));
 			});
 	} catch (e) {
 		// log.warn(e);

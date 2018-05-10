@@ -13,7 +13,6 @@
 	</div> -->
 	<!-- <pre>
 	<%= comentarios_hoje.length %>
-	<%= charts.charts %>
 
 	<%= notification %>
 	<% if (notification) { %>
@@ -34,7 +33,7 @@
 			                    </div>
 			                    <div class="card-content">
 			                        <p class="category">Comentários hoje</p>
-			                        <h3 class="card-title"><%= comentarios_hoje.length %></h3>
+			                        <h3 id="id-qt-comentario" class="card-title"><%= comentarios_hoje.length %></h3>
 			                    </div>
 			                    <div class="card-footer">
 			                        <div class="stats">
@@ -52,10 +51,10 @@
 			                    </div>
 			                    <div class="card-content">
 			                        <p class="category">Ouvintes</p>
-			                        <h3 class="card-title">0</h3>
+			                        <h3 id="id-qt-listeners" class="card-title">0</h3>
 			                    </div>
 			                    <div class="card-footer">
-			                        <div class="stats">
+			                        <div id="id-qt-listeners-peak" class="stats">
 			                            <i class="material-icons">queue_music</i>
 			                            Pico ouvintes 0
 			                        </div>
@@ -97,20 +96,41 @@
 			        </div>
 
 			        <div class="row">
-			            <div class="col-md-6">
+			            <div class="col-md-12">
 			                <div class="card">
 			                    <div class="card-header card-header-icon" data-background-color="blue">
 			                        <i class="material-icons">timeline</i>
 			                    </div>
 			                    <div class="card-content">
-			                        <h4 class="card-title">Quantidade semanal
-			                            <small> - Ouvintes</small>
+			                        <h4 class="card-title">Contagem de ouvintes por período
+			                            <small></small>
 			                        </h4>
+			                        <div class="row">
+			                        	<div class="col col-12 col-md-5">
+					                        <div class="form-group">
+					                            <label class="label-control">Data inicial</label>
+					                            <input id="id-dt-inicial" type="text" class="form-control datepicker" value="<%= airtimeCharts.dia1 %>" />
+					                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-5">
+				                    		<div class="form-group">
+					                            <label class="label-control">Data final</label>
+					                            <input id="id-dt-final" type="text" class="form-control datepicker" value="<%= airtimeCharts.hoje %>" />
+					                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-2">
+				                    		<div class="form-group">
+				                    			<button onclick="initChartsAirtimesByPeriodo()" type="button" class="btn btn-info btn-simple" rel="tooltip" title="Refresh">
+					                                <i class="material-icons">refresh</i>
+					                            </button>
+				                    		</div>
+				                    	</div>
+			                        </div>
 			                    </div>
-			                    <div id="colouredRoundedLineChart" class="ct-chart"></div>
+			                    <div id="airtimeCharts" class="ct-chart"></div>
 			                </div>
 			            </div>
-			            <div class="col-md-6">
+			            <!-- <div class="col-md-6">
 			                <div class="card">
 			                    <div class="card-header card-header-icon" data-background-color="rose">
 			                        <i class="material-icons">insert_chart</i>
@@ -122,122 +142,42 @@
 			                    </div>
 			                    <div id="multipleBarsChart" class="ct-chart"></div>
 			                </div>
-			            </div>
+			            </div> -->
 			        </div>
 
 			        <div class="row">
-			            <div class="col-12">
+			            <div class="col-md-12">
 			                <div class="card">
 			                    <div class="card-header card-header-icon" data-background-color="blue">
 			                        <i class="material-icons">insert_chart</i>
 			                    </div>
 			                    <div class="card-content">
 			                        <h4 class="card-title">Ranking
-			                            <small>- musicas curtidas</small>
+			                            <small>- top 10 musicas + curtidas</small>
 			                        </h4>
 			                    </div>
 			                    <div id="curtidasCharts" class="ct-chart"></div>
 			                </div>
 			            </div>
 			        </div>
-
-			        <div class="row">
-			            <div class="col-md-4">
-			                <div class="card card-chart">
-			                    <div class="card-header" data-background-color="green" data-header-animation="true">
-			                        <div class="ct-chart" id="dailySalesChart"></div>
-			                    </div>
-			                    <div class="card-content">
-			                        <div class="card-actions">
-			                            <button type="button" class="btn btn-danger btn-simple fix-broken-card">
-			                                <i class="material-icons">build</i> Fix Header!
-			                            </button>
-			                            <button type="button" class="btn btn-info btn-simple" rel="tooltip" data-placement="bottom" title="Refresh">
-			                                <i class="material-icons">refresh</i>
-			                            </button>
-			                            <button type="button" class="btn btn-default btn-simple" rel="tooltip" data-placement="bottom" title="Change Date">
-			                                <i class="material-icons">edit</i>
-			                            </button>
-			                        </div>
-			                        <h4 class="card-title">Daily Sales</h4>
-			                        <p class="category">
-			                            <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today sales.</p>
-			                    </div>
-			                    <div class="card-footer">
-			                        <div class="stats">
-			                            <i class="material-icons">access_time</i> updated 4 minutes ago
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			            <div class="col-md-4">
-			                <div class="card card-chart">
-			                    <div class="card-header" data-background-color="orange" data-header-animation="true">
-			                        <div class="ct-chart" id="completedTasksChart"></div>
-			                    </div>
-			                    <div class="card-content">
-			                        <div class="card-actions">
-			                            <button type="button" class="btn btn-danger btn-simple fix-broken-card">
-			                                <i class="material-icons">build</i> Fix Header!
-			                            </button>
-			                            <button type="button" class="btn btn-info btn-simple" rel="tooltip" data-placement="bottom" title="Refresh">
-			                                <i class="material-icons">refresh</i>
-			                            </button>
-			                            <button type="button" class="btn btn-default btn-simple" rel="tooltip" data-placement="bottom" title="Change Date">
-			                                <i class="material-icons">edit</i>
-			                            </button>
-			                        </div>
-			                        <h4 class="card-title">Completed Tasks</h4>
-			                        <p class="category">Last Campaign Performance</p>
-			                    </div>
-			                    <div class="card-footer">
-			                        <div class="stats">
-			                            <i class="material-icons">access_time</i> campaign sent 2 days ago
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			            <div class="col-md-4">
-			                <div class="card card-chart">
-			                    <div class="card-header" data-background-color="red" data-header-animation="true">
-			                        <div class="ct-chart" id="websiteViewsChart"></div>
-			                    </div>
-			                    <div class="card-content">
-			                        <div class="card-actions">
-			                            <button type="button" class="btn btn-danger btn-simple fix-broken-card">
-			                                <i class="material-icons">build</i> Fix Header!
-			                            </button>
-			                            <button type="button" class="btn btn-info btn-simple" rel="tooltip" data-placement="bottom" title="Refresh">
-			                                <i class="material-icons">refresh</i>
-			                            </button>
-			                            <button type="button" class="btn btn-default btn-simple" rel="tooltip" data-placement="bottom" title="Change Date">
-			                                <i class="material-icons">edit</i>
-			                            </button>
-			                        </div>
-			                        <h4 class="card-title">Website Views</h4>
-			                        <p class="category">Last Campaign Performance</p>
-			                    </div>
-			                    <div class="card-footer">
-			                        <div class="stats">
-			                            <i class="material-icons">access_time</i> campaign sent 2 days ago
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			        </div>
-			    </div>
 			</div>
 		</div>
 	</div>
 
 
 	<% include partials/script %>
+	<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+	<!-- <script src="/js/plugins/moment.min.js"></script> -->
+	<script src="/js/plugins/moment-with-locales.min.js"></script>
+	<!-- DateTimePicker Plugin -->
+	<script src="/js/plugins/bootstrap-datetimepicker.js"></script>
 	<!--  Charts Plugin -->
 	<script src="/js/plugins/chartist.min.js"></script>
-	<script>
-		<%- charts %>
-		<%- charts2 %>
-	</script>
+	<script src="/js/init/initDatetimepickers.js"></script>
+	<!-- <script src="/js/init/charts.js"></script>
+	<script src="/js/init/initChartsPage.js"></script> -->
+	
+
 	<script>
 		// var ps = new PerfectScrollbar('#myscroll');
 		// $('.sidebar-wrapper').perfectScrollbar();
@@ -255,8 +195,9 @@
 	                tension: 0
 	            }),
 	            low: 0,
-	            high: 50, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+	            high: <%= curtidaCharts.high %>, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
 	            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+	            height: '300px'
 	        }
 
 	        var curtidasCharts = new Chartist.Bar('#curtidasCharts', dataCurtidasChart, optionsDailySalesChart);
@@ -265,18 +206,141 @@
 
 		}
 
+		function initChartsAirtimes(data){
+			// dataAirtimeChart = JSON.parse(data);
+			dataAirtimeChart = data;
+
+	        optionsDailySalesChart = {
+	        	lineSmooth: Chartist.Interpolation.cardinal({
+					tension: 10
+				}),
+				axisY: {
+					showGrid: true,
+					offset: 40
+				},
+				axisX: {
+					showGrid: false,
+				},
+				low: 0,
+				high: <%= airtimeCharts.high %>,
+				showPoint: true,
+				height: '300px'
+	        }
+
+	        var airtimeCharts = new Chartist.Line('#airtimeCharts', dataAirtimeChart, optionsDailySalesChart);
+
+	        md.startAnimationForLineChart(airtimeCharts);
+
+		}
+
+		function initChartsAirtimesByPeriodo(){
+			let dtInicial = new Date();
+			let dtFinal = new Date();
+			let tmpI = $('#id-dt-inicial').val();
+			let tmpF = $('#id-dt-final').val();
+
+			let dia = tmpI.substring(0, 2);
+			let mes = tmpI.substring(3, 5);
+			let ano = tmpI.substring(6, 10);
+			dtInicial.setDate(dia);
+			dtInicial.setMonth(parseInt(mes) - 1);
+			dtInicial.setFullYear(ano);
+
+			dia = tmpF.substring(0, 2);
+			mes = tmpF.substring(3, 5);
+			ano = tmpF.substring(6, 10);
+			dtFinal.setDate(dia);
+			dtFinal.setMonth(parseInt(mes) - 1);
+			dtFinal.setFullYear(ano);
+			
+			
+			console.log('datainicial', dtInicial);
+			console.log('datafinal', dtFinal);
+
+			var vai = {data_inicial: dtInicial, data_final: dtFinal};
+
+			const request = $.ajax({
+                url: '/airtime',
+                type: 'POST',
+                data: vai,
+                // contentType: "application/json"
+            });
+            
+
+            request.done(function (msg) {
+                console.log('getAirtimes() done');
+                console.log(msg);
+                let ac = JSON.parse(msg);
+                initChartsAirtimes(ac.airtimeCharts);
+                // var json = JSON.parse(msg);
+
+                // console.log('json.message:', json.message);
+                // console.log('indexof.inserido:', json.message.indexOf('inserido'));
+                // console.log('indexof.atualizado:', json.message.indexOf('atualizado'));
+
+                // if(json.message.indexOf('inserido') >= 0 ){
+
+                //     if (isLike){
+                //         Curtida.plusLike();
+                //         $('#ico-deslike-audio').removeAttr("style");
+                //     } else {
+                //         Curtida.plusDeslike();
+                //         $('#ico-like-audio').removeAttr("style");
+                //     }
+
+
+                // } else if(json.message.indexOf('atualizado') >= 0){
+                //     if (isLike){
+                //         Curtida.plusLike();
+                //         Curtida.minusDeslike();
+                //         $('#ico-deslike-audio').removeAttr("style");
+                //     } else {
+                //         Curtida.plusDeslike();
+                //         Curtida.minusLike();
+                //         $('#ico-like-audio').removeAttr("style");
+                //     }
+                // }
+            });
+
+            request.fail(function (jqXHR, textStatus) {
+                console.log('erro');
+                console.log(jqXHR);
+                console.log(textStatus);
+                //swal("Erro!", textoErro1.textStatus, "error");
+            });
+		}
+
+
 		$( document ).ready(function() {
-			// initCharts();
-			initChartsPage();
 			initChartsCurtidas();
+			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'));
+			initDatetimepickers();
+			initAirtimeStats();
 		});
-
-
-		
-
 		
 		
-		// var ps2 = new PerfectScrollbar('.main-content');
+	</script>
+	
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	    const socket = io();
+
+	    function initAirtimeStats() {
+	        // socket.emit('airtime-info', ''); //envia mensagem ao servidor
+	        socket.on('airtime-stats', function(msg){
+	            // console.log(msg);
+	            $('#id-qt-listeners').html(msg.listeners);
+	            $('#id-qt-listeners-peak').html('<i class="material-icons">queue_music</i> Pico ouvintes ' + msg.listener_peak);
+	        });
+
+	        socket.on('comentario-io', function(msg){
+	            // console.log('comentario-io', msg);
+	            if(msg._id != null && msg._id != undefined) {
+	            	$('#id-qt-comentario').html(parseInt($('#id-qt-comentario').text()) + 1);
+	            }
+	        });
+	    }
+
 	</script>
 
 	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
