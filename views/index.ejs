@@ -5,7 +5,7 @@
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <!-- Favicons -->
-    <!-- criar logo com tamanoho 32x32  -->
+    <!-- criar logo com tamanho 32x32  -->
     <link rel="apple-touch-icon" href="/img/logo/logo.png">
     <link rel="icon" href="/img/logo/logo.png">
     <title>
@@ -53,22 +53,24 @@
                                 </div>
                             </div>
                             <div class="play-list">
+                            <% radios.forEach(function(ra){ %>
                                 <a href="#" class="play"
                                     data-id="1"
-                                    data-album="Atento"
-                                    data-artist=""
-                                    data-title=""
-                                    data-albumart="/img/logo/logo.png"
-                                    data-url="http://177.54.158.150:8000/airtime_128"></a>
-                                <% podcasts.forEach(function(pc){ %>
-                                    <a href="#" class="play"
-                                                data-id="<%= pc._id %>"
-                                                data-album="<%= pc.subtitulo %>"
-                                                data-artist="<%= pc.autor %>"
-                                                data-title="<%= pc.titulo %>"
-                                                data-albumart="/podcasts/capa/<%= pc.capa %>"
-                                                data-url="/podcasts/audio/<%= pc.audio %>"></a> 
-                                <% }); %>
+                                    data-album="<%= ra.subtitulo %>"
+                                    data-artist="<%= ra.autor %>"
+                                    data-title="<%= ra.titulo %>"
+                                    data-albumart="<%= ra.capa %>"
+                                    data-url="<%= ra.audio %>"></a>
+                            <% }); %>
+                            <% podcasts.forEach(function(pc){ %>
+                                <a href="#" class="play"
+                                            data-id="<%= pc._id %>"
+                                            data-album="<%= pc.subtitulo %>"
+                                            data-artist="<%= pc.autor %>"
+                                            data-title="<%= pc.titulo %>"
+                                            data-albumart="/podcasts/capa/<%= pc.capa %>"
+                                            data-url="/podcasts/audio/<%= pc.audio %>"></a> 
+                            <% }); %>
                             </div>
                             <div class="audio"></div>
                             <div class="controls">

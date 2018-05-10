@@ -2,6 +2,7 @@ const express          = require('express');
 const router           = express.Router();
 const service_podcast  = require('../service/service-podcast');
 const service_curtidas = require('../service/service-curtidas');
+const service_radio    = require('../service/service-radio');
 const os 			   = require('os');
 
 /* GET home page. */
@@ -16,7 +17,6 @@ router.get('/', function(req, res, next) {
 
 		service_podcast.findAll(
 			(err, result) => {
-
 				try {
 
 					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
@@ -33,9 +33,17 @@ router.get('/', function(req, res, next) {
 					//     	}
 					// });
 
-					return res.render('index', { message: null, podcasts: result })
+					const podcasts = result;
+
+					service_radio.findAll((err, result) => {
+						if(err) return res.status(204).end(JSON.stringify({ message: "radios não encontrados", error: err }))
+
+
+						return res.render('index', { message: null, radios: result, podcasts: podcasts })
+
+					})
 				} catch (e) {
-		    		return res.status(500).end(JSON.stringify({ method: "get./service_podcast.findAll" , message: "", error: e}));
+		    		return res.status(500).end(JSON.stringify({ method: "get in /" , message: "erro ao tentar buscar dados da base", error: e}));
 		    	}
 			});
 })
