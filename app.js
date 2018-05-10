@@ -30,10 +30,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use('/scripts', express.static(__dirname + '/node_modules/sweetalert2/dist/'));
-// app.use('/scripts', express.static(__dirname + '/node_modules/datatables.net/js/'));
-// app.use('/css', express.static(__dirname + '/node_modules/datatables.net-dt/css/'));
-// app.use('/images', express.static(__dirname + '/node_modules/datatables.net-dt/images/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/sweetalert2/dist/'));
+app.use('/scripts', express.static(__dirname + '/node_modules/datatables.net/js/'));
+app.use('/css', express.static(__dirname + '/node_modules/datatables.net-dt/css/'));
+app.use('/images', express.static(__dirname + '/node_modules/datatables.net-dt/images/'));
 
 require('./auth')(passport);
 app.use(session({  
