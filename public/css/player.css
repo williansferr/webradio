@@ -83,8 +83,7 @@
 	-moz-border-radius: 10px/7px; 
 	border-radius: 10px/7px; 
 	background: rgba(255, 121, 0, .9);/* rgba(1,66,106,.9); */
-	-webkit-box-shadow:0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
-	        box-shadow:0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
+	box-shadow: 5px 5px 5px rgba(0,0,0,.22);
 }
 
 .mhn-player .album-art,
@@ -111,6 +110,8 @@
 	style="display: block; 
 	margin-left: auto; 
 	margin-right: auto;
+	-webkit-box-shadow:0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
+	        box-shadow:0 16px 28px 0 rgba(0,0,0,.22),0 25px 55px 0 rgba(0,0,0,.21);
 }
 .mhn-player .album-art:before{
 /* .album-art:before{ */
