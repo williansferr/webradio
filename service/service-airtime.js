@@ -110,6 +110,13 @@ function findByAirtimeToday(airtime, callback){
                     month: { $gte: (mes + 1) },
                     day: { $gte: dia }
                 }
+            },
+            {
+                $sort: { 
+                    day: -1,
+                    month: -1,
+                    year: -1
+                } 
             }
         ]
     ).toArray(callback);
@@ -143,6 +150,17 @@ function upsert(airtime, callback){
     
 }
 
+/**
+    Exemplo atualizando apenas o campo autor
+    db.radios.update({
+        _id: ObjectId("5af48c8fa8ce524aeaa2ade1")
+    },
+    {
+        $set : {
+            "autor" : "teste"
+        }
+    })
+*/
 function update(_id, airtime, callback){
     global.db.collection("airtimes").updateOne(
     	{ _id: ObjectId(_id) },

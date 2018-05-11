@@ -109,14 +109,21 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
   const request = require('request');
   const service_curtidas = require('../service/service-curtidas');
   const airtime_service = require('../service/service-airtime');
+  const bunyan = require('bunyan');
+  const log = bunyan.createLogger(
+    {
+      name: "webradioApp",
+      streams: [{
+        path: '/var/log/webradioApp.log',
+      }]
+    });
 
   function loopEterno(){
-    
+    log.info('Iniciar requisições no airtime');
     setTimeout(function () {
       try {
         request('http://177.54.158.150/api/live-info/?callback'
                                   ,function (error, response, body) {
-
           // console.log('body', body);
           if(body != undefined){  
             var tmp = body.replace('(', '');
@@ -125,7 +132,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
             var hasErro = false;
 
             
-            try { 
+            try {
               var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
               // console.log('fechaPare', fechaPare);
               if (fechaPare == ')') {
@@ -135,7 +142,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
               live_info = JSON.parse( tmp );
             } catch(e){
               hasErro = true;
-              console.log(e);
+              log.error(e);
             }
 
             if (!hasErro) {
@@ -166,7 +173,10 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           
         });
       } catch(e){
-        console.log(e);
+        log.error({
+          error: e,
+          request: 'http://177.54.158.150/api/live-info/?callback'
+        });
       }
 
       try {
@@ -186,32 +196,31 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                   const parseString = require('xml2js').parseString;
                   // console.log('body2', body);
                   parseString(body, function (err, result) {
-                    // console.dir('parse xml to object');
                     var obj = result;
-                    // console.dir(obj);
-                    // console.dir(obj.icestats.source);
-                    // console.dir('listener_peak', obj.icestats.source[0].listener_peak[0]);
-                    // console.dir('listeners', obj.icestats.source[0].listeners[0]);
-                    // console.dir('mount', obj.icestats.source[0].$.mount);
-                    // var tmp = new Date(obj.icestats.source[0].stream_start[0]);
-                    var airtime = {
-                      listener_peak: obj.icestats.source[0].listener_peak[0],
-                      listeners: obj.icestats.source[0].listeners[0],
-                      mount: obj.icestats.source[0].$.mount,
-                      stream_start: new Date(obj.icestats.source[0].stream_start[0]),
-                      stream_start2: obj.icestats.source[0].stream_start[0],
-                      title: obj.icestats.source[0].title[0]
-                    };
-                    airtime_service.upsert(airtime);
-                    io.emit('airtime-stats', airtime);
-                    // console.dir('listener_peak',result.source.listener_peak);
+                    if (obj.icestats.source !== undefined) {
+                      if(obj.icestats.source[0].title !== undefined){
+                        var airtime = {
+                          listener_peak:  obj.icestats.source[0].listener_peak[0],
+                          listeners:      obj.icestats.source[0].listeners[0],
+                          mount:          obj.icestats.source[0].$.mount,
+                          stream_start:   new Date(obj.icestats.source[0].stream_start[0]),
+                          stream_start2:  obj.icestats.source[0].stream_start[0],
+                          title:          obj.icestats.source[0].title[0]
+                        };
+                        airtime_service.upsert(airtime);
+                        io.emit('airtime-stats', airtime);
+                      }
+                    }
                 });
               }
             }
         });
 
       } catch(e){
-        console.log(e);
+        log.error({
+          error: e,
+          request: 'http://177.54.158.150:8000/admin/stats'
+        });
       }
 
 

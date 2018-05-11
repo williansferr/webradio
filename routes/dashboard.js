@@ -10,8 +10,14 @@ const service_comentario = require('../service/service-comentario');
 const service_curtida = require('../service/service-curtidas');
 const service_airtime = require('../service/service-airtime');
 const bunyan = require('bunyan');
-const log = bunyan.createLogger({name: 'dashboard'});
-// const parseString = require('xml2js').parseString;
+const log = bunyan.createLogger(
+{
+  name: "webradioApp",
+  streams: [{
+    path: '/var/log/webradioApp.log',
+  }]
+});
+
 
 global.expanded = {
 	main: {
@@ -105,19 +111,26 @@ global.classMenu = {
 		}
 	}
 
+/**
+	Rota /dashboard
+	Objetivo: 
+		- Buscar comentários na data de hoje
+		- Buscar musicas mais curtidas e retornar as 10 mais, para compor o gráfico de ranking
+		- 
 
+*/
 	router.get('/', authenticationMiddleware(), function(req, res, next) {
-		// - Buscar comentarios
-		// - Trazer dados para compor os graficos
 		disableExpandAll();
 		enableExpandMenuDashboard();
 		classMenu.dashboard.main = 'active visible';
-		// console.log('expanded', classMenu.podcast.expand.main.expanded);
-		// var charts = require('../public/js/init/charts.js');
-		// var charts2 = require('../public/js/init/initChartsPage.js');
 
+		log.info({
+			user: req.user,
+			request: '/dashboard',
+			method: 'GET'
+		})
 
-		service_comentario.findByDataInclusao(null, 
+		service_comentario.findByDtToday( 
 			(err, result) => {
     			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_comentario.findByDataInclusao", error: err }))
 
@@ -188,7 +201,15 @@ global.classMenu = {
 						airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
 						airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
-						res.render('app/dashboard', { airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''})
+						const data = { airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
+						log.info({
+							user: req.user,
+							request: '/dashboard',
+							method: 'GET',
+							data: data
+						})
+						
+						res.render('app/dashboard', data);
 
     				});
 

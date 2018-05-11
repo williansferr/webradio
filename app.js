@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const path = require('path');
 const favicon = require('serve-favicon')
 const logger = require('morgan');
@@ -19,6 +20,8 @@ const curtidasRouter = require('./routes/curtidas');
 const airtimeRouter = require('./routes/airtime');
 
 const app = express();
+
+app.use(compression());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

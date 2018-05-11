@@ -254,8 +254,8 @@
 			dtFinal.setFullYear(ano);
 			
 			
-			console.log('datainicial', dtInicial);
-			console.log('datafinal', dtFinal);
+			// console.log('datainicial', dtInicial);
+			// console.log('datafinal', dtFinal);
 
 			var vai = {data_inicial: dtInicial, data_final: dtFinal};
 
@@ -268,8 +268,8 @@
             
 
             request.done(function (msg) {
-                console.log('getAirtimes() done');
-                console.log(msg);
+                // console.log('getAirtimes() done');
+                // console.log(msg);
                 let ac = JSON.parse(msg);
                 initChartsAirtimes(ac.airtimeCharts);
                 // var json = JSON.parse(msg);
