@@ -31,7 +31,7 @@ Para iniciar inslate abaixo;
 ### Logs
 
 * `node_modules\.bin\bunyan webradioApp.log`
-* [help] (http://trentm.com/node-bunyan/bunyan.1.html)
+* [help](http://trentm.com/node-bunyan/bunyan.1.html)
 
 <!-- ## Contribuição
 
