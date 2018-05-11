@@ -125,7 +125,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
         request('http://177.54.158.150/api/live-info/?callback'
                                   ,function (error, response, body) {
           // console.log('body', body);
-          if(body != undefined){  
+          if(body){  
             var tmp = body.replace('(', '');
             tmp = tmp.replace(')', '');
             var live_info = {};
@@ -190,15 +190,15 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                                       ,function (error, response, body) {
                 // console.log('error:', error); // Print the error if one occurred and handle it
                 // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            if (response != undefined) {
+            if (response) {
               // console.log(response);
               if (response.statusCode == 200){
                   const parseString = require('xml2js').parseString;
                   // console.log('body2', body);
                   parseString(body, function (err, result) {
                     var obj = result;
-                    if (obj.icestats.source !== undefined) {
-                      if(obj.icestats.source[0].title !== undefined){
+                    if (obj.icestats.source) {
+                      if(obj.icestats.source[0].title){
                         var airtime = {
                           listener_peak:  obj.icestats.source[0].listener_peak[0],
                           listeners:      obj.icestats.source[0].listeners[0],

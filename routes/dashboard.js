@@ -120,229 +120,317 @@ global.classMenu = {
 
 */
 	router.get('/', authenticationMiddleware(), function(req, res, next) {
-		disableExpandAll();
-		enableExpandMenuDashboard();
-		classMenu.dashboard.main = 'active visible';
 
-		log.info({
-			user: req.user,
-			request: '/dashboard',
-			method: 'GET'
-		})
+		try{ 
 
-		service_comentario.findByDtToday( 
-			(err, result) => {
-    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_comentario.findByDataInclusao", error: err }))
+			disableExpandAll();
+			enableExpandMenuDashboard();
+			classMenu.dashboard.main = 'active visible';
 
-				
+			service_comentario.findByDtToday(
+				(err, result) => {
+	    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_comentario.findByDataInclusao", error: err }))
 
-    			var comentarios = result;
-    			service_curtida.findForCharts((err, result) => {
-    				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_curtida.findForCharts", error: err }))
+	    			var comentarios = result;
+	    			service_curtida.findForCharts((err, result) => {
+	    				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_curtida.findForCharts", error: err }))
 
-    				var tmp_curtidas = result;
-    				let curtida = {};
-    				let labels = [];
-    				let series = [];
-    				let tamanho = 10;
-    				let maxCurtidas = 0;
-    				if (tmp_curtidas.length < tamanho){
-    					tamanho = tmp_curtidas.length;
-    				}
-    				for (var i = 0, len = tamanho; i < len; i++) {
-    					labels.push(tmp_curtidas[i]._id);
-    					series.push(tmp_curtidas[i].count);
-    					if(tmp_curtidas[i].count > maxCurtidas){
-    						maxCurtidas = tmp_curtidas[i].count;
-    					}
-					}
-
-					curtida.labels = labels;
-					curtida.series = [];
-					curtida.series.push(series);
-					curtida.high = maxCurtidas;
-
-					var hoje = new Date();
-					var dia1 = new Date();
-					dia1.setDate(1);
-
-					let data_inicial = {
-						dia: dia1.getDate(),
-						mes: dia1.getMonth(),
-						ano: dia1.getFullYear()
-					}
-
-					let data_final = {
-						dia: hoje.getDate(),
-						mes: hoje.getMonth(),
-						ano: hoje.getFullYear()
-					}
-
-
-					service_airtime.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
-    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoBetween", error: err }))
-
-    					var airtimes = result;
-    					var airtime = {};
-    					labels = [];
-    					series = [];
-    					let maxList = 0;
-    					for (var i = 0, len = airtimes.length; i < len; i++) {
-	    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
-	    					series.push(airtimes[i].listenersMax);
-	    					if(airtimes[i].listenersMax > maxList){
-	    						maxList = airtimes[i].listenersMax;
+	    				var tmp_curtidas = result;
+	    				let curtida = {};
+	    				let labels = [];
+	    				let series = [];
+	    				let tamanho = 10;
+	    				let maxCurtidas = 0;
+	    				if (tmp_curtidas.length < tamanho){
+	    					tamanho = tmp_curtidas.length;
+	    				}
+	    				for (var i = 0, len = tamanho; i < len; i++) {
+	    					labels.push(tmp_curtidas[i]._id);
+	    					series.push(tmp_curtidas[i].count);
+	    					if(tmp_curtidas[i].count > maxCurtidas){
+	    						maxCurtidas = tmp_curtidas[i].count;
 	    					}
 						}
-						airtime.labels = labels;
-						airtime.series = [];
-						airtime.series.push(series);
-						airtime.high = maxList;
-						airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
-						airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
-						const data = { airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
-						log.info({
-							user: req.user,
-							request: '/dashboard',
-							method: 'GET',
-							data: data
-						})
-						
-						res.render('app/dashboard', data);
+						curtida.labels = labels;
+						curtida.series = [];
+						curtida.series.push(series);
+						curtida.high = maxCurtidas;
 
-    				});
+						var hoje = new Date();
+						var dia1 = new Date();
+						dia1.setDate(1);
 
-					// request('http://177.54.158.150:8000/admin/listmounts'
-     //                                                   ,{
-     //                                                      'auth': {
-     //                                                        'user': 'admin',
-     //                                                        'pass': '31ypq8X18LSR',
-     //                                                        'sendImmediately': false
-     //                                                    }}
-	    //                                   ,function (error, response, body) {
-		   //              // console.log('error:', error); // Print the error if one occurred and handle it
-		   //              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+						let data_inicial = {
+							dia: dia1.getDate(),
+							mes: dia1.getMonth(),
+							ano: dia1.getFullYear()
+						}
 
-		   //              if (response.statusCode == 200){
-		   //                  const parseString = require('xml2js').parseString;
-		   //                  console.log('body2', body);
-		   //                  console.dir('parse xml to object');
-		   //                  parseString(body, function (err, result) {
-		   //                    var obj = result;
-		   //                    console.dir(obj);
-		   //                    // console.dir(obj.icestats.source[0].listener_peak[0]);
-		   //                    // var airtime_service = require('../service/service-airtime');
-		   //                    // var airtime = {
-		   //                    //   listener_peak: obj.icestats.source[0].listener_peak[0],
-		   //                    //   mount: 'airtime_128'
-		   //                    // };
-		   //                    // airtime_service.upsert(airtime);
-		   //                    // console.dir('listener_peak',result.source.listener_peak);
-		   //                });
-		   //              }
-		   //                // res.send(body)
-		   //          });
-		   			//charts2: charts2, charts: charts,
-    				
-    			})
-  		});
+						let data_final = {
+							dia: hoje.getDate(),
+							mes: hoje.getMonth(),
+							ano: hoje.getFullYear()
+						}
+
+
+						service_airtime.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
+	    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoBetween", error: err }))
+
+	    					var airtimes = result;
+	    					var airtime = {};
+	    					labels = [];
+	    					series = [];
+	    					let maxList = 0;
+	    					for (var i = 0, len = airtimes.length; i < len; i++) {
+		    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+		    					series.push(airtimes[i].listenersMax);
+		    					if(airtimes[i].listenersMax > maxList){
+		    						maxList = airtimes[i].listenersMax;
+		    					}
+							}
+							airtime.labels = labels;
+							airtime.series = [];
+							airtime.series.push(series);
+							airtime.high = maxList;
+							airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+							airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+
+							const data = { airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
+							log.info({
+								user: req.user,
+								request: '/dashboard',
+								method: 'GET',
+								data: data
+							})
+							
+							res.render('app/dashboard', data);
+
+	    				});
+
+						// request('http://177.54.158.150:8000/admin/listmounts'
+	     //                                                   ,{
+	     //                                                      'auth': {
+	     //                                                        'user': 'admin',
+	     //                                                        'pass': '31ypq8X18LSR',
+	     //                                                        'sendImmediately': false
+	     //                                                    }}
+		    //                                   ,function (error, response, body) {
+			   //              // console.log('error:', error); // Print the error if one occurred and handle it
+			   //              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+
+			   //              if (response.statusCode == 200){
+			   //                  const parseString = require('xml2js').parseString;
+			   //                  console.log('body2', body);
+			   //                  console.dir('parse xml to object');
+			   //                  parseString(body, function (err, result) {
+			   //                    var obj = result;
+			   //                    console.dir(obj);
+			   //                    // console.dir(obj.icestats.source[0].listener_peak[0]);
+			   //                    // var airtime_service = require('../service/service-airtime');
+			   //                    // var airtime = {
+			   //                    //   listener_peak: obj.icestats.source[0].listener_peak[0],
+			   //                    //   mount: 'airtime_128'
+			   //                    // };
+			   //                    // airtime_service.upsert(airtime);
+			   //                    // console.dir('listener_peak',result.source.listener_peak);
+			   //                });
+			   //              }
+			   //                // res.send(body)
+			   //          });
+			   			//charts2: charts2, charts: charts,
+	    				
+	    			})
+	  		});
+		} catch(e) {
+			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard',
+				method: 'GET'
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
+		}
 	})
 
 	router.get('/podcast/', authenticationMiddleware(), function(req, res, next) {
 		
-		disableExpandAll();
-		enableExpandMenuPodcast();
-		classMenu.podcast.cadastro = 'active visible';
+		try{
+			disableExpandAll();
+			enableExpandMenuPodcast();
+			classMenu.podcast.cadastro = 'active visible';
 
-  		res.render('app/podcast', {path: "../", editPodcast: "{}", podcast: {}, classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
+			const data = {
+				path: "../", 
+				editPodcast: "{}", 
+				podcast: {}, 
+				classMenu: classMenu, 
+				message: "", 
+				user: {
+					name: req.user.username, 
+					password: req.user.password, 
+					email: req.user.email
+				} 
+			};
+
+			log.info({
+				user: req.user,
+				request: '/dashboard/podcast',
+				method: 'GET',
+				data: data
+			});
+	  		res.render('app/podcast', data);
+  		} catch(e) {
+  			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast',
+				method: 'GET'
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
+		}
 	})
 
 	router.get('/podcast/edit/:id', authenticationMiddleware(), function(req, res, next) {
-		
-		disableExpandAll();
-		enableExpandMenuPodcast();
-		classMenu.podcast.cadastro = 'active visible';
-		const id = req.params.id;		
+		try{
+			disableExpandAll();
+			enableExpandMenuPodcast();
+			classMenu.podcast.cadastro = 'active visible';
+			const id = req.params.id;		
 
-		service_podcast.findById(id, 
-			(err, result) => {
-    			if(err) return res.status(204).end(JSON.stringify({ message: "service_podcast.findById(" + id + ") não localizado", error: err }))
-    		
-    		try {
-	    		result.capa = '/podcasts/capa/' + result.capa;
-	    		result.audio = '/podcasts/audio/' + result.audio;
-	    		var podcast = JSON.stringify(result);
-				res.render('app/podcast', {path: "../../../", editPodcast: podcast, podcast: result, classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email} });
-			} catch(e) {
-				return res.status(500).end(JSON.stringify({ message: "get - '/podcast/edit/:id'", error: e }));
-			}
-  		});
+			service_podcast.findById(id, 
+				(err, result) => {
+	    			if(err) return res.status(204).end(JSON.stringify({ message: "service_podcast.findById(" + id + ") não localizado", error: err }))
+	    		
+	    		try {
+		    		result.capa = '/podcasts/capa/' + result.capa;
+		    		result.audio = '/podcasts/audio/' + result.audio;
+		    		var podcast = JSON.stringify(result);
+
+		    		const data = {
+		    			path: "../../../", 
+		    			editPodcast: podcast, 
+		    			podcast: result, 
+		    			classMenu: classMenu, 
+		    			message: null, 
+		    			user: {
+		    				name: req.user.username, 
+		    				password: req.user.password, 
+		    				email: req.user.email
+		    			} 
+		    		};
+		    		log.info({
+						user: req.user,
+						request: '/dashboard',
+						method: 'GET',
+						data: data
+					});
+					res.render('app/podcast', data);
+				} catch(e) {
+					return res.status(500).end(JSON.stringify({ message: "get - '/podcast/edit/:id'", error: e }));
+				}
+	  		});
+  		} catch(e) {
+  			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/edit/:id',
+				id: req.params.id,
+				method: 'GET'
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
+		}
 	})
 
 	router.get('/podcast/consulta', authenticationMiddleware(), function(req, res, next) {
-		
-		disableExpandAll();
-		enableExpandMenuPodcast();
-		classMenu.podcast.consulta = 'active visible';
+		try{
+			disableExpandAll();
+			enableExpandMenuPodcast();
+			classMenu.podcast.consulta = 'active visible';
 
-		const header_podcast = [{name: "id"}, {name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}];
-		service_podcast.findAll(
-			(err, result) => {
-    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
-    		
+			const header_podcast = [{name: "id"}, {name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}];
+			service_podcast.findAll(
+				(err, result) => {
+	    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))
+	    		
 
-			res.render('app/podcast-consulta', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email}, podcasts: result, header_podcast: header_podcast })
-  		});
-		
+				res.render('app/podcast-consulta', {classMenu: classMenu, message: null, user: {name: req.user.username, password: req.user.password, email: req.user.email}, podcasts: result, header_podcast: header_podcast })
+	  		});
+		} catch(e) {
+  			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/consulta',
+				method: 'GET'
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
+		}
 
 	})
 
 	router.post('/podcast', authenticationMiddleware(), function(req, res, next) {
 
-		const body = req.body;
-		const autor = req.body.autor,
-		     titulo = req.body.titulo,
-		  subtitulo = req.body.subtitulo,
-		  descricao = req.body.descricao,
-		      audio = req.body.audio,
-		       capa = req.body.capa;
-		if (typeof autor === "undefined") {
-			return res.status(400).end(JSON.stringify({ message: "informe o autor", error: "autor não informado" }));
-		}
-		
-		if (typeof titulo === "undefined") {
-			return res.status(400).end(JSON.stringify({ message: "informe o título", error: "tíitulo não informado" }));
-		}
+		try{
 
-		if (typeof subtitulo === "undefined") {
-			return res.status(400).end(JSON.stringify({ message: "informe o subtítulo", error: "'subtítulo não informado'" }));	
-		}
+			const body = req.body;
+			const autor = req.body.autor,
+			     titulo = req.body.titulo,
+			  subtitulo = req.body.subtitulo,
+			  descricao = req.body.descricao,
+			      audio = req.body.audio,
+			       capa = req.body.capa;
+			if (typeof autor === "undefined") {
+				return res.status(400).end(JSON.stringify({ message: "informe o autor", error: "autor não informado" }));
+			}
+			
+			if (typeof titulo === "undefined") {
+				return res.status(400).end(JSON.stringify({ message: "informe o título", error: "tíitulo não informado" }));
+			}
 
-		if (typeof descricao === "undefined") {
-			return res.status(400).end(JSON.stringify({ message: "informe a descrição", error: "descrição não informado" }));
-		}
+			if (typeof subtitulo === "undefined") {
+				return res.status(400).end(JSON.stringify({ message: "informe o subtítulo", error: "'subtítulo não informado'" }));	
+			}
 
-		if (typeof audio === "undefined") {
-			return res.status(400).end(JSON.stringify({ message: "informe o nome do audio", error: "audio não informado" }));	
-		}
+			if (typeof descricao === "undefined") {
+				return res.status(400).end(JSON.stringify({ message: "informe a descrição", error: "descrição não informado" }));
+			}
 
-		if (typeof capa === "undefined") {
-			return res.status(400).end(JSON.stringify({ message: "informe o nome da capa", error: "capa não informado" }));
-		}
+			if (typeof audio === "undefined") {
+				return res.status(400).end(JSON.stringify({ message: "informe o nome do audio", error: "audio não informado" }));	
+			}
 
-		// service_podcast.insert(req.body.autor, req.body.titulo, req.body.subtitulo, req.body.descricao, req.body.audio, req.body.capa,
-		
-		service_podcast.insert(body,
-			(err, result) => {
-    			if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))//res.redirect('/dashboard?classMenu=' + classMenu + '&notification=Erro%20ao%20tentar%20inserir%20podcast:"' + err +'}')
-    			
-    // 			req.body.notification = 'qualquer coisa'	
-				// // res.redirect('/dashboard?classMenu=' + classMenu + '&notification=Podcast%20cadastrado%20com%20sucesso')
-				// res.redirect('/dashboard')
-				// console.log(result);
-				return res.status(200).end(JSON.stringify({ podcast: result.ops[0], message: "inserido" }));
-  		});
+			if (typeof capa === "undefined") {
+				return res.status(400).end(JSON.stringify({ message: "informe o nome da capa", error: "capa não informado" }));
+			}
+
+			// service_podcast.insert(req.body.autor, req.body.titulo, req.body.subtitulo, req.body.descricao, req.body.audio, req.body.capa,
+			
+			service_podcast.insert(body,
+				(err, result) => {
+	    			if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))//res.redirect('/dashboard?classMenu=' + classMenu + '&notification=Erro%20ao%20tentar%20inserir%20podcast:"' + err +'}')
+	    			
+	    // 			req.body.notification = 'qualquer coisa'	
+					// // res.redirect('/dashboard?classMenu=' + classMenu + '&notification=Podcast%20cadastrado%20com%20sucesso')
+					// res.redirect('/dashboard')
+					// console.log(result);
+					return res.status(200).end(JSON.stringify({ podcast: result.ops[0], message: "inserido" }));
+	  		});
+
+  		} catch(e) {
+  			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast',
+				method: 'POST',
+				body: req.body
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
+		}
 		// global.db.collection("podcasts").insert({ autor: req.body.autor, titulo: req.body.titulo, subtitulo: req.body.subtitulo, descricao: req.body.descricao, audio: req.body.audio, capa: req.body.capa}, function(err, result){
 	 //        console.log(err, result);
 	 //    })
@@ -444,18 +532,23 @@ global.classMenu = {
 				})
 			}
 		} catch (e) {
-			// log.warn(e);
-			return res.status(500).end(JSON.stringify({ _id: id, message: 'delete./dashboard/podcast/:id', error: e }));
+			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/:id',
+				method: 'DELETE',
+				id: req.params.id
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
 		}
 	})
 
 	router.put('/podcast/:id', authenticationMiddleware(), function(req, res, next) {
-		// log.info("put.dashboard/podcast/:id");
-		console.log('id', req.params.id);
-		console.log('body',req.body);
-		const id = req.params.id,
-		    body = req.body;
+		
 		try {
+			const id = req.params.id,
+		    	body = req.body;
 			if (typeof id === "undefined") {
 				return res.status(400).end(JSON.stringify({ _id: id , message: "informe o id", error: "id não informado" }));
 			} else if (typeof body === "undefined") {
@@ -468,38 +561,69 @@ global.classMenu = {
 				})	
 			}		
 		} catch (e){
-			return res.status(500).end(JSON.stringify({ _id: id , message: "put./dashboard/podcast/:id", error: e }));
+			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/:id',
+				method: 'PUT',
+				id: req.params.id,
+				body: req.body
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
 		}
 	})
 
 	router.get('/podcast/download', authenticationMiddleware(), function(req, res){
-		var path = 'public/podcasts/';
-		var file = req.body.filename;
-		if (file) {
-			res.download(path + file);
-			return res.status(200).end(JSON.stringify({ file: file, path: path,  message: "arquivo baixado com sucesso" }));
-		} else {
-			return res.status(400).end(JSON.stringify({ file: file, path: path,  message: "informe o filename para realizar o download", error: "filename não informado" }));
+		try {
+			var path = 'public/podcasts/';
+			var file = req.body.filename;
+			if (file) {
+				res.download(path + file);
+				return res.status(200).end(JSON.stringify({ file: file, path: path,  message: "arquivo baixado com sucesso" }));
+			} else {
+				return res.status(400).end(JSON.stringify({ file: file, path: path,  message: "informe o filename para realizar o download", error: "filename não informado" }));
+			}
+		} catch (e){
+			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/download',
+				method: 'GET',
+				body: req.body
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
 		}
 	})
 
 	//Deprecated
 	router.post('/podcast/directory', authenticationMiddleware(), function(req, res, next) {
-		log.info('titulo:' + req.body.titulo);
-		// currentDir = req.body.titulo;
-		// console.log('currentDir:' + currentDir);
-		var mypath = __dirname + '/../public/podcasts/' + req.body.titulo;
+		try {
+			// currentDir = req.body.titulo;
+			// console.log('currentDir:' + currentDir);
+			var mypath = __dirname + '/../public/podcasts/' + req.body.titulo;
 
-	    if (!fs.existsSync(mypath)){
-			fs.mkdirSync(mypath);
+		    if (!fs.existsSync(mypath)){
+				fs.mkdirSync(mypath);
+			}
+		} catch (e){
+			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/directory',
+				method: 'POST',
+				body: req.body
+			};
+  			log.error(msg);
+			return res.status(500).end(JSON.stringify({ message: msg }));
 		}
 	})
 
 	router.post('/podcast/upload-audio', authenticationMiddleware(), function(req, res, next) {
 
-		var form = new formidable.IncomingForm();
-
 		try {
+			var form = new formidable.IncomingForm();
 		    form.parse(req);
 
 		    var mypath = __dirname + '/../public/podcasts/audio/';
@@ -520,7 +644,14 @@ global.classMenu = {
 		    	res.status(500).end(JSON.stringify({ message: "erro no upload do audio", error: err }));
 			});
 	    } catch (e) {
-	    	res.status(500).end(JSON.stringify({ method: "put./dashboard/podcast/upload-audio" , message: "", error: e }));
+	    	const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/upload-audio',
+				method: 'POST'
+			};
+  			log.error(msg);
+	    	res.status(500).end(JSON.stringify({ message: msg, error: e }));
 	    }
 	    // res.sendFile(__dirname + '/dashboard');
 	    
@@ -603,7 +734,14 @@ global.classMenu = {
 		    	// res.status(500).end();
 			});
 		} catch (e) {
-	    	res.status(500).end(JSON.stringify({ method: "put./dashboard/podcast/upload-capa" , message: "", error: e }));
+			const msg = {
+				user: req.user,
+				error: e,
+				request: '/dashboard/podcast/upload-capa',
+				method: 'POST'
+			};
+  			log.error(msg);
+	    	res.status(500).end(JSON.stringify({ message: msg, error: e }));
 		}
 	})
 
