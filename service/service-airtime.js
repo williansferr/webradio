@@ -113,9 +113,9 @@ function findByAirtimeToday(airtime, callback){
             },
             {
                 $sort: { 
-                    day: -1,
-                    month: -1,
-                    year: -1
+                    day: 1,
+                    month: 1,
+                    year: 1
                 } 
             }
         ]
