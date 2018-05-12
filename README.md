@@ -28,7 +28,12 @@ Para iniciar inslate abaixo;
 
 * `pm2 start npm -- start -i max`
 
-## Contribuição
+### Logs
+
+* `node_modules\.bin\bunyan webradioApp.log`
+* [help](http://trentm.com/node-bunyan/bunyan.1.html)
+
+<!-- ## Contribuição
 
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
@@ -44,5 +49,5 @@ See also the list of [contributors](https://github.com/your/project/contributors
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details -->
 
