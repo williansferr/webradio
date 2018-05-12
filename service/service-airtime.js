@@ -67,6 +67,13 @@ function findByDataInclusaoBetween(data_inicial, data_final, callback) {
                     },
                     listenersMax: { $max: "$listeners"}
                 } 
+            },
+            {
+                $sort: { 
+                    day: 1,
+                    month: 1,
+                    year: 1
+                } 
             }
         ]
     ).toArray(callback);
