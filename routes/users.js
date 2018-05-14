@@ -50,11 +50,11 @@ router.get('/forgot', function(req, res, next) {
 router.post('/forgot', function(req, res, next) {
   db.findUser(req.body.email, (err, doc) => {
     if(err || !doc) res.redirect('/users')//manda pro login mesmo que não ache.
-      
+
     // const newpass = require('../utils').generatePassword()
     // db.changePassword(req.body.email, newpass)
     // require('../mail')(req.body.email, 'Sua nova senha do chat', 'Olá ' + doc.username + ', sua nova senha é ' + newpass)
-    res.redirect('/users')
+    res.redirect('/users/login')
   })
 })
 
