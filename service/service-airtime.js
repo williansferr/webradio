@@ -122,7 +122,7 @@ function findByAirtimeToday(airtime, callback){
                 }
             },
             {
-                $orderby: { 
+                $sort: { 
                     day: 1,
                     month: 1,
                     year: 1
