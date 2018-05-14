@@ -40,7 +40,7 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 			(err, result) => {
 				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findByAudio não localizado", error: err }));
 			
-				console.log('findByDataInclusaoBetweenAirtime', result);
+				// console.log('findByDataInclusaoBetweenAirtime', result);
 
 				let airtimes = result;
 				let airtime = {};
@@ -60,7 +60,6 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 				airtime.high = maxList;
 				airtime.data_inicial = dtI.getDate() + "/" + (dtI.getMonth() + 1) + "/" + dtI.getFullYear();
 				airtime.data_final = dtF.getDate() + "/" + (dtF.getMonth() + 1) + "/" + dtF.getFullYear();
-				console.log('airtimeCharts', airtime);
 				
 				return res.status(200).end(JSON.stringify({ airtimeCharts: airtime, message: result }));
 			});
