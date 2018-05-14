@@ -60,7 +60,7 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 				airtime.high = maxList;
 				airtime.data_inicial = dtI.getDate() + "/" + (dtI.getMonth() + 1) + "/" + dtI.getFullYear();
 				airtime.data_final = dtF.getDate() + "/" + (dtF.getMonth() + 1) + "/" + dtF.getFullYear();
-				console.log('airtimeCharts', rairtime);
+				console.log('airtimeCharts', airtime);
 				
 				return res.status(200).end(JSON.stringify({ airtimeCharts: airtime, message: result }));
 			});
