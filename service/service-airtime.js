@@ -121,13 +121,13 @@ function findByAirtimeToday(airtime, callback){
                     day: { $gte: dia }
                 }
             },
-            {
-                $sort: { 
-                    day: 1,
-                    month: 1,
-                    year: 1
-                } 
-            }
+            // {
+            //     $sort: { 
+            //         day: 1,
+            //         month: 1,
+            //         year: 1
+            //     } 
+            // }
         ]
     ).toArray(callback);
 }
