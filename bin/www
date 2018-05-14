@@ -98,11 +98,31 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
 
   var io = require('socket.io')(server);
   app.io = io;
+
+  var currentMusic = {
+    name: '',
+    artist: ''
+  };
+
   io.on('connection', function(socket){
     console.log('a user connected');
+    
+    requestAirtimeStats(true);
+    requestLiveInfo(true);
+
     socket.on('disconnect', function(){
       console.log('user disconnected');
     });
+
+    socket.on('airtime-info', function(msg){
+      if(msg){
+        if(msg === 'reset'){
+          currentMusic = {};
+        }
+      }
+      // io.emit('chat message', msg);
+    });
+
     loopEterno();
   });
 
@@ -118,47 +138,117 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       }]
     });
 
-  function loopEterno(){
-    log.info('Iniciar requisições no airtime');
-    setTimeout(function () {
-      try {
-        request('http://177.54.158.150/api/live-info/?callback'
-                                  ,function (error, response, body) {
-          // console.log('body', body);
-          if(body){  
-            var tmp = body.replace('(', '');
-            tmp = tmp.replace(')', '');
-            var live_info = {};
-            var hasErro = false;
+  
+  function requestAirtimeStats(isNewUser){
+    try {
+      request('http://177.54.158.150:8000/admin/stats'
+                                                     ,{
+                                                        'auth': {
+                                                        'user': 'admin',
+                                                        'pass': '31ypq8X18LSR',
+                                                        'sendImmediately': false
+                                                      }}
+                                    ,function (error, response, body) {
+              // console.log('error:', error); // Print the error if one occurred and handle it
+              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+          if (response) {
+            // console.log(response);
+            if (response.statusCode == 200){
+                const parseString = require('xml2js').parseString;
+                // console.log('body2', body);
+                parseString(body, function (err, result) {
+                  var obj = result;
+                  if (obj.icestats.source) {
+                    if(obj.icestats.source[0].title){
+                      var airtime = {
+                        listener_peak:  obj.icestats.source[0].listener_peak[0],
+                        listeners:      obj.icestats.source[0].listeners[0],
+                        mount:          obj.icestats.source[0].$.mount,
+                        stream_start:   new Date(obj.icestats.source[0].stream_start[0]),
+                        stream_start2:  obj.icestats.source[0].stream_start[0],
+                        title:          obj.icestats.source[0].title[0]
+                      };
+                      airtime_service.upsert(airtime, function (err, result) {
 
-            
-            try {
-              var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
-              // console.log('fechaPare', fechaPare);
-              if (fechaPare == ')') {
-                tmp = tmp.substring(0, tmp.length - 1);
-              }
-              // console.log('tmp', tmp);
-              live_info = JSON.parse( tmp );
-            } catch(e){
-              hasErro = true;
-              log.error(e);
+                        // console.log('upsert', result);
+                        if(err === null) {
+                          airtime_service.findByListenerPeakToday(function (err, result) {
+                            if(err === null) {
+                              airtime.listener_peak = result[0].listenersMax;
+                              io.emit('airtime-stats', airtime);
+                            }
+                          });
+                        }
+                      });
+
+                      if(isNewUser){
+                        airtime_service.findByListenerPeakToday(function (err, result) {
+                          if(err === null) {
+                            airtime.listener_peak = result[0].listenersMax;
+                            io.emit('airtime-stats', airtime);
+                          }
+                        });
+                      }
+                    }
+                  }
+              });
             }
+          }
+      });
 
-            if (!hasErro) {
-              // console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-              var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-              // console.log('live_info', live_info);
-              // console.log('live_date', live_date);
-              // console.log('hours', live_date.getHours());
-              // console.log('minutes', live_date.getMinutes());
-              // console.log('seconds', live_date.getSeconds());
-              
+    } catch(e){
+      log.error({
+        error: e,
+        request: 'http://177.54.158.150:8000/admin/stats'
+      });
+    }
+  }
 
-              var artista = live_info.current.name;
-              artista = artista.substring(artista.indexOf("-") + 2, artista.length);
-              var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
-              artista = artista.substring(0, artista.indexOf("-") - 1);
+  function requestLiveInfo(isNewUser){
+    try {
+      request('http://177.54.158.150/api/live-info/?callback'
+                                ,function (error, response, body) {
+        // console.log('body', body);
+        if(body){  
+          var tmp = body.replace('(', '');
+          tmp = tmp.replace(')', '');
+          var live_info = {};
+          var hasErro = false;
+
+          
+          try {
+            var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
+            // console.log('fechaPare', fechaPare);
+            if (fechaPare == ')') {
+              tmp = tmp.substring(0, tmp.length - 1);
+            }
+            // console.log('tmp', tmp);
+            live_info = JSON.parse( tmp );
+          } catch(e){
+            hasErro = true;
+            log.error(e);
+          }
+
+          if (!hasErro) {
+            // console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+            var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+            // console.log('live_info', live_info);
+            // console.log('live_date', live_date);
+            // console.log('hours', live_date.getHours());
+            // console.log('minutes', live_date.getMinutes());
+            // console.log('seconds', live_date.getSeconds());
+            
+
+            var artista = live_info.current.name;
+            artista = artista.substring(artista.indexOf("-") + 2, artista.length);
+            var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
+            artista = artista.substring(0, artista.indexOf("-") - 1);
+            // console.log('currentMusic', currentMusic);
+            // console.log('artista', artista);
+            // console.log('musica', musica);
+            if(currentMusic.artist !== artista && currentMusic.name !== musica || isNewUser){
+              currentMusic.artist = artista;
+              currentMusic.name = musica;
               // console.log('buscar audio por', (artista + ' - ' + musica));
               service_curtidas.findByAudio(artista + ' - ' + musica,
                     (err, result) => {
@@ -167,61 +257,25 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                     live_info.curtidas = result;
                     io.emit('airtime-info', live_info);
               });
-              
             }
           }
-          
-        });
-      } catch(e){
-        log.error({
-          error: e,
-          request: 'http://177.54.158.150/api/live-info/?callback'
-        });
-      }
+        }
+        
+      });
+    } catch(e){
+      log.error({
+        error: e,
+        request: 'http://177.54.158.150/api/live-info/?callback'
+      });
+    }
+  }
 
-      try {
-        request('http://177.54.158.150:8000/admin/stats'
-                                                       ,{
-                                                          'auth': {
-                                                          'user': 'admin',
-                                                          'pass': '31ypq8X18LSR',
-                                                          'sendImmediately': false
-                                                        }}
-                                      ,function (error, response, body) {
-                // console.log('error:', error); // Print the error if one occurred and handle it
-                // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-            if (response) {
-              // console.log(response);
-              if (response.statusCode == 200){
-                  const parseString = require('xml2js').parseString;
-                  // console.log('body2', body);
-                  parseString(body, function (err, result) {
-                    var obj = result;
-                    if (obj.icestats.source) {
-                      if(obj.icestats.source[0].title){
-                        var airtime = {
-                          listener_peak:  obj.icestats.source[0].listener_peak[0],
-                          listeners:      obj.icestats.source[0].listeners[0],
-                          mount:          obj.icestats.source[0].$.mount,
-                          stream_start:   new Date(obj.icestats.source[0].stream_start[0]),
-                          stream_start2:  obj.icestats.source[0].stream_start[0],
-                          title:          obj.icestats.source[0].title[0]
-                        };
-                        airtime_service.upsert(airtime);
-                        io.emit('airtime-stats', airtime);
-                      }
-                    }
-                });
-              }
-            }
-        });
+  function loopEterno(){
+    log.info('Iniciar requisições no airtime');
+    setTimeout(function () {
 
-      } catch(e){
-        log.error({
-          error: e,
-          request: 'http://177.54.158.150:8000/admin/stats'
-        });
-      }
+      requestLiveInfo(false);
+      requestAirtimeStats(false);
 
 
       // console.log((new Date).toLocaleString().substr(11))

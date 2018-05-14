@@ -326,15 +326,12 @@
 	    const socket = io();
 
 	    function initAirtimeStats() {
-	        // socket.emit('airtime-info', ''); //envia mensagem ao servidor
 	        socket.on('airtime-stats', function(msg){
-	            // console.log(msg);
 	            $('#id-qt-listeners').html(msg.listeners);
 	            $('#id-qt-listeners-peak').html('<i class="material-icons">queue_music</i> Pico ouvintes ' + msg.listener_peak);
 	        });
 
 	        socket.on('comentario-io', function(msg){
-	            // console.log('comentario-io', msg);
 	            if(msg._id != null && msg._id != undefined) {
 	            	$('#id-qt-comentario').html(parseInt($('#id-qt-comentario').text()) + 1);
 	            }
@@ -342,8 +339,6 @@
 	    }
 
 	</script>
-
-	<!-- <script src="/js/sidebar-moving-tab.js"></script> -->
 </body>
 
 

@@ -333,6 +333,7 @@
         $('.fa-facebook-square').on('click', function() {
             window.open("http://www.facebook.com", '_blank');
         });
+        socket.emit('airtime-info', 'reset');
     };
 </script>
 <script src="/socket.io/socket.io.js"></script>
@@ -342,7 +343,7 @@
     function initAirtimeInfo() {
         // socket.emit('airtime-info', '');
         socket.on('airtime-info', function(msg){
-            if (msg != null && $('.play-list a.active').data().id == 1){
+            if (msg && $('.play-list a.active').data().id == 1){
                 if(msg.curtidas != null && msg.curtidas != undefined){
                     Curtida.curtidas(msg.curtidas);
                 }

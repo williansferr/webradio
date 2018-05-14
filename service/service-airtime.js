@@ -17,6 +17,30 @@ function findByDataInclusaoGTE(date, callback) {
     global.db.collection("airtimes").find({data_inclusao: {$gte: date}}).toArray(callback)
 }
 
+function findByListenerPeakToday(callback){
+    global.db.collection("airtimes").aggregate(
+        [
+            {   
+                $match: {
+                    data_inclusao: {
+                        $gte: new Date(new Date().setDate(new Date().getDate()-1))
+                    }
+                }
+            },
+            { 
+                $group : { 
+                    _id : { 
+                        mount: "$mount"
+                    }, 
+                    count : { 
+                        "$sum" : 1 
+                    },
+                    listenersMax: { $max: "$listeners"}
+                }
+            }
+        ]).toArray(callback);
+}
+
 /**
 Exemplo no mongodb
 db.airtimes.aggregate(
@@ -139,6 +163,7 @@ function findByAirtimeToday(airtime, callback){
 function upsert(airtime, callback){
     airtime.data_inclusao = new Date();
     findByAirtimeToday(airtime,  (err, result) => {
+
         if(err){
         } else if ( result.length === 0 ) {
             global.db.collection("airtimes").updateOne(
@@ -184,4 +209,4 @@ function remove(_id, callback){
     global.db.collection("airtimes").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, upsert,  update, remove, findById, findByDataInclusao, findByDataInclusaoGTE, findByDataInclusaoBetween, findAll }
+module.exports = { insert, upsert,  update, remove, findById, findByDataInclusao, findByListenerPeakToday, findByDataInclusaoGTE, findByDataInclusaoBetween, findAll }
