@@ -38,6 +38,11 @@ db.airtimes.aggregate(
             },
             listenersMax: { $max: "$listeners"}
         } 
+    },
+    {
+        $sort: { 
+            _id: 1
+        } 
     }
 ]).pretty()
 */
@@ -66,6 +71,11 @@ function findByDataInclusaoBetween(data_inicial, data_final, callback) {
                         "$sum" : 1 
                     },
                     listenersMax: { $max: "$listeners"}
+                }
+            },
+            {
+                $sort: { 
+                    _id: 1
                 } 
             }
         ]
@@ -112,10 +122,10 @@ function findByAirtimeToday(airtime, callback){
                 }
             },
             {
-                $sort: { 
-                    day: -1,
-                    month: -1,
-                    year: -1
+                $orderby: { 
+                    day: 1,
+                    month: 1,
+                    year: 1
                 } 
             }
         ]

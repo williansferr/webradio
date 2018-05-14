@@ -14,7 +14,7 @@ const log = bunyan.createLogger(
 {
   name: "webradioApp",
   streams: [{
-    path: '/var/log/webradioApp.log',
+    path: '/var/log/webradioApp_dashboard.log',
   }]
 });
 
@@ -178,6 +178,7 @@ global.classMenu = {
 	    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoBetween", error: err }))
 
 	    					var airtimes = result;
+
 	    					var airtime = {};
 	    					labels = [];
 	    					series = [];
