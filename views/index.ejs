@@ -107,7 +107,7 @@
                                 <div>
                                     <div class="row">
                                         <div class="col col-md-12 col-12" align="center">
-                                            <div class="radio-on">
+                                            <div id="id-play" class="radio-on">
                                                 <i class="material-icons">radio</i> ao vivo
                                             </div>
                                         </div>
@@ -124,7 +124,7 @@
                                         </div>
                                         <div class="col col-md-4 col-4" align="center">
                                             <div id="action2">
-                                                <a href="#" id="id-play" class="play-pause"><i class="action-pp fas fa-pp fa-2x"></i></a>
+                                                <a href="#" class="play-pause"><i class="action-pp fas fa-pp fa-2x"></i></a>
                                             </div>
                                         </div>
                                         <div class="col col-md-4 col-4" align="center">
@@ -356,6 +356,7 @@
                 $('#txt-album').html('<i class="fas fa-music"></i>');
                 $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
             }
+            document.getElementById("id-play").click();
         });
     }
 

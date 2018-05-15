@@ -1,7 +1,7 @@
 $(function(){
 	Audio.init();
 	// $('.play-pause').click();
-	document.getElementById("id-play").click();
+	// document.getElementById("id-play").click();
 });
 
 var intval;
