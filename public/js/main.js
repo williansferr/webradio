@@ -132,13 +132,13 @@ var Curtida = {
             
 
             request.done(function (msg) {
-                console.log('sendLike() done');
-                console.log(msg);
+                // console.log('sendLike() done');
+                // console.log(msg);
                 var json = JSON.parse(msg);
 
-                console.log('json.message:', json.message);
-                console.log('indexof.inserido:', json.message.indexOf('inserido'));
-                console.log('indexof.atualizado:', json.message.indexOf('atualizado'));
+                // console.log('json.message:', json.message);
+                // console.log('indexof.inserido:', json.message.indexOf('inserido'));
+                // console.log('indexof.atualizado:', json.message.indexOf('atualizado'));
 
                 if(json.message.indexOf('inserido') >= 0 ){
 
@@ -195,7 +195,6 @@ var Curtida = {
         }
 
         if (comentario === ""){
-            console.log("vazio comentario:" + comentario);
             swal('Informe o comentario');
             return;
         }
@@ -214,8 +213,8 @@ var Curtida = {
         
 
         request.done(function (msg) {
-            console.log('done');
-            console.log(msg);
+            // console.log('done');
+            // console.log(msg);
             swal(
                 'Comentário enviado!',
                 '',

@@ -20,12 +20,12 @@ router.get('/:audio', function(req, res, next) {
 					if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findBy não localizado", error: err }));
 
 
-					console.log(result)
+					// console.log(result)
 					var send = {curtidas: global.curtidas}
 					if(result){
 						send.thisuser = result.curtiu;	
 					}
-					console.log(send);
+					// console.log(send);
 					return res.status(200).end(JSON.stringify(send));
 				});
 				
@@ -42,21 +42,31 @@ router.get('/:audio', function(req, res, next) {
 //@Deprecated / teste para veriricar se o find estava retornar corretamente
 router.post('/teste', function(req, res, next) {
 	
+	console.log('/curtidas/teste')
 	try {
 		
+		console.log(os.networkInterfaces());
+		console.log(os.hostname());
+		console.log(os.userInfo());
 
-		service_curtidas.findBy(req.body.username, req.body.hostname, req.body.audio,
-			(err, result) => {
-				if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }));
+		// service_curtidas.findBy(req.body.username, req.body.hostname, req.body.audio,
+		// 	(err, result) => {
+		// 		if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }));
 				
-				console.log(result.length);
-				if (result.length > 0) {
-					return res.status(200).end(JSON.stringify(result[0]));	
-				}  else {
-					return res.status(200).end(JSON.stringify({}));
-				}
+		// 		console.log(result.length);
+		// 		if (result.length > 0) {
+		// 			return res.status(200).end(JSON.stringify(result[0]));	
+		// 		}  else {
+		// 			return res.status(200).end(JSON.stringify({}));
+		// 		}
 
-			});
+		// 	});
+
+		return res.status(200).end(JSON.stringify({
+			networkInterfaces: os.networkInterfaces(),
+			hostname: os.hostname(),
+			userInfo: os.userInfo()
+		}));
 	} catch (e) {
 		// log.warn(e);
 		return res.status(500).end(JSON.stringify({ message: 'post.curtidas/teste', error: e }));

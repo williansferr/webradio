@@ -68,7 +68,7 @@ var Audio = {
 		
 		var audio_aux = audio.substring(audio.lastIndexOf('/') + 1, audio.length);
 
-		console.log('request audio:', audio_aux);
+		// console.log('request audio:', audio_aux);
 
         const request = $.ajax({
             url: '/curtidas/' + audio_aux,
@@ -77,7 +77,7 @@ var Audio = {
         
         request.done(function (msg) {
             // console.log('updateCurtir() done');
-            console.log('updateCurtir', msg);
+            // console.log('updateCurtir', msg);
             var json = JSON.parse(msg);
             // console.log(json.thisuser);
 
@@ -118,10 +118,26 @@ var Audio = {
         });
 
 	},
+	insertOuvinte:function(){
+		const request = $.ajax({
+            url: '/ouvinte',
+            type: 'POST'
+        });
+        
+        request.done(function (msg) {
+            var json = JSON.parse(msg);
+            console.log(json);
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            console.error('erro');
+        });
+	},
 	player:function(){
 		var id, album, artist, albumart, title, mp3;
 		$('.play-list .play').each(function(){
 			$(this).on('click',function(e){
+				Audio.insertOuvinte();
 				e.preventDefault();
 				$(this).siblings().removeClass('active');
 				$('.play-list a.active').removeClass('active');
@@ -219,6 +235,7 @@ var Audio = {
 		});
 		$('.radio-on').on('click',function(e){
 			$('.play-list a:first-child')[0].click();
+			socket.emit('airtime-info', 'reset');
 		});
 	},
 	playlist:{
