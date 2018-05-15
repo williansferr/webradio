@@ -213,8 +213,8 @@ var Curtida = {
         
 
         request.done(function (msg) {
-            // console.log('done');
-            // console.log(msg);
+            console.log('done');
+            console.log(msg);
             swal(
                 'Comentário enviado!',
                 '',
