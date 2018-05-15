@@ -9,6 +9,7 @@ const service_podcast 	 = require('../service/service-podcast');
 const service_comentario = require('../service/service-comentario');
 const service_curtida = require('../service/service-curtidas');
 const service_airtime = require('../service/service-airtime');
+const service_ouvinte = require('../service/service-ouvinte');
 const bunyan = require('bunyan');
 const log = bunyan.createLogger(
 {
@@ -204,9 +205,31 @@ global.classMenu = {
 								method: 'GET',
 								data: data
 							})
-							
-							res.render('app/dashboard', data);
 
+							service_ouvinte.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
+	    						if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_ouvinte.findByDataInclusaoBetween", error: err }))
+
+	    						let ouvintes = result;
+	    						
+	    						var ouvinte = {};
+	    						labels = [];
+		    					series = [];
+		    					let maxList = 0;
+		    					for (var i = 0, len = ouvintes.length; i < len; i++) {
+			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+			    					series.push(airtimes[i].count);
+								}
+								ouvinte.labels = labels;
+								ouvinte.series = [];
+								ouvinte.series.push(series);
+								ouvinte.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+								ouvinte.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+
+								data.ouvinteCharts = ouvinte;
+
+	    						res.render('app/dashboard', data);
+
+	    					});
 	    				});
 
 						// request('http://177.54.158.150:8000/admin/listmounts'
