@@ -328,6 +328,7 @@
 <script>
     window.onload = function () {
         $('.action-button').css('display', 'none');
+        document.getElementById("id-play").click();
         initAirtimeInfo();
 
         $('.fa-facebook-square').on('click', function() {
@@ -356,7 +357,7 @@
                 $('#txt-album').html('<i class="fas fa-music"></i>');
                 $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
             }
-            document.getElementById("id-play").click();
+
         });
     }
 
