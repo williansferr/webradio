@@ -1,6 +1,5 @@
 $(function(){
 	Audio.init();
-	// $('.play-pause').click();
 	// document.getElementById("id-play").click();
 });
 
@@ -11,6 +10,7 @@ var Audio = {
 		this.info.init();
 		this.player();
 		this.scrollbar();
+		$('.play-pause').click();
 	},
 	formatTime:function(secs){
 		var hr,min,sec;
