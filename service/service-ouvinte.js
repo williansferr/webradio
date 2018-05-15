@@ -13,9 +13,40 @@ function insert(ouvinte, callback){
     global.db.collection("ouvintes").insert(ouvinte, callback);
 }
 
+function findByDataInclusaoBetween(data_inicial, data_final, callback) {
+
+    global.db.collection("ouvintes").aggregate(
+        [
+            {
+                $match: {
+                    data_inclusao: {$gte: new Date(data_inicial.ano, data_inicial.mes, data_inicial.dia), $lt: new Date(data_final.ano, data_final.mes, data_final.dia + 1)}
+                }
+            },
+            { 
+                $group : { 
+                    _id : { 
+                        year: { $year: "$data_inclusao" },
+                        month: { $month: "$data_inclusao" },
+                        day: { $dayOfMonth: "$data_inclusao" }
+                    }, 
+                    count : { 
+                        "$sum" : 1 
+                    },
+                    // listenersMax: { $max: "$listeners"}
+                }
+            },
+            {
+                $sort: { 
+                    _id: 1
+                } 
+            }
+        ]
+    ).toArray(callback);
+}
+
 function upsert(ouvinte, callback){
     ouvinte.data_inclusao = new Date();
-    global.db.collection("airtimes").updateOne(
+    global.db.collection("ouvintes").updateOne(
     { 
         _id: ObjectId(ouvinte._id)
     },
@@ -41,4 +72,4 @@ function remove(_id, callback){
     global.db.collection("ouvintes").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, update, remove, findById, findAll }
+module.exports = { insert, update, remove, findById, findAll, findByDataInclusaoBetween }
