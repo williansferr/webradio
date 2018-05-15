@@ -128,7 +128,7 @@ var Audio = {
 	        
 	        request.done(function (msg) {
 	            var json = JSON.parse(msg);
-	            console.log(json);
+	            // console.log(json);
 	        });
 
 	        request.fail(function (jqXHR, textStatus) {
