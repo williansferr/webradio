@@ -327,7 +327,7 @@
     
 <script>
     window.onload = function () {
-        $('.action-button').css('display', 'none');
+        
         initAirtimeInfo();
 
         $('.fa-facebook-square').on('click', function() {
@@ -356,6 +356,7 @@
                 $('#txt-album').html('<i class="fas fa-music"></i>');
                 $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
             }
+            $('.action-button').css('display', 'none');
         });
     }
 
