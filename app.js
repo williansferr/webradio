@@ -18,6 +18,7 @@ const dashboardRouter = require('./routes/dashboard');
 const comentarioRouter = require('./routes/comentario');
 const curtidasRouter = require('./routes/curtidas');
 const airtimeRouter = require('./routes/airtime');
+const ouvinteRouter = require('./routes/ouvintes');
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use('/dashboard', dashboardRouter);
 app.use('/comentario', comentarioRouter);
 app.use('/curtidas', curtidasRouter);
 app.use('/airtime', airtimeRouter);
+app.use('/ouvinte', ouvinteRouter);
 
 //Diretorios estaticos
 // app.use(express.static('public/uploads/'));

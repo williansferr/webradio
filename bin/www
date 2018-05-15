@@ -118,6 +118,8 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       if(msg){
         if(msg === 'reset'){
           currentMusic = {};
+          requestAirtimeStats(true);
+          requestLiveInfo(true);
         }
       }
       // io.emit('chat message', msg);
@@ -237,8 +239,6 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
             // console.log('hours', live_date.getHours());
             // console.log('minutes', live_date.getMinutes());
             // console.log('seconds', live_date.getSeconds());
-            
-
             var artista = live_info.current.name;
             artista = artista.substring(artista.indexOf("-") + 2, artista.length);
             var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
