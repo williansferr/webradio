@@ -119,19 +119,22 @@ var Audio = {
 
 	},
 	insertOuvinte:function(){
-		const request = $.ajax({
-            url: '/ouvinte',
-            type: 'POST'
-        });
-        
-        request.done(function (msg) {
-            var json = JSON.parse(msg);
-            console.log(json);
-        });
+		Curtida.getIPs(function(ip){
+			const request = $.ajax({
+	            url: '/ouvinte',
+	            type: 'POST',
+	            data: {ip: ip}
+	        });
+	        
+	        request.done(function (msg) {
+	            var json = JSON.parse(msg);
+	            console.log(json);
+	        });
 
-        request.fail(function (jqXHR, textStatus) {
-            console.error('erro');
-        });
+	        request.fail(function (jqXHR, textStatus) {
+	            console.error('erro');
+	        });
+    	});
 	},
 	player:function(){
 		var id, album, artist, albumart, title, mp3;

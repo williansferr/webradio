@@ -80,6 +80,7 @@ router.post('/', function(req, res, next) {
 		ouvinte.networkInterfaces = os.networkInterfaces();
 		ouvinte.hostname          = os.hostname();
 		ouvinte.userInfo          = os.userInfo();
+		ouvinte.ip                = req.body.ip;
 
 		data.ouvinte = ouvinte;
 
