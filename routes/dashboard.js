@@ -174,61 +174,105 @@ global.classMenu = {
 							ano: hoje.getFullYear()
 						}
 
+						service_curtida.findByDeslike((err, result) => {
+	    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_curtida.findByDeslike", error: err }))
+						
+							tmp_curtidas = result;
+		    				deslike = {};
+		    				labels = [];
+		    				series = [];
+		    				tamanho = 10;
+		    				maxCurtidas = 0;
 
-						service_airtime.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
-	    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoBetween", error: err }))
-
-	    					var airtimes = result;
-
-	    					var airtime = {};
-	    					labels = [];
-	    					series = [];
-	    					let maxList = 0;
-	    					for (var i = 0, len = airtimes.length; i < len; i++) {
-		    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
-		    					series.push(airtimes[i].listenersMax);
-		    					if(airtimes[i].listenersMax > maxList){
-		    						maxList = airtimes[i].listenersMax;
+		    				if (tmp_curtidas.length < tamanho){
+		    					tamanho = tmp_curtidas.length;
+		    				}
+		    				for (var i = 0, len = tamanho; i < len; i++) {
+		    					labels.push(tmp_curtidas[i]._id);
+		    					series.push(tmp_curtidas[i].count);
+		    					if(tmp_curtidas[i].count > maxCurtidas){
+		    						maxCurtidas = tmp_curtidas[i].count;
 		    					}
 							}
-							airtime.labels = labels;
-							airtime.series = [];
-							airtime.series.push(series);
-							airtime.high = maxList;
-							airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
-							airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
-							const data = { airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
-							log.info({
-								user: req.user,
-								request: '/dashboard',
-								method: 'GET',
-								data: data
-							})
+							deslike.labels = labels;
+							deslike.series = [];
+							deslike.series.push(series);
+							deslike.high = maxCurtidas;
 
-							service_ouvinte.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
-	    						if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_ouvinte.findByDataInclusaoBetween", error: err }))
+							hoje = new Date();
+							dia1 = new Date();
+							dia1.setDate(1);
 
-	    						let ouvintes = result;
-	    						
-	    						var ouvinte = {};
-	    						labels = [];
+							let data_inicial = {
+								dia: dia1.getDate(),
+								mes: dia1.getMonth(),
+								ano: dia1.getFullYear()
+							}
+
+							let data_final = {
+								dia: hoje.getDate(),
+								mes: hoje.getMonth(),
+								ano: hoje.getFullYear()
+							}
+
+	    		
+
+							service_airtime.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
+		    					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_airtime.findByDataInclusaoBetween", error: err }))
+
+		    					var airtimes = result;
+
+		    					var airtime = {};
+		    					labels = [];
 		    					series = [];
 		    					let maxList = 0;
-		    					for (var i = 0, len = ouvintes.length; i < len; i++) {
+		    					for (var i = 0, len = airtimes.length; i < len; i++) {
 			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
-			    					series.push(airtimes[i].count);
+			    					series.push(airtimes[i].listenersMax);
+			    					if(airtimes[i].listenersMax > maxList){
+			    						maxList = airtimes[i].listenersMax;
+			    					}
 								}
-								ouvinte.labels = labels;
-								ouvinte.series = [];
-								ouvinte.series.push(series);
-								ouvinte.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
-								ouvinte.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+								airtime.labels = labels;
+								airtime.series = [];
+								airtime.series.push(series);
+								airtime.high = maxList;
+								airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+								airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
-								data.ouvinteCharts = ouvinte;
+								const data = { deslikeCaharts: deslike, airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
+								log.info({
+									user: req.user,
+									request: '/dashboard',
+									method: 'GET',
+									data: data
+								})
 
-	    						res.render('app/dashboard', data);
+								service_ouvinte.findByDataInclusaoBetween(data_inicial, data_final, (err, result) => {
+		    						if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_ouvinte.findByDataInclusaoBetween", error: err }))
 
+		    						let ouvintes = result;
+		    						
+		    						var ouvinte = {};
+		    						labels = [];
+			    					series = [];
+			    					let maxList = 0;
+			    					for (var i = 0, len = ouvintes.length; i < len; i++) {
+				    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+				    					series.push(airtimes[i].count);
+									}
+									ouvinte.labels = labels;
+									ouvinte.series = [];
+									ouvinte.series.push(series);
+									ouvinte.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+									ouvinte.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+
+									data.ouvinteCharts = ouvinte;
+
+		    						res.render('app/dashboard', data);
+
+		    					});
 	    					});
 	    				});
 
