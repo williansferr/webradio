@@ -26,6 +26,34 @@ function findByAudio(audio, callback){
 
 function findForCharts(callback) {
     global.db.collection("curtidas").aggregate([
+                            {
+                                $match: {
+                                    curtiu: true
+                                }
+                            },
+                            { 
+                                $group: { 
+                                    _id: "$audio",
+                                    count: { 
+                                        $sum: 1 
+                                    } 
+                                },
+                            },
+                            {
+                                $sort: { 
+                                    count: -1 
+                                } 
+                            }
+                        ]).toArray(callback)
+}
+
+function findByDeslike(callback) {
+    global.db.collection("curtidas").aggregate([
+                            {
+                                $match: {
+                                    curtiu: false
+                                }
+                            },
                             { 
                                 $group: { 
                                     _id: "$audio",
