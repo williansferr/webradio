@@ -224,6 +224,28 @@
 
 		}
 
+		function initChartsDeslike(data, id){
+			// dataCurtidasChart = JSON.parse('<%- JSON.stringify(curtidaCharts) %>');
+			dataChart = data;
+
+	        optionsChart = {
+	        	lineSmooth: Chartist.Interpolation.cardinal({
+	                tension: 0
+	            }),
+	            low: 0,
+	            // high: <%= curtidaCharts.high %>, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+	            high: data.high,
+	            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+	            height: '300px',
+	            stroke: white;
+	        }
+
+	        var charts = new Chartist.Bar('#deslikeCharts', dataChart, optionsChart);
+
+	        md.startAnimationForLineChart(charts);
+
+		}
+
 		function initChartsAirtimes(data){
 			// dataAirtimeChart = JSON.parse(data);
 			dataAirtimeChart = data;
@@ -332,7 +354,7 @@
 		$( document ).ready(function() {
 			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'), '#curtidasCharts');
 			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'));
-			initChartsCurtidas(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'), '#deslikeCharts');
+			initChartsDeslike(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'));
 			initDatetimepickers();
 			initAirtimeStats();
 		});
