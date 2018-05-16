@@ -88,4 +88,4 @@ function remove(_id, callback){
     global.db.collection("curtidas").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, update, remove, findById, findAll, findByUserAndHost, findForCharts, findBy, findByAudio }
+module.exports = {findByDeslike, insert, update, remove, findById, findAll, findByUserAndHost, findForCharts, findBy, findByAudio }
