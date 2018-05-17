@@ -63,7 +63,7 @@ function initAirtimeInfo() {
             artista = artista.substring(0, artista.indexOf("-") - 1);
             
             Audio.requestImg(artista, musica);
-            $('.radio-on').click();
+
         }
     });
 
@@ -71,17 +71,8 @@ function initAirtimeInfo() {
         setTimeout(function () {
             $('.play-list a:first-child')[0].click();
             socket.emit('airtime-info', 'reset');
-        }, 1000);
-
-        setTimeout(function () {
-            $('.play-list a:first-child')[0].click();
-            socket.emit('airtime-info', 'reset');
-        }, 2000);
-
-        setTimeout(function () {
-            $('.play-list a:first-child')[0].click();
-            socket.emit('airtime-info', 'reset');
-        }, 3000);
+            $('.radio-on').click();
+        }, 10000);
      
     }
 }
