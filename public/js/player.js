@@ -77,10 +77,22 @@ var Audio = {
         
         request.done(function (msg) {
 
-        	if(msg.track){
-        		if(msg.track.album){
-        			if(msg.track.album.image[2]){
-   			            var image = msg.track.album.image[2];
+        	// if(msg.track){
+        	// 	if(msg.track.album){
+        	// 		if(msg.track.album.image[2]){
+   			   //          var image = msg.track.album.image[2];
+			      //       if(image['#text']){
+				     //        $('#nova-img').attr("src", image['#text']);
+				     //        $('#teste-id').data('albumart', image['#text']);
+			      //       }
+         //    		}
+        	// 	}
+        	// }
+
+        	if(msg.artist){
+        		if(msg.artist.image){
+        			if(msg.artist.image[2]){
+   			            var image = msg.artist.image[2];
 			            if(image['#text']){
 				            $('#nova-img').attr("src", image['#text']);
 				            $('#teste-id').data('albumart', image['#text']);
@@ -88,7 +100,6 @@ var Audio = {
             		}
         		}
         	}
-
         });
 
         request.fail(function (jqXHR, textStatus) {
