@@ -71,7 +71,10 @@ router.post('/teste', authenticationMiddleware (), function(req, res, next) {
 
 router.get('/teste2', authenticationMiddleware (), function(req, res, next) {
 	try {
-      request('http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+
+		console.log('passo1');
+
+      	request('http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
                                                      ,{
                                                         'auth': {
                                                         'user': 'admin',
@@ -80,7 +83,9 @@ router.get('/teste2', authenticationMiddleware (), function(req, res, next) {
                                                       }}
                                     ,function (error, response, body) {
 
+            console.log('passo2');
           if (response) {
+          	console.log('passo3');
             // console.log(response);
             if (response.statusCode == 200){
             	console.log(body);
