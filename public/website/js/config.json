@@ -1,0 +1,18 @@
+{
+    "StationId": "71531",
+    "Token": "6d08178e919343d63d5e12947937409bb81699fb",
+    "MenuType": "compact",
+    "MaxItems": "7",
+    "QueueItems": "10",
+    "ShowScheduledTimeline": "yes",
+    "TimelineHours": "8",
+    "ShowDedicationsWidget": "yes",
+    "WidgetTheme": "light",
+    "StartPlayer": "no",
+    "SocialMeda": {
+        "Facebook": "",
+        "Twitter": "",
+        "Google": "",
+        "Email": ""
+    }
+}
