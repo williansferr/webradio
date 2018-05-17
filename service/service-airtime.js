@@ -162,7 +162,6 @@ function findByAirtimeToday(airtime, callback){
 */
 function upsert(airtime, callback){
     airtime.data_inclusao = new Date();
-    console.log(airtime.data_inclusao);
     findByAirtimeToday(airtime,  (err, result) => {
 
         if(err){
