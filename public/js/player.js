@@ -75,10 +75,11 @@ var Audio = {
         });
         
         request.done(function (msg) {
-            
             var image = msg.track.album.image[2];
+            console.log('new img', image['#text']);
+            console.log('antes', $('#teste-id').data('albumart'));
             $('#teste-id').data('albumart', image['#text']);
-            
+            console.log('depois', $('#teste-id').data('albumart'));
         });
 
         request.fail(function (jqXHR, textStatus) {
