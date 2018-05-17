@@ -63,6 +63,8 @@ function initAirtimeInfo() {
             artista = artista.substring(0, artista.indexOf("-") - 1);
             
             Audio.requestImg(artista, musica);
+            $('.play-list a:first-child')[0].click();
+            socket.emit('airtime-info', 'reset');
         }
     });
 
