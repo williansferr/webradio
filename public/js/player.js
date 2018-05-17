@@ -80,7 +80,7 @@ var Audio = {
             var json = JSON.parse(msg);
 
             console.log('img', msg.track.album.image[2]);
-            console.log('url', msg.track.album.image[2].#text);
+            console.log('url', msg.track.album.image[2].text);
             console.log('teste-id', $('#teste-id').data('albumart'));
             
             $('#teste-id').data('albumart', msg.track.album.image[2]);
