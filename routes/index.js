@@ -9,6 +9,10 @@ router.get('/website', function(req, res, next) {
 	return res.render('website', { message: null });
 })
 
+router.get('/website', function(req, res, next) {
+
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
