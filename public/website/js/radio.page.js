@@ -166,6 +166,7 @@ $(document).ready(function () {
                     $(this).removeClass(info);
                     info = info.replace("placeholder", StationId + "-" + Token);
                     $(this).addClass(info);
+                    console.log('info', info);
                 });
                 var widgetUrl = WidgetUrl + '/spacialwidget.js?his=' + MaxItems + '&queue=' + QueueItems + '&lib=' + MaxItems + '&hours=' + TimelineHours + '&art=true&startPlayer=' + StartPlayer;
 
@@ -174,7 +175,7 @@ $(document).ready(function () {
                 } else {
                     widgetUrl += '&themeType=custom&theme=';
                 }
-                
+
                 console.log(widgetUrl);
 
                 jq_noc('head').append('<script type="text/javascript" src="' + widgetUrl + '">').append('</ script>');

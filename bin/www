@@ -367,9 +367,9 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       requestLiveInfo(false);
       requestAirtimeStats(false);
 
-      requestListMount();
+      // requestListMount();
 
-      requestImage();
+      // requestImage();
 
       // console.log((new Date).toLocaleString().substr(11))
       // console.log(new Date)
