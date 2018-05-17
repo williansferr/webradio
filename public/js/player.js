@@ -66,9 +66,9 @@ var Audio = {
 		}
 	},
 	requestImg:function(){
-		console.log('aritsta', $('#txt-artist').val());
+		console.log('aritsta', $(this).data('artist'));
 		const request = $.ajax({
-            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + $('#txt-artist').val() + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
+            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + $(this).data('artist') + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
             type: 'GET'
         });
         
