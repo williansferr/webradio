@@ -71,7 +71,6 @@ function initAirtimeInfo() {
         setTimeout(function () {
             $('.play-list a:first-child')[0].click();
             socket.emit('airtime-info', 'reset');
-            $('.radio-on').click();
         }, 10000);
      
     }
