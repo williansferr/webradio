@@ -67,7 +67,7 @@ var Audio = {
 
 		}
 	},
-	requestImg:function(artista, musica){
+	requestImg:function(artista, musica, album){
 
 		if(Audio.info.load.id === 1 && Audio.info.load.artist !== artista){
 
@@ -99,14 +99,22 @@ var Audio = {
 	        			if(msg.artist.image[2]){
 	   			            var image = msg.artist.image[2];
 				            if(image['#text']){
-					            // $('#nova-img').attr("src", image['#text']);
+
 					            $('#albumart-id').data('albumart', image['#text']);
 					            $('#albumart-id').data('artist', artista);
 								$('#albumart-id').data('title', musica);
-					            // $('.play-list a:first-child')[0].click();
-					            $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
-					            $('#txt-album').html('<i class="fas fa-music"></i>');
+								if (album){
+									$('#albumart-id').data('album', album);	
+									$('#txt-album').html('<i class="fas fa-music"></i>' + album);
+								} else {
+									$('#albumart-id').data('album', '');
+									$('#txt-album').html('<i class="fas fa-music"></i>');
+								}
+								$('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
+					            
 					            $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+								
+					            
 
 					            var albumart = $('#albumart-id').data('albumart');
 					            albumart=albumart?'<img src="'+albumart+'">':'';
@@ -134,9 +142,15 @@ var Audio = {
 			// mp3 = link.data('url');
 			// Audio.info.load(id,album,artist,title,albumart,mp3);
 
-	        $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
-            $('#txt-album').html('<i class="fas fa-music"></i>');
-            $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+			
+			$('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
+			$('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+			if(album){
+				$('#txt-album').html('<i class="fas fa-music"></i>' + album);
+			} else {
+				$('#txt-album').html('<i class="fas fa-music"></i>');
+			}
+            
             // $('.play-pause').click();
     	}
 	},
@@ -314,7 +328,8 @@ var Audio = {
 			}
 		});
 		$('.radio-on').on('click',function(e){
-			$('.play-list a:first-child')[0].click();
+			// $('.play-list a:first-child')[0].click();
+			Audio.play($('.music'));
 			socket.emit('airtime-info', 'reset');
 		});
 	},
