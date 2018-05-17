@@ -260,7 +260,7 @@ var Audio = {
 		});
 		$('.radio-on').on('click',function(e){
 			$('.play-list a:first-child')[0].click();
-			console.log($('#coverArt'));
+			Audio.requestImg();
 			socket.emit('airtime-info', 'reset');
 		});
 	},
