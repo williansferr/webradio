@@ -190,6 +190,11 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
             // console.log(response);
             if (response.statusCode == 200){
               // console.log(body);
+              console.log('body', body);
+              var sourceImg = body.substring(body.indexof('id="coverArt"') + 6, body.indexof('id="coverArt"') + 100);
+              console.log('sourceImg', sourceImg);
+
+
               var json = html2json(body);
               console.log(json.child);
               // console.log('1:',json.child[0].child[0]);
