@@ -185,6 +185,14 @@ body {
   color: #3B5998;
 }
 
+.content-facebook {
+  cursor: pointer;
+}
+
+.content-facebook:hover {
+  color: #3B5998;
+}
+
 .content-social {
   height:111px;
   padding:15px;
