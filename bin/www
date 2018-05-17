@@ -199,7 +199,9 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
               // console.log('5:',json.child[0].child[4]);
               // console.log('6:',json.child[0].child[5]);
 
-              console.log('body', json.child[0].child[4].child[8]);
+              console.log('body', json.child[0].child[4]);
+              console.log('length', json.child[0].child[4].child.length);
+              
             }
           }
       });
