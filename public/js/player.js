@@ -71,7 +71,7 @@ var Audio = {
 			// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
 			// 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json'
 			//http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist=Zeca%20Pagodinho&track=Verdade&format=json
-            url: 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist='+artista+'&track='+musica+'&format=json',
+            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
             type: 'GET'
         });
         
