@@ -9,8 +9,14 @@ router.get('/website', function(req, res, next) {
 	return res.render('website', { message: null });
 })
 
-router.get('/website', function(req, res, next) {
+router.get('/website2', function(req, res, next) {
+	var scrape = require('html-metadata');
 
+	var url = "https://samcloudmedia.spacial.com/webwidgets/player/v4/300x160.html?sid=71531&rid=155795&startstation=false&theme=light&showBuyButton=always&token=6d08178e919343d63d5e12947937409bb81699fb";
+
+	scrape(url).then(function(metadata){
+		console.log('metadata', metadata);
+	});
 });
 
 /* GET home page. */
