@@ -355,6 +355,7 @@
                 var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
                 artista = artista.substring(0, artista.indexOf("-") - 1);
                 $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
+                Audio.requestImg(artista);
                 $('#txt-album').html('<i class="fas fa-music"></i>');
                 $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
             }

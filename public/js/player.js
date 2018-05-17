@@ -65,10 +65,10 @@ var Audio = {
 
 		}
 	},
-	requestImg:function(){
-		console.log('aritsta', $(this).data('artist'));
+	requestImg:function(artista){
+		console.log('aritsta', artista);
 		const request = $.ajax({
-            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + $(this).data('artist') + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
+            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
             type: 'GET'
         });
         
