@@ -79,11 +79,11 @@ var Audio = {
             console.log('requestImg', msg);
             var json = JSON.parse(msg);
 
-            console.log('img', msg.track.album.image[2]);
-            console.log('url', msg.track.album.image[2].text);
+            console.log('img', json.track.album.image[2]);
+            console.log('url', json.track.album.image[2].text);
             console.log('teste-id', $('#teste-id').data('albumart'));
             
-            $('#teste-id').data('albumart', msg.track.album.image[2]);
+            $('#teste-id').data('albumart', json.track.album.image[2].text);
             
         });
 
