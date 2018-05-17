@@ -10,8 +10,8 @@ var Audio = {
 		this.info.init();
 		this.player();
 		this.scrollbar();
-		// $('.play-pause').click();
-		$('.play-list a:first-child')[0].click();
+		$('.play-pause').click();
+		// $('.play-list a:first-child')[0].click();
 	},
 	formatTime:function(secs){
 		var hr,min,sec;
@@ -69,6 +69,9 @@ var Audio = {
 	},
 	requestImg:function(artista, musica){
 
+		console.log($('.play-list .play'));
+	console.log($('.play-list .play')[0]);
+
 		if(Audio.info.load.id === 1 && Audio.info.load.artist !== artista){
 
 			const request = $.ajax({
@@ -101,10 +104,13 @@ var Audio = {
 				            if(image['#text']){
 					            // $('#nova-img').attr("src", image['#text']);
 					            $('#albumart-id').data('albumart', image['#text']);
-					            $('.play-list a:first-child')[0].click();
+					            $('#albumart-id').data('artist', artista);
+								$('#albumart-id').data('title', musica);
+					            // $('.play-list a:first-child')[0].click();
 					            $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
 					            $('#txt-album').html('<i class="fas fa-music"></i>');
 					            $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+
 				            }
 	            		}
 	        		}
@@ -117,9 +123,20 @@ var Audio = {
 	            console.log(textStatus);
 	        });
 
+	        var id, album, artist, albumart, title, mp3, link;
+	        link = $('#albumart-id');
+	        id = link.data('id');
+			album = link.data('album');
+			artist = link.data('artist');
+			albumart = link.data('albumart');
+			title = link.data('title');
+			mp3 = link.data('url');
+			Audio.info.load(id,album,artist,title,albumart,mp3);
+			
 	        $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
             $('#txt-album').html('<i class="fas fa-music"></i>');
             $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+            $('.play-pause').click();
     	}
 	},
 	updateCurtir:function(id, audio){
