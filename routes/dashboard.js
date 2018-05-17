@@ -253,13 +253,12 @@ global.classMenu = {
 		    						if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_ouvinte.findByDataInclusaoBetween", error: err }))
 
 		    						let ouvintes = result;
-		    						
+		    						console.log('ouvintes', ouvintes);
 		    						var ouvinte = {};
 		    						labels = [];
 			    					series = [];
 			    					let maxList = 0;
 			    					for (var i = 0, len = ouvintes.length; i < len; i++) {
-			    						console.log('airtimes[i]', airtimes[i]);
 			    						if (airtimes[i]){
 			    							labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
 				    						series.push(airtimes[i].count);	
