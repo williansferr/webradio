@@ -71,8 +71,8 @@ db.airtimes.aggregate(
 ]).pretty()
 */
 function findByDataInclusaoBetween(data_inicial, data_final, callback) {
-    // console.log('date_inicial', data_inicial);
-    // console.log('data_final', data_final);
+    console.log('date_inicial', data_inicial);
+    console.log('data_final', data_final);
     // date_inicial.setHours(0,0,0);
     // date_final.setHours(0,0,0);
     //data_inclusao: {$lt: new Date(), $gte: new Date(new Date().setDate(new Date().getDate()-1))}
