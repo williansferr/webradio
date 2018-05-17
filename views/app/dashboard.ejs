@@ -3,6 +3,17 @@
 <head>
     <% var title = 'Dashboard'; var path = '' %>
     <% include partials/head %>
+    <style>
+    	.ct-series-a .ct-line,
+		.ct-series-a .ct-point {
+		  stroke: blue;
+		}
+
+		.ct-series-b .ct-line,
+		.ct-series-b .ct-point {
+		  stroke: green;
+		}
+    </style>
 </head>
 
 <body>
@@ -237,7 +248,7 @@
 	            high: data.high,
 	            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
 	            height: '300px',
-	            stroke: white;
+	            stroke: white
 	        }
 
 	        var charts = new Chartist.Bar('#deslikeCharts', dataChart, optionsChart);
