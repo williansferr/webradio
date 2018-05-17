@@ -31,8 +31,7 @@ function findByDataInclusaoBetween(data_inicial, data_final, callback) {
                     }, 
                     count : { 
                         "$sum" : 1 
-                    },
-                    // listenersMax: { $max: "$listeners"}
+                    }
                 }
             },
             {

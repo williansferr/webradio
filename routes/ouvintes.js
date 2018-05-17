@@ -1,7 +1,9 @@
 const express            = require('express');
 const router 	         = express.Router();
-const service_ouvinte   = require('../service/service-ouvinte');
+const service_ouvinte    = require('../service/service-ouvinte');
 const os 				 = require('os');
+const html2json          = require('html2json').html2json;
+const request            = require('request');
 const bunyan = require('bunyan');
 const log = bunyan.createLogger(
 {
@@ -66,6 +68,35 @@ router.post('/teste', authenticationMiddleware (), function(req, res, next) {
 	
 })
 
+
+router.get('/teste2', authenticationMiddleware (), function(req, res, next) {
+	try {
+      request('http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+                                                     ,{
+                                                        'auth': {
+                                                        'user': 'admin',
+                                                        'pass': '31ypq8X18LSR',
+                                                        'sendImmediately': false
+                                                      }}
+                                    ,function (error, response, body) {
+
+          if (response) {
+            // console.log(response);
+            if (response.statusCode == 200){
+            	console.log(body);
+            	// json === html2json(body.innerHTML);
+
+            }
+          }
+      });
+
+    } catch(e){
+      log.error({
+        error: e,
+        request: 'http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+      });
+    }
+})
 
 router.post('/', function(req, res, next) {
 	let data = {
