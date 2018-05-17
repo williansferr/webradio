@@ -56,13 +56,22 @@ var Curtida = {
     },
     load:function(){
         $('#like-audio').on('click', function() {
-            console.log($('#like-audio'));
-            Curtida.sendLike(true);
+            if($('#like-audio')[0].innerHTML.indexOf("rgb(1, 66, 106)") >= 0){
+                console.log('ja deu like');
+            } else {
+                Curtida.sendLike(true);    
+            }
+            
         });
 
         $('#deslike-audio').on('click', function() {
             console.log($('#deslike-audio'));
-            Curtida.sendLike(false);
+            if($('#like-audio')[0].innerHTML.indexOf("rgb(1, 66, 106)") >= 0){
+                console.log('ja deu deslike');
+            } else {
+                Curtida.sendLike(false);    
+            }
+            
         });
     },
     info: {
