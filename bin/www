@@ -200,8 +200,11 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
               // console.log('6:',json.child[0].child[5]);
 
               console.log('body', json.child[0].child[4]);
-              console.log('length', json.child[0].child[4].child.length);
-              
+              console.log('div1', json.child[0].child[4].child[1]);
+              console.log('div2', json.child[0].child[4].child[1].child[0]);
+              console.log('div3', json.child[0].child[4].child[1].child[0].child[1]);
+              console.log('div4', json.child[0].child[4].child[1].child[0].child[1].child[0]);
+
             }
           }
       });
