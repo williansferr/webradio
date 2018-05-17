@@ -3,17 +3,6 @@
 <head>
     <% var title = 'Dashboard'; var path = '' %>
     <% include partials/head %>
-    <style>
-    	.ct-series-a .ct-line,
-		.ct-series-a .ct-point {
-		  stroke: blue;
-		}
-
-		.ct-series-b .ct-line,
-		.ct-series-b .ct-point {
-		  stroke: green;
-		}
-    </style>
 </head>
 
 <body>
@@ -214,7 +203,7 @@
 		    $(this).perfectScrollbar();
 		});
 
-		function initChartsCurtidas(data, id){
+		function initChartsCurtidas(data){
 			// dataCurtidasChart = JSON.parse('<%- JSON.stringify(curtidaCharts) %>');
 			dataCurtidasChart = data;
 
@@ -229,14 +218,13 @@
 	            height: '300px'
 	        }
 
-	        var curtidasCharts = new Chartist.Bar(id, dataCurtidasChart, optionsDailySalesChart);
+	        var curtidasCharts = new Chartist.Bar('#curtidasCharts', dataCurtidasChart, optionsDailySalesChart);
 
 	        md.startAnimationForLineChart(curtidasCharts);
 
 		}
 
-		function initChartsDeslike(data, id){
-			// dataCurtidasChart = JSON.parse('<%- JSON.stringify(curtidaCharts) %>');
+		function initChartsDeslike(data){
 			dataChart = data;
 
 	        optionsChart = {
@@ -244,7 +232,6 @@
 	                tension: 0
 	            }),
 	            low: 0,
-	            // high: <%= curtidaCharts.high %>, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
 	            high: data.high,
 	            chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
 	            height: '300px'
@@ -362,7 +349,7 @@
 
 
 		$( document ).ready(function() {
-			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'), '#curtidasCharts');
+			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'));
 			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'));
 			initChartsDeslike(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'));
 			initDatetimepickers();
