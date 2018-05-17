@@ -76,17 +76,8 @@ var Audio = {
         
         request.done(function (msg) {
             
-           
-            console.log('requestImg', msg);
             var image = msg.track.album.image[2];
-            var json = JSON.stringify(image);
-            json = JSON.parse(json);
-            console.log('json', json);
-            console.log('size', json.size);
-            console.log('url', image['#text']);
-            console.log('teste-id', $('#teste-id').data('albumart'));
-            
-            // $('#teste-id').data('albumart', msg.track.album.image[2].text);
+            $('#teste-id').data('albumart', image['#text']);
             
         });
 
