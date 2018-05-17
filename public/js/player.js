@@ -328,8 +328,7 @@ var Audio = {
 			}
 		});
 		$('.radio-on').on('click',function(e){
-			// $('.play-list a:first-child')[0].click();
-			Audio.play($('.music'));
+			$('.play-list a:first-child')[0].click();
 			socket.emit('airtime-info', 'reset');
 		});
 	},
