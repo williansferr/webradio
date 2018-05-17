@@ -159,13 +159,15 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
               // console.log(body);
               var json = html2json(body);
               // console.log(json.child);
-              console.log('1:',json.child[0].child[0]);
-              console.log('2:',json.child[0].child[1]);
-              console.log('3:',json.child[0].child[2]);
-              console.log('4:',json.child[0].child[3]);
-              console.log('5:',json.child[0].child[4]);
-              console.log('6:',json.child[0].child[5]);
-              // console.log(json.child[0].child[1]);
+              // console.log('1:',json.child[0].child[0]);TXT
+              // console.log('2:',json.child[0].child[1]);TXT
+              // console.log('3:',json.child[0].child[2]);HEAD
+              // console.log('4:',json.child[0].child[3]);TXT
+              // console.log('5:',json.child[0].child[4]);BODY
+              // console.log('6:',json.child[0].child[5]);TXT
+
+              console.log('BODY:',json.child[0].child[4].child[6].child[1]);
+
             }
           }
       });
