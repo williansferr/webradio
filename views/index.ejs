@@ -54,7 +54,7 @@
                             </div>
                             <div class="play-list">
                             <% radios.forEach(function(ra){ %>
-                                <a id="teste-id" href="#" class="play"
+                                <a id="albumart-id" href="#" class="play"
                                     data-id="1"
                                     data-album="<%= ra.subtitulo %>"
                                     data-artist="<%= ra.autor %>"
@@ -305,7 +305,7 @@
                 </div>
             </div>
             <div class="col col-12 col-sm-1 col-md-1 col-xl-3">
-                <img id="nova-img" src="" alt="">
+                <!-- <img id="nova-img" src="" alt=""> -->
                 
                 <!-- <i class="fab fa-facebook-square fa-2x"></i> -->
                 <!-- <div class="copyright"><span class="">© 2017 por LuppiaArts. Luppiarts Produções Artisticas</span></div> -->
@@ -346,6 +346,7 @@
     function initAirtimeInfo() {
         // socket.emit('airtime-info', '');
         socket.on('airtime-info', function(msg){
+
             if (msg && $('.play-list a.active').data().id == 1){
                 if(msg.curtidas != null && msg.curtidas != undefined){
                     Curtida.curtidas(msg.curtidas);
@@ -355,12 +356,9 @@
                 artista = artista.substring(artista.indexOf("-") + 2, artista.length);
                 var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
                 artista = artista.substring(0, artista.indexOf("-") - 1);
-                $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
-                $('#txt-album').html('<i class="fas fa-music"></i>');
-                $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+                
                 Audio.requestImg(artista, musica);
             }
-
         });
     }
 

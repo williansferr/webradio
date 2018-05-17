@@ -140,7 +140,8 @@
 .mhn-player .album-art img{
 /* .album-art img{ */
 	width:100%;
-	/* position:relative; */
+	right: -48px;
+	position:relative;
 }
 .mhn-player .album-art.blur img{
 /* .album-art.blur img{ */

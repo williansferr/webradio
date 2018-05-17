@@ -276,7 +276,9 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                       if(isNewUser){
                         airtime_service.findByListenerPeakToday(function (err, result) {
                           if(err === null) {
-                            airtime.listener_peak = result[0].listenersMax;
+                            if(result[0].listenersMax){
+                              airtime.listener_peak = result[0].listenersMax;  
+                            }
                             io.emit('airtime-stats', airtime);
                           }
                         });

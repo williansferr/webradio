@@ -10,7 +10,8 @@ var Audio = {
 		this.info.init();
 		this.player();
 		this.scrollbar();
-		$('.play-pause').click();
+		// $('.play-pause').click();
+		$('.play-list a:first-child')[0].click();
 	},
 	formatTime:function(secs){
 		var hr,min,sec;
@@ -48,6 +49,7 @@ var Audio = {
 		load: function(id,album,artist,title,albumart,mp3) {
 			this.load.id = id
 			this.load.mp3 = mp3
+			this.load.artist = artist
 			var currentTrack, totalTrack;
 			totalTrack = $('.play-list>a').length;
 			currentTrack = $('.play-list a').index($('.play-list .active'))+1;
@@ -66,48 +68,55 @@ var Audio = {
 		}
 	},
 	requestImg:function(artista, musica){
-	
-		const request = $.ajax({
-			// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
-			// 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json'
-			//http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist=Zeca%20Pagodinho&track=Verdade&format=json
-            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
-            type: 'GET'
-        });
-        
-        request.done(function (msg) {
 
-        	// if(msg.track){
-        	// 	if(msg.track.album){
-        	// 		if(msg.track.album.image[2]){
-   			   //          var image = msg.track.album.image[2];
-			      //       if(image['#text']){
-				     //        $('#nova-img').attr("src", image['#text']);
-				     //        $('#teste-id').data('albumart', image['#text']);
-			      //       }
-         //    		}
-        	// 	}
-        	// }
+		if(Audio.info.load.id === 1){
 
-        	// console.log(msg);
-        	if(msg.artist){
-        		if(msg.artist.image){
-        			if(msg.artist.image[2]){
-   			            var image = msg.artist.image[2];
-			            if(image['#text']){
-				            $('#nova-img').attr("src", image['#text']);
-				            $('#teste-id').data('albumart', image['#text']);
-			            }
-            		}
-        		}
-        	}
-        });
+			const request = $.ajax({
+				// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
+				// 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json'
+				//http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist=Zeca%20Pagodinho&track=Verdade&format=json
+	            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
+	            type: 'GET'
+	        });
+	        
+	        request.done(function (msg) {
 
-        request.fail(function (jqXHR, textStatus) {
-            console.log('erro');
-            console.log(jqXHR);
-            console.log(textStatus);
-        });
+	        	// if(msg.track){
+	        	// 	if(msg.track.album){
+	        	// 		if(msg.track.album.image[2]){
+	   			   //          var image = msg.track.album.image[2];
+				      //       if(image['#text']){
+					     //        $('#nova-img').attr("src", image['#text']);
+					     //        $('#teste-id').data('albumart', image['#text']);
+				      //       }
+	         //    		}
+	        	// 	}
+	        	// }
+
+	        	// console.log(msg);
+	        	if(msg.artist){
+	        		if(msg.artist.image){
+	        			if(msg.artist.image[2]){
+	   			            var image = msg.artist.image[2];
+				            if(image['#text']){
+					            // $('#nova-img').attr("src", image['#text']);
+					            $('#albumart-id').data('albumart', image['#text']);
+					            $('.play-list a:first-child')[0].click();
+					            $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
+				                $('#txt-album').html('<i class="fas fa-music"></i>');
+				                $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+				            }
+	            		}
+	        		}
+	        	}
+	        });
+
+	        request.fail(function (jqXHR, textStatus) {
+	            console.log('erro');
+	            console.log(jqXHR);
+	            console.log(textStatus);
+	        });
+    	}
 	},
 	updateCurtir:function(id, audio){
 		
