@@ -70,7 +70,7 @@ var Audio = {
 		const request = $.ajax({
 			// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
 			// 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json'
-            url: 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist='+artista+'&track='+musica+'&format=json',
+            url: 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist=Zeca%20Pagodinho&track=Verdade&format=json',
             type: 'GET'
         });
         
@@ -80,7 +80,9 @@ var Audio = {
             var json = JSON.parse(msg);
 
             console.log('img', msg.track.album.image[2]);
+            console.log('url', msg.track.album.image[2].#text);
             console.log('teste-id', $('#teste-id').data('albumart'));
+            
             $('#teste-id').data('albumart', msg.track.album.image[2]);
             
         });
