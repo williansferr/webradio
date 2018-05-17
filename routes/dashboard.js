@@ -259,7 +259,8 @@ global.classMenu = {
 			    					series = [];
 			    					let maxList = 0;
 			    					for (var i = 0, len = ouvintes.length; i < len; i++) {
-			    						if (airtimes[i]._id){
+			    						console.log('airtimes[i]', airtimes[i]);
+			    						if (airtimes[i]){
 			    							labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
 				    						series.push(airtimes[i].count);	
 			    						}
