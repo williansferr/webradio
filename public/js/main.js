@@ -69,7 +69,8 @@ function initAirtimeInfo() {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         setTimeout(function () {
             alert('teste mobile');
-            Audio.play($('.music'));
+            $('.play-list a:first-child')[0].click();
+            socket.emit('airtime-info', 'reset');
         }, 10000);
      
     }
