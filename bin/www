@@ -155,9 +155,9 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
           if (response) {
             // console.log(response);
             if (response.statusCode == 200){
-              console.log(body);
-              // json === html2json(body.innerHTML);
-
+              // console.log(body);
+              json === html2json(body);
+              console.log(json);
             }
           }
       });
