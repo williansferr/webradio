@@ -69,7 +69,7 @@ var Audio = {
 	},
 	requestImg:function(artista, musica){
 
-		if(Audio.info.load.id === 1){
+		if(Audio.info.load.id === 1 && Audio.info.load.artist !== artista){
 
 			const request = $.ajax({
 				// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
