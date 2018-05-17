@@ -11,7 +11,8 @@
 body { 
 	/* background: url('../img/exemplos/img8.jpg') no-repeat center center fixed; */
 	/* background: url('../img/bg2.jpg') no-repeat center center fixed; */
-  background-image: url('../ARTES_OFICIAIS_ATENTO/Textura Mundi.png');
+  /* background-image: url('../ARTES_OFICIAIS_ATENTO/Textura Mundi.png'); */
+  background-image: url('../img/background.jpg');
   background-repeat: repeat-x; 
 	background-size: cover;
 }
