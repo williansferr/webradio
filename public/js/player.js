@@ -75,13 +75,13 @@ var Audio = {
         });
         
         request.done(function (msg) {
-            console.log('msg1', msg.replace('#', ''));
             
-            var json = JSON.parse(msg.replace('#', ''));
-            console.log('requestImg', json);
+            
+            var json = JSON.parse(msg);
+            console.log('requestImg', msg);
 
-            console.log('img', json.track.album.image[2]);
-            console.log('url', json.track.album.image[2].text);
+            console.log('img', msg.track.album.image[2]);
+            console.log('url', msg.track.album.image[2].['#text']);
             console.log('teste-id', $('#teste-id').data('albumart'));
             
             $('#teste-id').data('albumart', json.track.album.image[2].text);
