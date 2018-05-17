@@ -130,9 +130,11 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
 
   const request = require('request');
   const service_curtidas = require('../service/service-curtidas');
+  const service_ouvinte  = require('../service/service-ouvinte');
   const airtime_service = require('../service/service-airtime');
   const html2json = require('html2json').html2json;
   const bunyan = require('bunyan');
+  var ouvintes = {};
   const log = bunyan.createLogger(
     {
       name: "webradioApp",
@@ -157,7 +159,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
             // console.log(response);
             if (response.statusCode == 200){
               // console.log(body);
-              // var json = html2json(body);
+              var json = html2json(body);
               // console.log(json.child);
               // console.log('1:',json.child[0].child[0]);TXT
               // console.log('2:',json.child[0].child[1]);TXT
@@ -166,8 +168,56 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
               // console.log('5:',json.child[0].child[4]);BODY
               // console.log('6:',json.child[0].child[5]);TXT
 
-              // console.log('BODY:',json.child[0].child[4]);
+              // console.log('BODY:',json.child[0].child[3]);
+              // console.log('div1:',json.child[0].child[3].child[10]);
+              // console.log('div2:',json.child[0].child[3].child[10].child[3]);
+              // console.log('table1:',json.child[0].child[3].child[10].child[3].child[6]);
 
+              let trs = json.child[0].child[3].child[10].child[3].child[6].child;
+
+              if(trs){
+
+                let ouvintes_tmp = {
+                  data_inclusao: new Date(),
+                  ips: []
+                };
+                let ouvinte_tmp = { };
+
+                for(let i = 0; i < trs.length; i++){
+                  if(trs[i].tag){
+                    if(trs[i].tag === 'tr'){
+                      if(i > 1){
+                        // console.log('[' + i + ']', trs[i].child[1].child[0].text);
+                        ouvinte_tmp.ip = trs[i].child[1].child[0].text;
+                        ouvintes_tmp.ips.push(ouvinte_tmp);
+                      }
+                    }
+                  }
+                }
+
+
+                if (!ouvintes) {
+                  ouvintes = ouvintes_tmp;
+                  console.log('gravar', ouvintes_tmp);
+                } else {
+                  console.log('getDate', ouvintes.data_inclusao.getDate());
+                  console.log('getMonth', ouvintes.data_inclusao.getMonth());
+                  console.log('getFullYear', ouvintes.data_inclusao.getFullYear());
+                  console.log('ouvintes_tmpgetDate', ouvintes_tmp.data_inclusao.getDate());
+                  console.log('ouvintes_tmpgetMonth', ouvintes_tmp.data_inclusao.getMonth());
+                  console.log('ouvintes_tmpgetFullYear', ouvintes_tmp.data_inclusao.getFullYear());
+
+                  if (ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate() && 
+                    ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() &&
+                    ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear()) {
+                    ouvintes = ouvintes_tmp;
+                    console.log('gravar', ouvintes_tmp);
+                    // service_ouvinte.insert(ouvintes_tmp);
+                  } else {
+                    console.log('ja foi gravado', ouvintes);
+                  }
+                }
+              }
             }
           }
       });
@@ -369,7 +419,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       requestLiveInfo(false);
       requestAirtimeStats(false);
 
-      // requestListMount();
+      requestListMount();
 
       // requestImage();
 

@@ -78,7 +78,6 @@ function initAirtimeInfo() {
 
 $(function(){
     Curtida.init();
-
 });
 
 var Curtida = {
