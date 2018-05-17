@@ -65,6 +65,26 @@ var Audio = {
 
 		}
 	},
+	requestImg:function(){
+		console.log('aritsta', $('#txt-artist').val());
+		const request = $.ajax({
+            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + $('#txt-artist').val() + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
+            type: 'GET'
+        });
+        
+        request.done(function (msg) {
+            
+            console.log('requestImg', msg);
+            var json = JSON.parse(msg);
+            
+        });
+
+        request.fail(function (jqXHR, textStatus) {
+            console.log('erro');
+            console.log(jqXHR);
+            console.log(textStatus);
+        });
+	},
 	updateCurtir:function(id, audio){
 		
 		var audio_aux = audio.substring(audio.lastIndexOf('/') + 1, audio.length);
