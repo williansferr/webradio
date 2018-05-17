@@ -57,7 +57,7 @@ var Curtida = {
     load:function(){
         $('#like-audio').on('click', function() {
             if($('#like-audio')[0].innerHTML.indexOf("rgb(1, 66, 106)") >= 0){
-                console.log('ja deu like');
+                // console.log('ja deu like');
             } else {
                 Curtida.sendLike(true);    
             }
@@ -65,9 +65,8 @@ var Curtida = {
         });
 
         $('#deslike-audio').on('click', function() {
-            console.log($('#deslike-audio'));
             if($('#like-audio')[0].innerHTML.indexOf("rgb(1, 66, 106)") >= 0){
-                console.log('ja deu deslike');
+                // console.log('ja deu deslike');
             } else {
                 Curtida.sendLike(false);    
             }
