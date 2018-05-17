@@ -89,6 +89,7 @@ var Audio = {
         	// 	}
         	// }
 
+        	// console.log(msg);
         	if(msg.artist){
         		if(msg.artist.image){
         			if(msg.artist.image[2]){

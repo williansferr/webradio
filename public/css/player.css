@@ -118,7 +118,7 @@
 	top:30px;
 	left:50%;
 	max-width:200px;
-	content:'Atento';
+	/* content:'Atento'; */
 	/* font-size:72px; */
 	font-size:2em;
 	font-weight:600;
