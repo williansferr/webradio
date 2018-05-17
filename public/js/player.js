@@ -102,9 +102,7 @@ var Audio = {
 					            // $('#nova-img').attr("src", image['#text']);
 					            $('#albumart-id').data('albumart', image['#text']);
 					            $('.play-list a:first-child')[0].click();
-					            $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
-				                $('#txt-album').html('<i class="fas fa-music"></i>');
-				                $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
+					            
 				            }
 	            		}
 	        		}
@@ -116,6 +114,10 @@ var Audio = {
 	            console.log(jqXHR);
 	            console.log(textStatus);
 	        });
+
+	        $('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
+            $('#txt-album').html('<i class="fas fa-music"></i>');
+            $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
     	}
 	},
 	updateCurtir:function(id, audio){
