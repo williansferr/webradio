@@ -196,27 +196,27 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                 }
 
 
-                if (!ouvintes) {
-                  ouvintes = ouvintes_tmp;
-                  console.log('gravar', ouvintes_tmp);
-                } else {
-                  console.log('getDate', ouvintes.data_inclusao.getDate());
-                  console.log('getMonth', ouvintes.data_inclusao.getMonth());
-                  console.log('getFullYear', ouvintes.data_inclusao.getFullYear());
-                  console.log('ouvintes_tmpgetDate', ouvintes_tmp.data_inclusao.getDate());
-                  console.log('ouvintes_tmpgetMonth', ouvintes_tmp.data_inclusao.getMonth());
-                  console.log('ouvintes_tmpgetFullYear', ouvintes_tmp.data_inclusao.getFullYear());
+                // if (!ouvintes) {
+                //   ouvintes = ouvintes_tmp;
+                //   console.log('gravar', ouvintes_tmp);
+                // } else {
+                //   console.log('getDate', ouvintes.data_inclusao.getDate());
+                //   console.log('getMonth', ouvintes.data_inclusao.getMonth());
+                //   console.log('getFullYear', ouvintes.data_inclusao.getFullYear());
+                //   console.log('ouvintes_tmpgetDate', ouvintes_tmp.data_inclusao.getDate());
+                //   console.log('ouvintes_tmpgetMonth', ouvintes_tmp.data_inclusao.getMonth());
+                //   console.log('ouvintes_tmpgetFullYear', ouvintes_tmp.data_inclusao.getFullYear());
 
-                  if (ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate() && 
-                    ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() &&
-                    ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear()) {
-                    ouvintes = ouvintes_tmp;
-                    console.log('gravar', ouvintes_tmp);
-                    // service_ouvinte.insert(ouvintes_tmp);
-                  } else {
-                    console.log('ja foi gravado', ouvintes);
-                  }
-                }
+                //   if (ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate() && 
+                //     ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() &&
+                //     ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear()) {
+                //     ouvintes = ouvintes_tmp;
+                //     console.log('gravar', ouvintes_tmp);
+                //     // service_ouvinte.insert(ouvintes_tmp);
+                //   } else {
+                //     console.log('ja foi gravado', ouvintes);
+                //   }
+                // }
               }
             }
           }
