@@ -80,6 +80,7 @@ var Audio = {
             console.log('antes', $('#teste-id').data('albumart'));
             $('#teste-id').data('albumart', image['#text']);
             console.log('depois', $('#teste-id').data('albumart'));
+            Audio.info.init();
         });
 
         request.fail(function (jqXHR, textStatus) {
