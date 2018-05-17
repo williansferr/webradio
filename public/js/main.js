@@ -65,6 +65,14 @@ function initAirtimeInfo() {
             Audio.requestImg(artista, musica);
         }
     });
+
+    if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+        setTimeout(function () {
+            alert('teste mobile');
+            Audio.play();
+        }, 10000);
+     
+    }
 }
 
 $(function(){
