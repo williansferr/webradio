@@ -56,10 +56,12 @@ var Curtida = {
     },
     load:function(){
         $('#like-audio').on('click', function() {
+            console.log($('#like-audio'));
             Curtida.sendLike(true);
         });
 
         $('#deslike-audio').on('click', function() {
+            console.log($('#deslike-audio'));
             Curtida.sendLike(false);
         });
     },
@@ -99,6 +101,7 @@ var Curtida = {
         $('#deslike-cnt').append('<span id="qt-deslike-curtidas">' + qt_deslike + '</span>');   
     },
     sendLike:function(isLike){
+
         let idAudio = Audio.info.load.id;
         let audio = '';
 
