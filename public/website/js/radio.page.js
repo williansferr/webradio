@@ -174,6 +174,8 @@ $(document).ready(function () {
                 } else {
                     widgetUrl += '&themeType=custom&theme=';
                 }
+                
+                console.log(widgetUrl);
 
                 jq_noc('head').append('<script type="text/javascript" src="' + widgetUrl + '">').append('</ script>');
 
