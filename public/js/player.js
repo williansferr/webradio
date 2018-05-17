@@ -80,6 +80,7 @@ var Audio = {
             console.log('requestImg', msg);
             var image = msg.track.album.image[2];
             var json = JSON.stringify(image);
+            json = JSON.parse(json);
             console.log('json', json);
             console.log('size', json.size);
             console.log('url', json.text);
