@@ -141,7 +141,6 @@ var Audio = {
 		var id, album, artist, albumart, title, mp3;
 		$('.play-list .play').each(function(){
 			$(this).on('click',function(e){
-				Audio.insertOuvinte();
 				e.preventDefault();
 				$(this).siblings().removeClass('active');
 				$('.play-list a.active').removeClass('active');
@@ -164,6 +163,7 @@ var Audio = {
 			});
 		});
 		$('.play-pause').on('click',function(e){
+
 			e.preventDefault();
 			if($('.audio').is(':empty')){
 				$('.play-list a:first-child')[0].click();
@@ -174,6 +174,7 @@ var Audio = {
 					setInterval(intval);
 					Audio.play($('.music'));
 					$(this).addClass('active');
+					Audio.insertOuvinte();
 				}else{
 					clearInterval(intval);
 					Audio.pause($('.music'));
