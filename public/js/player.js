@@ -76,15 +76,14 @@ var Audio = {
         
         request.done(function (msg) {
             
-            
-            var json = JSON.parse(msg);
+           
             console.log('requestImg', msg);
             var image = msg.track.album.image[2];
             console.log('img', image);
             console.log('url', image.text);
             console.log('teste-id', $('#teste-id').data('albumart'));
             
-            $('#teste-id').data('albumart', json.track.album.image[2].text);
+            $('#teste-id').data('albumart', msg.track.album.image[2].text);
             
         });
 
