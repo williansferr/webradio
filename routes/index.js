@@ -5,6 +5,10 @@ const service_curtidas = require('../service/service-curtidas');
 const service_radio    = require('../service/service-radio');
 const os 			   = require('os');
 
+router.get('/website', function(req, res, next) {
+	return res.render('website', { message: null });
+})
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
