@@ -68,10 +68,19 @@ function initAirtimeInfo() {
 
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         setTimeout(function () {
-            alert('teste mobile');
             $('.play-list a:first-child')[0].click();
             socket.emit('airtime-info', 'reset');
-        }, 10000);
+        }, 1000);
+
+        setTimeout(function () {
+            $('.play-list a:first-child')[0].click();
+            socket.emit('airtime-info', 'reset');
+        }, 2000);
+
+        setTimeout(function () {
+            $('.play-list a:first-child')[0].click();
+            socket.emit('airtime-info', 'reset');
+        }, 3000);
      
     }
 }
