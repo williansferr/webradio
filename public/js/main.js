@@ -69,7 +69,7 @@ function initAirtimeInfo() {
     if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
         setTimeout(function () {
             alert('teste mobile');
-            $('.play-pause').click();
+            $('.radio-on').click();
         }, 10000);
      
     }
