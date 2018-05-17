@@ -240,10 +240,7 @@ var Audio = {
 		});
 		$('.radio-on').on('click',function(e){
 			$('.play-list a:first-child')[0].click();
-			console.log($('coverArt'));
-			var iframe = document.getElementById('sam');
-			// var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
-			console.log('iframe', iframe);
+			console.log($('#coverArt');
 			socket.emit('airtime-info', 'reset');
 		});
 	},
