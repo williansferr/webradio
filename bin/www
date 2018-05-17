@@ -140,6 +140,35 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       }]
     });
 
+  function requestListMount(){
+    try {
+
+      request('http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+                                                     ,{
+                                                        'auth': {
+                                                        'user': 'admin',
+                                                        'pass': '31ypq8X18LSR',
+                                                        'sendImmediately': false
+                                                      }}
+                                    ,function (error, response, body) {
+
+          if (response) {
+            // console.log(response);
+            if (response.statusCode == 200){
+              console.log(body);
+              // json === html2json(body.innerHTML);
+
+            }
+          }
+      });
+
+    } catch(e){
+      log.error({
+        error: e,
+        request: 'http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+      });
+    }
+  }
   
   function requestAirtimeStats(isNewUser){
     try {
@@ -277,6 +306,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
       requestLiveInfo(false);
       requestAirtimeStats(false);
 
+      requestListMount();
 
       // console.log((new Date).toLocaleString().substr(11))
       // console.log(new Date)

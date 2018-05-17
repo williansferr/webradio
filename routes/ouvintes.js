@@ -70,37 +70,37 @@ router.post('/teste', authenticationMiddleware (), function(req, res, next) {
 
 
 router.get('/teste2', authenticationMiddleware (), function(req, res, next) {
-	try {
+	// try {
 
-		console.log('passo1');
+	// 	console.log('passo1');
 
-      	request('http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
-                                                     ,{
-                                                        'auth': {
-                                                        'user': 'admin',
-                                                        'pass': '31ypq8X18LSR',
-                                                        'sendImmediately': false
-                                                      }}
-                                    ,function (error, response, body) {
+ //      	request('http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+ //                                                     ,{
+ //                                                        'auth': {
+ //                                                        'user': 'admin',
+ //                                                        'pass': '31ypq8X18LSR',
+ //                                                        'sendImmediately': false
+ //                                                      }}
+ //                                    ,function (error, response, body) {
 
-            console.log('passo2');
-          if (response) {
-          	console.log('passo3');
-            // console.log(response);
-            if (response.statusCode == 200){
-            	console.log(body);
-            	// json === html2json(body.innerHTML);
+ //            console.log('passo2');
+ //          if (response) {
+ //          	console.log('passo3');
+ //            // console.log(response);
+ //            if (response.statusCode == 200){
+ //            	console.log(body);
+ //            	// json === html2json(body.innerHTML);
 
-            }
-          }
-      });
+ //            }
+ //          }
+ //      });
 
-    } catch(e){
-      log.error({
-        error: e,
-        request: 'http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
-      });
-    }
+ //    } catch(e){
+ //      log.error({
+ //        error: e,
+ //        request: 'http://177.54.158.150:8000/admin/listclients.xsl?mount=/airtime_128'
+ //      });
+ //    }
 })
 
 router.post('/', function(req, res, next) {
