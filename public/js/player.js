@@ -76,8 +76,9 @@ var Audio = {
         
         request.done(function (msg) {
             
-            console.log('requestImg', msg);
+            
             var json = JSON.parse(msg);
+            console.log('requestImg', json);
 
             console.log('img', json.track.album.image[2]);
             console.log('url', json.track.album.image[2].text);
