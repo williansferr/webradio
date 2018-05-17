@@ -66,21 +66,23 @@ var Audio = {
 		}
 	},
 	requestImg:function(artista, musica){
-		console.log('aritsta', artista);
+	
 		const request = $.ajax({
 			// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
 			// 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json'
-            url: 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist=Zeca%20Pagodinho&track=Verdade&format=json',
+			//http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist=Zeca%20Pagodinho&track=Verdade&format=json
+            url: 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist='+artista+'&track='+musica+'&format=json',
             type: 'GET'
         });
         
         request.done(function (msg) {
             var image = msg.track.album.image[2];
-            console.log('new img', image['#text']);
-            console.log('antes', $('#teste-id').data('albumart'));
-            $('#teste-id').data('albumart', image['#text']);
-            console.log('depois', $('#teste-id').data('albumart'));
-            Audio.info.init();
+
+            if(image['#text']){
+	            $('#nova-img').attr("src", image['#text']);
+	            $('#teste-id').data('albumart', image['#text']);
+            }
+
         });
 
         request.fail(function (jqXHR, textStatus) {
