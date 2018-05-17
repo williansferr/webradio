@@ -65,10 +65,12 @@ var Audio = {
 
 		}
 	},
-	requestImg:function(artista){
+	requestImg:function(artista, musica){
 		console.log('aritsta', artista);
 		const request = $.ajax({
-            url: 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json',
+			// http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=YOUR_API_KEY&artist=cher&track=believe&format=json
+			// 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artista + '&api_key=0fcb8c128735315528c258fc93d04add&format=json'
+            url: 'http://ws.audioscrobbler.com/2.0/?method=track.getInfo&api_key=0fcb8c128735315528c258fc93d04add&artist='+artista+'&track='+musica+'&format=json',
             type: 'GET'
         });
         
@@ -76,6 +78,10 @@ var Audio = {
             
             console.log('requestImg', msg);
             var json = JSON.parse(msg);
+
+            console.log('img', msg.img[2].#text);
+            console.log('teste-id', $('#teste-id').data('albumart'));
+            $('#teste-id').data('albumart', msg.img[2].#text);
             
         });
 
