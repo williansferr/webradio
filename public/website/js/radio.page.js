@@ -65,7 +65,7 @@ $(document).ready(function () {
         });
     };
 
-    jq_noc.loadScript("config.json", "json",
+    jq_noc.loadScript("config/config.json", "json",
             function (result) {
                 var totalToShow = 0;
                 StationId = result.StationId;
