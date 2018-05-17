@@ -95,56 +95,68 @@ router.post('/', function(req, res, next) {
 			return res.status(400).end(JSON.stringify({ message: "informe se curtiu", error: "curtiu não informado" }));
 		}
 
-		body.hostname = os.hostname()
-		body.username = os.userInfo().username
-		body.id_podcast = id_podcast
+		// body.hostname = os.hostname()
+		// body.username = os.userInfo().username
+		// body.id_podcast = id_podcast
 
-		service_curtidas.findBy(body.username, body.hostname, audio,
-			(err, result) => {
-				try {
-					if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }));
+		//Verifica se o audio ja voi curtido pleo username e hostname
+		// service_curtidas.findBy(body.username, body.hostname, audio,
+		// 	(err, result) => {
+		// 		try {
+		// 			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }));
 					
-					// console.log(result);
-					if (result != null) {
+		// 			// console.log(result);
+		// 			if (result != null) {
 
-						const obj = result;
-						if (curtiu == obj.curtiu) {
-							return res.status(200).end(JSON.stringify({ body: result, message: "ja foi curtido pelo usuário" }))
-						} else {
-							service_curtidas.update(obj._id, body, 
-							(err, result) => {
-								try {
-									if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não atualizado", message: "não atualizou a curtida", error: err }))
+		// 				const obj = result;
+		// 				if (curtiu == obj.curtiu) {
+		// 					return res.status(200).end(JSON.stringify({ body: result, message: "ja foi curtido pelo usuário" }))
+		// 				} else {
+		// 					service_curtidas.update(obj._id, body, 
+		// 					(err, result) => {
+		// 						try {
+		// 							if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não atualizado", message: "não atualizou a curtida", error: err }))
 								
-									// console.log(result)
-									return res.status(200).end(JSON.stringify({ body: body, message: "atualizado" }))
-								} catch (e) {
-									return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.update', error: e }));
-								}
-							});
-						}
+		// 							// console.log(result)
+		// 							return res.status(200).end(JSON.stringify({ body: body, message: "atualizado" }))
+		// 						} catch (e) {
+		// 							return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.update', error: e }));
+		// 						}
+		// 					});
+		// 				}
 
-						// return res.status(200).end(JSON.stringify({ body: result, message: "ja foi curtido pelo usuário" }))
-					}  else {
+		// 				// return res.status(200).end(JSON.stringify({ body: result, message: "ja foi curtido pelo usuário" }))
+		// 			}  else {
 
-						service_curtidas.insert(body,
-							(err, result) => {
-								try {
-									if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))
+		// 				service_curtidas.insert(body,
+		// 					(err, result) => {
+		// 						try {
+		// 							if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))
 								
 
-									return res.status(200).end(JSON.stringify({ curtidas: result.ops[0], message: "inserido" }));
-								} catch (e) {
-									return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.insert', error: e }));
-								}
-							});
-					}
-				} catch (e) {
-					return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.findBy', error: e }));
-				}
+		// 							return res.status(200).end(JSON.stringify({ curtidas: result.ops[0], message: "inserido" }));
+		// 						} catch (e) {
+		// 							return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.insert', error: e }));
+		// 						}
+		// 					});
+		// 			}
+		// 		} catch (e) {
+		// 			return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.findBy', error: e }));
+		// 		}
 				
-			});
+		// 	});
 
+		service_curtidas.insert(body, (err, result) => {
+			
+			try {
+				if(err) return res.status(204).end(JSON.stringify({ body: body, message: "não inserido", error: err }))
+			
+
+				return res.status(200).end(JSON.stringify({ curtidas: result.ops[0], message: "inserido" }));
+			} catch (e) {
+				return res.status(500).end(JSON.stringify({ message: 'post.curtidas/service_curtidas.insert', error: e }));
+			}
+		});
 	} catch (e) {
 		// log.warn(e);
 		return res.status(500).end(JSON.stringify({ message: 'post.curtidas/', error: e }));
