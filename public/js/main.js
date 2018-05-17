@@ -45,8 +45,31 @@
     //         //swal("Erro!", textoErro1.textStatus, "error");
     //     });
     // }
+
+const socket = io();
+
+function initAirtimeInfo() {
+    // socket.emit('airtime-info', '');
+    socket.on('airtime-info', function(msg){
+
+        if (msg && $('.play-list a.active').data().id == 1){
+            if(msg.curtidas != null && msg.curtidas != undefined){
+                Curtida.curtidas(msg.curtidas);
+            }
+            // $('.action-button').css('display', 'none');
+            var artista = msg.current.name;
+            artista = artista.substring(artista.indexOf("-") + 2, artista.length);
+            var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
+            artista = artista.substring(0, artista.indexOf("-") - 1);
+            
+            Audio.requestImg(artista, musica);
+        }
+    });
+}
+
 $(function(){
     Curtida.init();
+
 });
 
 var Curtida = {

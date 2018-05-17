@@ -325,6 +325,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.4/TweenMax.min.js"></script>
     <script src="/js/like.js"></script>
     <script src="/scripts/sweetalert2.all.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="/js/main.js"></script>
     
 <script>
@@ -339,29 +340,6 @@
 
     };
 </script>
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    const socket = io();
 
-    function initAirtimeInfo() {
-        // socket.emit('airtime-info', '');
-        socket.on('airtime-info', function(msg){
-
-            if (msg && $('.play-list a.active').data().id == 1){
-                if(msg.curtidas != null && msg.curtidas != undefined){
-                    Curtida.curtidas(msg.curtidas);
-                }
-                $('.action-button').css('display', 'none');
-                var artista = msg.current.name;
-                artista = artista.substring(artista.indexOf("-") + 2, artista.length);
-                var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
-                artista = artista.substring(0, artista.indexOf("-") - 1);
-                
-                Audio.requestImg(artista, musica);
-            }
-        });
-    }
-
-</script>
 </body>
 </html>
