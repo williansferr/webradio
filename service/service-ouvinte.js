@@ -19,7 +19,7 @@ function findByDataInclusaoBetween(data_inicial, data_final, callback) {
         [
             {
                 $match: {
-                    data_inclusao: {$gte: new Date(data_inicial.ano, data_inicial.mes, data_inicial.dia), $lt: new Date(data_final.ano, data_final.mes, data_final.dia/* + 1*/)}
+                    data_inclusao: {$gte: new Date(data_inicial.ano, data_inicial.mes, data_inicial.dia), $lt: new Date(data_final.ano, data_final.mes, data_final.dia + 1)}
                 }
             },
             { 
