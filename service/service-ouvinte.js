@@ -13,6 +13,33 @@ function insert(ouvinte, callback){
     global.db.collection("ouvintes").insert(ouvinte, callback);
 }
 
+/**
+Teste mongodb
+db.ouvintes.aggregate(
+    [
+        { $unwind: "$ips"},
+        { 
+            $group : { 
+                _id : { 
+                    year: { $year: "$data_inclusao" },
+                    month: { $month: "$data_inclusao" },
+                    day: { $dayOfMonth: "$data_inclusao" },
+                    ip: "$ips.ip"
+
+                }, 
+                count : { 
+                    "$sum" : 1
+                },
+                listenersMax: { $max: "$ips.quantidade" }
+            }
+        },
+        {
+            $sort: { 
+                _id: 1
+            } 
+        }
+    ]).pretty()
+*/
 function findByDataInclusaoBetween(data_inicial, data_final, callback) {
 
     global.db.collection("ouvintes").aggregate(
@@ -22,22 +49,95 @@ function findByDataInclusaoBetween(data_inicial, data_final, callback) {
                     data_inclusao: {$gte: new Date(data_inicial.ano, data_inicial.mes, data_inicial.dia), $lt: new Date(data_final.ano, data_final.mes, data_final.dia + 1)}
                 }
             },
-            { 
-                $group : { 
-                    _id : { 
+            { $unwind: "$ips"},
+            {
+                $group : {
+                    _id : {
                         year: { $year: "$data_inclusao" },
                         month: { $month: "$data_inclusao" },
-                        day: { $dayOfMonth: "$data_inclusao" }
-                    }, 
-                    count : { 
-                        "$sum" : 1 
-                    }
+                        day: { $dayOfMonth: "$data_inclusao" },
+                        ip: "$ips.ip"
+
+                    },
+                    count : {
+                        "$sum" : 1
+                    },
+                    listenersMax: { $max: "$ips.quantidade" }
                 }
             },
             {
-                $sort: { 
+                $sort: {
                     _id: 1
-                } 
+                }
+            }
+        ]
+    ).toArray(callback);
+}
+/**
+db.ouvintes.aggregate(
+    [
+        { $unwind: "$ips"},
+        {
+            $match: {
+                "ips.ip": "200.146.89.150"
+            }
+        },
+        { 
+            $group : { 
+                _id : { 
+                    year: { $year: "$data_inclusao" },
+                    month: { $month: "$data_inclusao" },
+                    day: { $dayOfMonth: "$data_inclusao" },
+                    ip: "$ips.ip"
+
+                }, 
+                count : { 
+                    "$sum" : 1
+                },
+                listenersMax: { $max: "$ips.quantidade" }
+            }
+        },
+        {
+            $sort: { 
+                _id: 1
+            } 
+        }
+    ]).pretty()
+*/
+function findByIpAndDate(pip, data_inicial, data_final, callback) {
+
+    global.db.collection("ouvintes").aggregate(
+        [
+            {
+                $match: {
+                    data_inclusao: {$gte: new Date(data_inicial.ano, data_inicial.mes, data_inicial.dia), $lt: new Date(data_final.ano, data_final.mes, data_final.dia + 1)}
+                }
+            },
+            { $unwind: "$ips"},
+            {
+                $match: {
+                    "ips.ip": pip
+                }
+            },
+            {
+                $group : {
+                    _id : {
+                        year: { $year: "$data_inclusao" },
+                        month: { $month: "$data_inclusao" },
+                        day: { $dayOfMonth: "$data_inclusao" },
+                        ip: "$ips.ip"
+
+                    },
+                    count : {
+                        "$sum" : 1
+                    },
+                    listenersMax: { $max: "$ips.quantidade" }
+                }
+            },
+            {
+                $sort: {
+                    _id: 1
+                }
             }
         ]
     ).toArray(callback);

@@ -129,6 +129,43 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
     loopEterno();
   });
 
+  Object.prototype.equals = function(x)
+  {
+    var x1 = JSON.parse(JSON.stringify(this));
+    var x2 = JSON.parse(JSON.stringify(x));
+
+    var p;
+
+    for(p in x1) {
+        if(typeof(x2[p])=='undefined') {return false;}
+    }
+
+    for(p in x1) {
+        if (x1[p]) {
+            switch(typeof(x1[p])) {
+                case 'object':
+                    if (!x1[p].equals(x2[p])) { return false; } break;
+                case 'function':
+                    if (typeof(x2[p])=='undefined' ||
+                        (p != 'equals' && x1[p].toString() != x2[p].toString()))
+                        return false;
+                    break;
+                default:
+                    if (x1[p] != x2[p]) { return false; }
+            }
+        } else {
+            if (x2[p])
+                return false;
+        }
+    }
+
+    for(p in x2) {
+        if(typeof(x1[p])=='undefined') {return false;}
+    }
+
+    return true;
+  }
+
   var isEqual = function (value, other) {
 
   // Get the value type
@@ -267,7 +304,8 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                 // console.log('ouvintes', ouvintes);
                 if (!ouvintes.ips && ouvintes_tmp.ips.length > 0) {
                   ouvintes = ouvintes_tmp;
-                  // console.log('gravar', ouvintes_tmp);
+                  // console.log('gravar', ouvintes);
+                  service_ouvinte.insert(ouvintes);
                 } else if(ouvintes.ips) {
                   // console.log('getDate', ouvintes.data_inclusao.getDate());
                   // console.log('getMonth', ouvintes.data_inclusao.getMonth());
@@ -276,14 +314,14 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                   // console.log('ouvintes_tmpgetMonth', ouvintes_tmp.data_inclusao.getMonth());
                   // console.log('ouvintes_tmpgetFullYear', ouvintes_tmp.data_inclusao.getFullYear());
                   
-                  // console.log('ouv', ouvintes.ips);
-                  // console.log('tmp', ouvintes_tmp.ips);
+                  // console.log('ouv', ouvintes);
+                  // console.log('tmp', ouvintes_tmp);
 
                   // console.log(!isEqual(ouvintes.ips,ouvintes_tmp.ips));
                   // console.log(ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate());
                   // console.log(ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() );
                   // console.log(ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear());
-
+                  // console.log('equals?',ouvintes.ips.equals(ouvintes_tmp.ips));
                   if(!isEqual(ouvintes.ips,ouvintes_tmp.ips) ||
                     ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate() ||
                     ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() ||
@@ -291,7 +329,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
                     
                     ouvintes = ouvintes_tmp;
                     // console.log('gravar', ouvintes_tmp);
-                    // service_ouvinte.insert(ouvintes_tmp);
+                    service_ouvinte.insert(ouvintes);
                   } else {
                     // console.log('ja foi gravado', ouvintes);
                   }

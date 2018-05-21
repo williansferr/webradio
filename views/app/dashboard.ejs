@@ -103,7 +103,7 @@
 			                    </div>
 			                    <div class="card-content">
 			                        <h4 class="card-title">Contagem de ouvintes por período
-			                            <small></small>
+			                            <small>GERAL</small>
 			                        </h4>
 			                        <div class="row">
 			                        	<div class="col col-12 col-md-5">
@@ -149,6 +149,43 @@
 			            <div class="col-md-12">
 			                <div class="card">
 			                    <div class="card-header card-header-icon" data-background-color="blue">
+			                        <i class="material-icons">timeline</i>
+			                    </div>
+			                    <div class="card-content">
+			                        <h4 class="card-title">Contagem de ouvintes por período
+			                            <small>LOCAL</small>
+			                        </h4>
+			                        <div class="row">
+			                        	<div class="col col-12 col-md-5">
+					                        <div class="form-group">
+					                            <label class="label-control">Data inicial</label>
+					                            <input id="id-dt-inicial" type="text" class="form-control datepicker" value="<%= airtimeCharts.dia1 %>" />
+					                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-5">
+				                    		<div class="form-group">
+					                            <label class="label-control">Data final</label>
+					                            <input id="id-dt-final" type="text" class="form-control datepicker" value="<%= airtimeCharts.hoje %>" />
+					                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-2">
+				                    		<div class="form-group">
+				                    			<button onclick="initChartsAirtimesByPeriodo()" type="button" class="btn btn-info btn-simple" rel="tooltip" title="Refresh">
+					                                <i class="material-icons">refresh</i>
+					                            </button>
+				                    		</div>
+				                    	</div>
+			                        </div>
+			                    </div>
+			                    <div id="ouvinteCharts" class="ct-chart"></div>
+			                </div>
+			            </div>
+			        </div>
+
+			        <div class="row">
+			            <div class="col-md-12">
+			                <div class="card">
+			                    <div class="card-header card-header-icon" data-background-color="blue">
 			                        <i class="material-icons">insert_chart</i>
 			                    </div>
 			                    <div class="card-content">
@@ -176,6 +213,8 @@
 			                </div>
 			            </div>
 			        </div>
+
+			        
 			</div>
 		</div>
 	</div>
@@ -270,6 +309,33 @@
 
 		}
 
+		function initChartsOuvintes(data){
+			// dataAirtimeChart = JSON.parse(data);
+			dataOuvinteChart = data;
+
+	        optionsDailySalesChart = {
+	        	lineSmooth: Chartist.Interpolation.cardinal({
+					tension: 10
+				}),
+				axisY: {
+					showGrid: true,
+					offset: 40
+				},
+				axisX: {
+					showGrid: false,
+				},
+				low: 0,
+				high: data.high,
+				showPoint: true,
+				height: '300px'
+	        }
+
+	        var ouvinteCharts = new Chartist.Line('#ouvinteCharts', dataOuvinteChart, optionsDailySalesChart);
+
+	        md.startAnimationForLineChart(ouvinteCharts);
+
+		}
+
 		function initChartsAirtimesByPeriodo(){
 			let dtInicial = new Date();
 			let dtFinal = new Date();
@@ -352,6 +418,7 @@
 			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'));
 			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'));
 			initChartsDeslike(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'));
+			initChartsOuvintes(JSON.parse('<%- JSON.stringify(ouvinteCharts) %>'));
 			initDatetimepickers();
 			initAirtimeStats();
 		});

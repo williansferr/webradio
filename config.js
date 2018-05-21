@@ -1,8 +1,8 @@
 var config = {};
 
 config.url = {};
-config.web = {};
 
+config.web = {};
 config.web.port = '3000';
 
 config.airtime = {};

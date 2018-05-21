@@ -253,24 +253,61 @@ global.classMenu = {
 		    						if(err) return res.status(204).end(JSON.stringify({ message: "não localizado service_ouvinte.findByDataInclusaoBetween", error: err }))
 
 		    						let ouvintes = result;
-		    						console.log('ouvintes', ouvintes);
+
 		    						var ouvinte = {};
 		    						labels = [];
 			    					series = [];
-			    					let maxList = 0;
+			    					let ips = [];
 			    					for (var i = 0, len = ouvintes.length; i < len; i++) {
-			    						if (airtimes[i]){
-			    							labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
-				    						series.push(airtimes[i].count);	
+			    						if (ouvintes[i]){
+			    							if(!labels.includes(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year)){
+			    								labels.push(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year);
+			    							}
+			    							if(!ips.includes(ouvintes[i]._id.ip)){
+			    								ips.push(ouvintes[i]._id.ip);
+			    							}
 			    						}
 									}
+
+									let maxList = 0, high = 0;
+									let tmpseries = [];
+									let descriseries = {};
+									for (var i = 0; i < ips.length; i++) {
+										
+										for (var j = 0; j < labels.length; j++) {
+				    						for (var k = 0; k < ouvintes.length; k++) {
+				    							if(labels[j] === (ouvintes[k]._id.day + "/" + ouvintes[k]._id.month + "/" + ouvintes[k]._id.year)){
+					    							if(ips[i] === ouvintes[k]._id.ip){
+														maxList = ouvintes[k].listenersMax;
+														break;
+					    							}
+				    							}
+				    						}
+				    						if(maxList > high){
+				    							high = maxList;
+				    						}
+
+				    						// descriseries.value = maxList;
+				    						// descriseries.name = ips[i];
+				    						// tmpseries.push(descriseries);
+				    						tmpseries.push(maxList);
+				    						maxList = 0;
+			    						}
+			    						
+			    						series.push(tmpseries);
+			    						tmpseries = [];
+									}
+									
 									ouvinte.labels = labels;
-									ouvinte.series = [];
-									ouvinte.series.push(series);
-									ouvinte.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
-									ouvinte.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+									ouvinte.series = series;
+									ouvinte.ips    = ips;
+									ouvinte.high   = high;
+									ouvinte.hoje   = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
+									ouvinte.dia1   = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
 									data.ouvinteCharts = ouvinte;
+
+									// console.log(ouvinte);
 
 		    						res.render('app/dashboard', data);
 
