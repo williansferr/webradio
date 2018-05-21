@@ -156,17 +156,28 @@
 			                            <small>LOCAL</small>
 			                        </h4>
 			                        <div class="row">
-			                        	<div class="col col-12 col-md-5">
+			                        	<div class="col col-12 col-md-3">
 					                        <div class="form-group">
 					                            <label class="label-control">Data inicial</label>
 					                            <input id="id-dt-o-inicial" type="text" class="form-control datepicker" value="<%= airtimeCharts.dia1 %>" />
 					                        </div>
 				                    	</div>
-				                    	<div class="col col-12 col-md-5">
+				                    	<div class="col col-12 col-md-3">
 				                    		<div class="form-group">
 					                            <label class="label-control">Data final</label>
 					                            <input id="id-dt-o-final" type="text" class="form-control datepicker" value="<%= airtimeCharts.hoje %>" />
 					                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-4">
+				                    		<div class="form-group">
+					                            <label class="label-control">Endereço</label>
+				                    			<select id="id-ips" class="selectpicker" data-style="select-with-transition" multiple title="Selecione o endereço" data-size="5">
+				                    				<option disabled>Selecione o endereço</option>
+				                    			<% for (var i = 0; i < ouvinteCharts.ips.length; i++) {%>
+	                                            	<option value="<%= ouvinteCharts.ips[i].ip %>" selected><%= ouvinteCharts.ips[i].ip %></option>	
+	                                            <%}%>
+	                                        	</select>
+	                                        </div>
 				                    	</div>
 				                    	<div class="col col-12 col-md-2">
 				                    		<div class="form-group">
@@ -223,6 +234,7 @@
 	<% include partials/script %>
 	<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
 	<!-- <script src="/js/plugins/moment.min.js"></script> -->
+	<script src="/js/plugins/jquery.select-bootstrap.js"></script>
 	<script src="/js/plugins/moment-with-locales.min.js"></script>
 	<!-- DateTimePicker Plugin -->
 	<script src="/js/plugins/bootstrap-datetimepicker.js"></script>
@@ -337,6 +349,7 @@
 		}
 
 		function initChartsAirtimesByPeriodo(){
+
 			let dtInicial = new Date();
 			let dtFinal = new Date();
 			let tmpI = $('#id-dt-inicial').val();
@@ -385,7 +398,10 @@
             });
 		}
 
+
 		function initChartsOuvintesByPeriodo(){
+			// console.log("id-ips:", $("#id-ips").val());
+			let selectIps = $("#id-ips").val();
 			let dtInicial = new Date();
 			let dtFinal = new Date();
 			let tmpI = $('#id-dt-o-inicial').val();
@@ -404,39 +420,96 @@
 			dtFinal.setDate(dia);
 			dtFinal.setMonth(parseInt(mes) - 1);
 			dtFinal.setFullYear(ano);
+
+			if(dtInicial.getDate() === dtIniOuvi.getDate() &&
+				dtInicial.getMonth() === dtIniOuvi.getMonth() &&
+				dtInicial.getFullYear() === dtIniOuvi.getFullYear() &&
+				dtFinal.getDate() === dtFinOuvi.getDate() &&
+				dtFinal.getMonth() === dtFinOuvi.getMonth() &&
+				dtFinal.getFullYear() === dtFinOuvi.getFullYear()) {
+
+				let newdata = {};
+				newdata.labels = ouvinteCharts.labels;
+				newdata.series = [];
+
+				console.log('ouvinteCharts', ouvinteCharts);
+
+				for(var i = 0; i < selectIps.length; i++){
+					for(var j = 0; j < ouvinteCharts.ips.length; j++){
+						if(selectIps[i] === ouvinteCharts.ips[j].ip){
+							newdata.series.push(ouvinteCharts.ips[j].serie);
+						}
+					}
+				}
+				newdata.high = ouvinteCharts.high;
+				console.log(newdata);
+				initChartsOuvintes(newdata);
+
+			} else {
+				var vai = {data_inicial: dtInicial, data_final: dtFinal, ips: selectIps};
+				
+				dtIniOuvi = dtInicial;
+				dtFinOuvi = dtFinal;
+				
+				const request = $.ajax({
+	                url: '/ouvinte',
+	                type: 'POST',
+	                data: vai,
+	            });
+	            
+
+	            request.done(function (msg) {
+	                // console.log('getAirtimes() done');
+	                // console.log(msg);
+	                let oc = JSON.parse(msg);
+	                ouvinteCharts = oc.ouvinteCharts;
+	                initChartsOuvintes(oc.ouvinteCharts);
+	            });
+
+	            request.fail(function (jqXHR, textStatus) {
+	                console.log('erro');
+	                console.log(jqXHR);
+	                console.log(textStatus);
+	                //swal("Erro!", textoErro1.textStatus, "error");
+	            });
+            }
 			
-			var vai = {data_inicial: dtInicial, data_final: dtFinal};
-
-			const request = $.ajax({
-                url: '/ouvinte',
-                type: 'POST',
-                data: vai,
-            });
-            
-
-            request.done(function (msg) {
-                // console.log('getAirtimes() done');
-                // console.log(msg);
-                let ac = JSON.parse(msg);
-                initChartsOuvintes(ac.airtimeCharts);
-            });
-
-            request.fail(function (jqXHR, textStatus) {
-                console.log('erro');
-                console.log(jqXHR);
-                console.log(textStatus);
-                //swal("Erro!", textoErro1.textStatus, "error");
-            });
 		}
 
+		var dtIniOuvi = new Date();
+		var dtFinOuvi = new Date();
+		var ouvinteCharts = {};
 
 		$( document ).ready(function() {
+			ouvinteCharts = JSON.parse('<%- JSON.stringify(ouvinteCharts) %>');
 			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'));
 			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'));
 			initChartsDeslike(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'));
-			initChartsOuvintes(JSON.parse('<%- JSON.stringify(ouvinteCharts) %>'));
+			initChartsOuvintes(ouvinteCharts);
 			initDatetimepickers();
 			initAirtimeStats();
+
+			let dtInicial = new Date();
+			let dtFinal = new Date();
+			let tmpI = $('#id-dt-o-inicial').val();
+			let tmpF = $('#id-dt-o-final').val();
+
+			let dia = tmpI.substring(0, 2);
+			let mes = tmpI.substring(3, 5);
+			let ano = tmpI.substring(6, 10);
+			dtInicial.setDate(dia);
+			dtInicial.setMonth(parseInt(mes) - 1);
+			dtInicial.setFullYear(ano);
+
+			dia = tmpF.substring(0, 2);
+			mes = tmpF.substring(3, 5);
+			ano = tmpF.substring(6, 10);
+			dtFinal.setDate(dia);
+			dtFinal.setMonth(parseInt(mes) - 1);
+			dtFinal.setFullYear(ano);
+
+			dtIniOuvi = dtInicial;
+			dtFinOuvi = dtFinal;
 		});
 		
 		

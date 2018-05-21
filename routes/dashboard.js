@@ -272,6 +272,7 @@ global.classMenu = {
 									let maxList = 0, high = 0;
 									let tmpseries = [];
 									let descriseries = {};
+									let ip = {}, ips2 = [];
 									for (var i = 0; i < ips.length; i++) {
 										
 										for (var j = 0; j < labels.length; j++) {
@@ -293,22 +294,24 @@ global.classMenu = {
 				    						tmpseries.push(maxList);
 				    						maxList = 0;
 			    						}
-			    						
+			    						ip.ip = ips[i];
+			    						ip.serie = tmpseries;
+			    						ips2.push(ip);
+			    						ip = {};
 			    						series.push(tmpseries);
 			    						tmpseries = [];
 									}
 									
 									ouvinte.labels = labels;
 									ouvinte.series = series;
-									ouvinte.ips    = ips;
+									ouvinte.ips    = ips2;
 									ouvinte.high   = high;
 									ouvinte.hoje   = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
 									ouvinte.dia1   = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
 									data.ouvinteCharts = ouvinte;
 
-									// console.log(ouvinte);
-
+									console.log(ouvinte);
 		    						res.render('app/dashboard', data);
 
 		    					});

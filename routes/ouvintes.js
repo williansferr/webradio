@@ -69,10 +69,70 @@ router.post('/teste', authenticationMiddleware (), function(req, res, next) {
 })
 
 
+function getOuvintesByResult(result, data_inicial, data_final){
+	let ouvintes = result;
+
+	let ouvinte = {};
+	let labels = [];
+	let series = [];
+	let ips = [];
+	for (var i = 0, len = ouvintes.length; i < len; i++) {
+		if (ouvintes[i]){
+			if(!labels.includes(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year)){
+				labels.push(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year);
+			}
+			if(!ips.includes(ouvintes[i]._id.ip)){
+				ips.push(ouvintes[i]._id.ip);
+			}
+		}
+	}
+
+	let maxList = 0, high = 0;
+	let tmpseries = [], ips2 = [];
+	let descriseries = {}, ip = {};
+	for (var i = 0; i < ips.length; i++) {
+		
+		for (var j = 0; j < labels.length; j++) {
+			for (var k = 0; k < ouvintes.length; k++) {
+				if(labels[j] === (ouvintes[k]._id.day + "/" + ouvintes[k]._id.month + "/" + ouvintes[k]._id.year)){
+					if(ips[i] === ouvintes[k]._id.ip){
+						maxList = ouvintes[k].listenersMax;
+						break;
+					}
+				}
+			}
+			if(maxList > high){
+				high = maxList;
+			}
+
+			// descriseries.value = maxList;
+			// descriseries.name = ips[i];
+			// tmpseries.push(descriseries);
+			tmpseries.push(maxList);
+			maxList = 0;
+		}
+		ip.ip = ips[i];
+		ip.serie = tmpseries;
+		ips2.push(ip);
+		series.push(tmpseries);
+		tmpseries = [];
+	}
+	
+	ouvinte.labels = labels;
+	ouvinte.series = series;
+	ouvinte.ips    = ips;
+	ouvinte.high   = high;
+	ouvinte.dia1   = data_inicial.dia + "/" + (data_inicial.mes + 1) + "/" + data_inicial.ano;
+	ouvinte.hoje   = data_final.dia + "/" + (data_final.mes + 1) + "/" + data_final.ano;
+
+	return ouvinte;
+}
+
 router.post('/', authenticationMiddleware(), function(req, res, next) {
 	try {
 		let dtI = new Date(req.body.data_inicial);
 		let dtF = new Date(req.body.data_final);
+		let paramips = req.body["ips[]"]
 
 		let data_inicial = {
 			dia: dtI.getDate(),
@@ -86,65 +146,98 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 			ano: dtF.getFullYear()
 		}
 
-		service_ouvinte.findByDataInclusaoBetween(data_inicial, data_final,
-			(err, result) => {
-				if(err) return res.status(204).end(JSON.stringify({ message: "service_ouvinte.findByDataInclusaoBetween não localizado", error: err }));
-			
-				let ouvintes = result;
+		if(paramips){
+			service_ouvinte.findByDataInclusaoBetween(data_inicial, data_final,
+				(err, result) => {
+					if(err) return res.status(204).end(JSON.stringify({ message: "service_ouvinte.findByDataInclusaoBetween não localizado", error: err }));
 
-				let ouvinte = {};
-				let labels = [];
-				let series = [];
-				let ips = [];
-				for (var i = 0, len = ouvintes.length; i < len; i++) {
-					if (ouvintes[i]){
-						if(!labels.includes(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year)){
-							labels.push(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year);
-						}
-						if(!ips.includes(ouvintes[i]._id.ip)){
-							ips.push(ouvintes[i]._id.ip);
-						}
-					}
-				}
-
-				let maxList = 0, high = 0;
-				let tmpseries = [];
-				let descriseries = {};
-				for (var i = 0; i < ips.length; i++) {
-					
-					for (var j = 0; j < labels.length; j++) {
-						for (var k = 0; k < ouvintes.length; k++) {
-							if(labels[j] === (ouvintes[k]._id.day + "/" + ouvintes[k]._id.month + "/" + ouvintes[k]._id.year)){
-    							if(ips[i] === ouvintes[k]._id.ip){
-									maxList = ouvintes[k].listenersMax;
-									break;
-    							}
+				var ouvintes = []
+				if( Array.isArray(paramips)){
+					let ipFound = false;
+					for(var i = 0; i < paramips.length; i++){
+						ipFound = false;
+						for(var j = 0; j < result.length; j++){
+							if(paramips[i] === result[j]._id.ip){
+								ouvintes.push(result[j]);
+								ipFound = true;
 							}
 						}
-						if(maxList > high){
-							high = maxList;
+					}	
+				} else {
+					for(var i = 0; i < result.length; i++){
+						if(paramips === result[i]._id.ip){
+							ouvintes.push(result[i]);
 						}
-
-						// descriseries.value = maxList;
-						// descriseries.name = ips[i];
-						// tmpseries.push(descriseries);
-						tmpseries.push(maxList);
-						maxList = 0;
+						
 					}
-					
-					series.push(tmpseries);
-					tmpseries = [];
 				}
 				
-				ouvinte.labels = labels;
-				ouvinte.series = series;
-				ouvinte.ips    = ips;
-				ouvinte.high   = high;
-				ouvinte.hoje   = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
-				ouvinte.dia1   = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
-
-				return res.status(200).end(JSON.stringify({ ouvinteCharts: ouvinte, message: result }));
+				return res.status(200).end(JSON.stringify({ ouvinteCharts: getOuvintesByResult(ouvintes, data_inicial, data_final), message: result }));
 			});
+		} else {
+
+			service_ouvinte.findByDataInclusaoBetween(data_inicial, data_final,
+				(err, result) => {
+					if(err) return res.status(204).end(JSON.stringify({ message: "service_ouvinte.findByDataInclusaoBetween não localizado", error: err }));
+				
+					// let ouvintes = result;
+
+					// let ouvinte = {};
+					// let labels = [];
+					// let series = [];
+					// let ips = [];
+					// for (var i = 0, len = ouvintes.length; i < len; i++) {
+					// 	if (ouvintes[i]){
+					// 		if(!labels.includes(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year)){
+					// 			labels.push(ouvintes[i]._id.day + "/" + ouvintes[i]._id.month + "/" + ouvintes[i]._id.year);
+					// 		}
+					// 		if(!ips.includes(ouvintes[i]._id.ip)){
+					// 			ips.push(ouvintes[i]._id.ip);
+					// 		}
+					// 	}
+					// }
+
+					// let maxList = 0, high = 0;
+					// let tmpseries = [], ips2 = [];
+					// let descriseries = {}, ip = {};
+					// for (var i = 0; i < ips.length; i++) {
+						
+					// 	for (var j = 0; j < labels.length; j++) {
+					// 		for (var k = 0; k < ouvintes.length; k++) {
+					// 			if(labels[j] === (ouvintes[k]._id.day + "/" + ouvintes[k]._id.month + "/" + ouvintes[k]._id.year)){
+	    // 							if(ips[i] === ouvintes[k]._id.ip){
+					// 					maxList = ouvintes[k].listenersMax;
+					// 					break;
+	    // 							}
+					// 			}
+					// 		}
+					// 		if(maxList > high){
+					// 			high = maxList;
+					// 		}
+
+					// 		// descriseries.value = maxList;
+					// 		// descriseries.name = ips[i];
+					// 		// tmpseries.push(descriseries);
+					// 		tmpseries.push(maxList);
+					// 		maxList = 0;
+					// 	}
+					// 	ip.ip = ips[i];
+					// 	ip.serie = tmpseries;
+					// 	ips2.push(ip);
+					// 	series.push(tmpseries);
+					// 	tmpseries = [];
+					// }
+					
+					// ouvinte.labels = labels;
+					// ouvinte.series = series;
+					// ouvinte.ips    = ips;
+					// ouvinte.high   = high;
+					// ouvinte.dia1   = data_inicial.dia + "/" + (data_inicial.mes + 1) + "/" + data_inicial.ano;
+					// ouvinte.hoje   = data_final.dia + "/" + (data_final.mes + 1) + "/" + data_final.ano;
+
+					return res.status(200).end(JSON.stringify({ ouvinteCharts: getOuvintesByResult(result, data_inicial, data_final), message: result }));
+				});
+			}
 	} catch (e) {
 		return res.status(500).end(JSON.stringify({ message: 'findByDataInclusaoBetween', error: e }));
 	}
