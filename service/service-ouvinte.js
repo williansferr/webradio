@@ -104,7 +104,7 @@ db.ouvintes.aggregate(
         }
     ]).pretty()
 */
-function findByIpAndDate(pip, data_inicial, data_final, callback) {
+function findByIpsAndDate(pip, data_inicial, data_final, callback) {
 
     global.db.collection("ouvintes").aggregate(
         [

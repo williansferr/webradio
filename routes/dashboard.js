@@ -311,7 +311,7 @@ global.classMenu = {
 
 									data.ouvinteCharts = ouvinte;
 
-									console.log(ouvinte);
+									// console.log(ouvinte);
 		    						res.render('app/dashboard', data);
 
 		    					});

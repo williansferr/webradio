@@ -152,7 +152,7 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 					if(err) return res.status(204).end(JSON.stringify({ message: "service_ouvinte.findByDataInclusaoBetween não localizado", error: err }));
 
 				var ouvintes = []
-				if( Array.isArray(paramips)){
+				if(Array.isArray(paramips)){
 					let ipFound = false;
 					for(var i = 0; i < paramips.length; i++){
 						ipFound = false;
@@ -168,7 +168,6 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 						if(paramips === result[i]._id.ip){
 							ouvintes.push(result[i]);
 						}
-						
 					}
 				}
 				
