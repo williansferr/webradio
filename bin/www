@@ -1,621 +1,644 @@
 #!/usr/bin/env node
-require('dotenv-safe').load();
-const mongoClient = require("mongodb").MongoClient;
-mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
-  if(err) { return console.log(err); }
-  console.log("conectou no banco de dados!");
-  global.db = conn.db(process.env.MONGO_DB);
-  //coloque todo o código antigo do www aqui dentro
+var cluster = require('cluster');
 
-  /**
-   * Module dependencies.
-   */
+// Code to run if we're in the master process
+if (cluster.isMaster) {
 
-  var app = require('../app');
-  var debug = require('debug')('webradio:server');
-  var http = require('http');
-  const config = require('../config');
+    // Count the machine's CPUs
+    var cpuCount = require('os').cpus().length;
 
-  /**
-   * Get port from environment and store in Express.
-   */
-
-  var port = normalizePort(process.env.PORT || config.web.port);
-  app.set('port', port);
-
-  /**
-   * Create HTTP server.
-   */
-
-  var server = http.createServer(app);
-
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
-
-  server.listen(port);
-  server.on('error', onError);
-  server.on('listening', onListening);
-
-  /**
-   * Normalize a port into a number, string, or false.
-   */
-
-  function normalizePort(val) {
-    var port = parseInt(val, 10);
-
-    if (isNaN(port)) {
-      // named pipe
-      return val;
+    // Create a worker for each CPU
+    for (var i = 0; i < cpuCount; i += 1) {
+        cluster.fork();
     }
 
-    if (port >= 0) {
-      // port number
-      return port;
+    // Listen for dying workers
+    cluster.on('exit', function (worker) {
+
+        // Replace the dead worker, we're not sentimental
+        console.log('Worker %d died :(', worker.id);
+        cluster.fork();
+
+    });
+} else {
+  require('dotenv-safe').load();
+  const mongoClient = require("mongodb").MongoClient;
+  mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
+    if(err) { return console.log(err); }
+    console.log("conectou no banco de dados!");
+    global.db = conn.db(process.env.MONGO_DB);
+    //coloque todo o código antigo do www aqui dentro
+
+    /**
+     * Module dependencies.
+     */
+
+    var app = require('../app');
+    var debug = require('debug')('webradio:server');
+    var http = require('http');
+    const config = require('../config');
+
+    /**
+     * Get port from environment and store in Express.
+     */
+
+    var port = normalizePort(process.env.PORT || config.web.port);
+    app.set('port', port);
+
+    /**
+     * Create HTTP server.
+     */
+
+    var server = http.createServer(app);
+
+    /**
+     * Listen on provided port, on all network interfaces.
+     */
+
+    server.listen(port);
+    server.on('error', onError);
+    server.on('listening', onListening);
+
+    /**
+     * Normalize a port into a number, string, or false.
+     */
+
+    function normalizePort(val) {
+      var port = parseInt(val, 10);
+
+      if (isNaN(port)) {
+        // named pipe
+        return val;
+      }
+
+      if (port >= 0) {
+        // port number
+        return port;
+      }
+
+      return false;
     }
 
-    return false;
-  }
+    /**
+     * Event listener for HTTP server "error" event.
+     */
 
-  /**
-   * Event listener for HTTP server "error" event.
-   */
-
-  function onError(error) {
-    if (error.syscall !== 'listen') {
-      throw error;
-    }
-
-    var bind = typeof port === 'string'
-      ? 'Pipe ' + port
-      : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-      case 'EACCES':
-        console.error(bind + ' requires elevated privileges');
-        process.exit(1);
-        break;
-      case 'EADDRINUSE':
-        console.error(bind + ' is already in use');
-        process.exit(1);
-        break;
-      default:
+    function onError(error) {
+      if (error.syscall !== 'listen') {
         throw error;
+      }
+
+      var bind = typeof port === 'string'
+        ? 'Pipe ' + port
+        : 'Port ' + port;
+
+      // handle specific listen errors with friendly messages
+      switch (error.code) {
+        case 'EACCES':
+          console.error(bind + ' requires elevated privileges');
+          process.exit(1);
+          break;
+        case 'EADDRINUSE':
+          console.error(bind + ' is already in use');
+          process.exit(1);
+          break;
+        default:
+          throw error;
+      }
     }
-  }
 
-  /**
-   * Event listener for HTTP server "listening" event.
-   */
+    /**
+     * Event listener for HTTP server "listening" event.
+     */
 
-  function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-    debug('Listening on ' + bind);
-  }
+    function onListening() {
+      var addr = server.address();
+      var bind = typeof addr === 'string'
+        ? 'pipe ' + addr
+        : 'port ' + addr.port;
+      debug('Listening on ' + bind);
+    }
 
-  var io = require('socket.io')(server);
-  app.io = io;
+    var io = require('socket.io')(server);
+    app.io = io;
 
-  var currentMusic = {
-    name: '',
-    artist: ''
-  };
+    var currentMusic = {
+      name: '',
+      artist: ''
+    };
 
-  io.on('connection', function(socket){
-    console.log('a user connected');
-    
-    requestAirtimeStats(true);
-    requestLiveInfo(true);
+    io.on('connection', function(socket){
+      console.log('a user connected');
+      
+      requestAirtimeStats(true);
+      requestLiveInfo(true);
 
-    socket.on('disconnect', function(){
-      console.log('user disconnected');
+      socket.on('disconnect', function(){
+        console.log('user disconnected');
+      });
+
+      socket.on('airtime-info', function(msg){
+        if(msg){
+          if(msg === 'reset'){
+            currentMusic = {};
+            requestAirtimeStats(true);
+            requestLiveInfo(true);
+          }
+        }
+        // io.emit('chat message', msg);
+      });
+
+      loopEterno();
     });
 
-    socket.on('airtime-info', function(msg){
-      if(msg){
-        if(msg === 'reset'){
-          currentMusic = {};
-          requestAirtimeStats(true);
-          requestLiveInfo(true);
-        }
-      }
-      // io.emit('chat message', msg);
-    });
-
-    loopEterno();
-  });
-
-  Object.prototype.equals = function(x)
-  {
-    var x1 = JSON.parse(JSON.stringify(this));
-    var x2 = JSON.parse(JSON.stringify(x));
-
-    var p;
-
-    for(p in x1) {
-        if(typeof(x2[p])=='undefined') {return false;}
-    }
-
-    for(p in x1) {
-        if (x1[p]) {
-            switch(typeof(x1[p])) {
-                case 'object':
-                    if (!x1[p].equals(x2[p])) { return false; } break;
-                case 'function':
-                    if (typeof(x2[p])=='undefined' ||
-                        (p != 'equals' && x1[p].toString() != x2[p].toString()))
-                        return false;
-                    break;
-                default:
-                    if (x1[p] != x2[p]) { return false; }
-            }
-        } else {
-            if (x2[p])
-                return false;
-        }
-    }
-
-    for(p in x2) {
-        if(typeof(x1[p])=='undefined') {return false;}
-    }
-
-    return true;
-  }
-
-  var isEqual = function (value, other) {
-
-  // Get the value type
-  var type = Object.prototype.toString.call(value);
-
-  // If the two objects are not the same type, return false
-  if (type !== Object.prototype.toString.call(other)) return false;
-
-  // If items are not an object or array, return false
-  if (['[object Array]', '[object Object]'].indexOf(type) < 0) return false;
-
-  // Compare the length of the length of the two items
-  var valueLen = type === '[object Array]' ? value.length : Object.keys(value).length;
-  var otherLen = type === '[object Array]' ? other.length : Object.keys(other).length;
-  if (valueLen !== otherLen) return false;
-
-  // Compare two items
-  var compare = function (item1, item2) {
-
-    // Get the object type
-    var itemType = Object.prototype.toString.call(item1);
-
-    // If an object or array, compare recursively
-    if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
-      if (!isEqual(item1, item2)) return false;
-    }
-
-    // Otherwise, do a simple comparison
-    else {
-
-      // If the two items are not the same type, return false
-      if (itemType !== Object.prototype.toString.call(item2)) return false;
-
-      // Else if it's a function, convert to a string and compare
-      // Otherwise, just compare
-      if (itemType === '[object Function]') {
-        if (item1.toString() !== item2.toString()) return false;
-      } else {
-        if (item1 !== item2) return false;
-      }
-
-    }
-  };
-
-  // Compare properties
-  if (type === '[object Array]') {
-    for (var i = 0; i < valueLen; i++) {
-      if (compare(value[i], other[i]) === false) return false;
-    }
-  } else {
-    for (var key in value) {
-      if (value.hasOwnProperty(key)) {
-        if (compare(value[key], other[key]) === false) return false;
-      }
-    }
-  }
-
-  // If nothing failed, return true
-  return true;
-
-};
-
-  const request = require('request');
-  const service_curtidas = require('../service/service-curtidas');
-  const service_ouvinte  = require('../service/service-ouvinte');
-  const airtime_service = require('../service/service-airtime');
-  const html2json = require('html2json').html2json;
-  const bunyan = require('bunyan');
-  var ouvintes = {};
-  const log = bunyan.createLogger(
+    Object.prototype.equals = function(x)
     {
-      name: "webradioApp",
-      streams: [{
-        path: '/var/log/webradioApp.log',
-      }]
-    });
+      var x1 = JSON.parse(JSON.stringify(this));
+      var x2 = JSON.parse(JSON.stringify(x));
 
-  function requestListMount(){
-    try {
-        request(config.icecast.listclients, config.icecast.auth
-                                    ,function (error, response, body) {
+      var p;
 
-          if (response) {
-            // console.log(response);
-            if (response.statusCode == 200){
-              // console.log(body);
-              var json = html2json(body);
-              // console.log(json.child);
-              // console.log('1:',json.child[0].child[0]);TXT
-              // console.log('2:',json.child[0].child[1]);TXT
-              // console.log('3:',json.child[0].child[2]);HEAD
-              // console.log('4:',json.child[0].child[3]);TXT
-              // console.log('5:',json.child[0].child[4]);BODY
-              // console.log('6:',json.child[0].child[5]);TXT
+      for(p in x1) {
+          if(typeof(x2[p])=='undefined') {return false;}
+      }
 
-              // console.log('BODY:',json.child[0].child[3]);
-              // console.log('div1:',json.child[0].child[3].child[10]);
-              // console.log('div2:',json.child[0].child[3].child[10].child[3]);
-              // console.log('table1:',json.child[0].child[3].child[10].child[3].child[6]);
+      for(p in x1) {
+          if (x1[p]) {
+              switch(typeof(x1[p])) {
+                  case 'object':
+                      if (!x1[p].equals(x2[p])) { return false; } break;
+                  case 'function':
+                      if (typeof(x2[p])=='undefined' ||
+                          (p != 'equals' && x1[p].toString() != x2[p].toString()))
+                          return false;
+                      break;
+                  default:
+                      if (x1[p] != x2[p]) { return false; }
+              }
+          } else {
+              if (x2[p])
+                  return false;
+          }
+      }
 
-              let trs = json.child[0].child[3].child[10].child[3].child[6].child;
+      for(p in x2) {
+          if(typeof(x1[p])=='undefined') {return false;}
+      }
 
-              if(trs){
+      return true;
+    }
 
-                let ouvintes_tmp = {
-                  data_inclusao: new Date(),
-                  ips: []
-                };
-                let ouvinte_tmp = {};
-                let ipExist = false;
-                for(let i = 0; i < trs.length; i++){
-                  if(trs[i].tag){
-                    if(trs[i].tag === 'tr'){
-                      if(i > 1){
-                        // console.log('[' + i + ']', trs[i].child[1].child[0].text);
-                        ouvinte_tmp            = {};
-                        ipExist                = false;
-                        ouvinte_tmp.ip         = trs[i].child[1].child[0].text;
-                        ouvinte_tmp.quantidade = 1;
-                        for (let j = 0; j < ouvintes_tmp.ips.length; j++){
-                          if(ouvintes_tmp.ips && ouvintes_tmp.ips[j].ip){
-                            if(ouvintes_tmp.ips[j].ip === ouvinte_tmp.ip){
-                              ouvintes_tmp.ips[j].quantidade ++;
-                              ipExist = true;
+    var isEqual = function (value, other) {
+
+    // Get the value type
+    var type = Object.prototype.toString.call(value);
+
+    // If the two objects are not the same type, return false
+    if (type !== Object.prototype.toString.call(other)) return false;
+
+    // If items are not an object or array, return false
+    if (['[object Array]', '[object Object]'].indexOf(type) < 0) return false;
+
+    // Compare the length of the length of the two items
+    var valueLen = type === '[object Array]' ? value.length : Object.keys(value).length;
+    var otherLen = type === '[object Array]' ? other.length : Object.keys(other).length;
+    if (valueLen !== otherLen) return false;
+
+    // Compare two items
+    var compare = function (item1, item2) {
+
+      // Get the object type
+      var itemType = Object.prototype.toString.call(item1);
+
+      // If an object or array, compare recursively
+      if (['[object Array]', '[object Object]'].indexOf(itemType) >= 0) {
+        if (!isEqual(item1, item2)) return false;
+      }
+
+      // Otherwise, do a simple comparison
+      else {
+
+        // If the two items are not the same type, return false
+        if (itemType !== Object.prototype.toString.call(item2)) return false;
+
+        // Else if it's a function, convert to a string and compare
+        // Otherwise, just compare
+        if (itemType === '[object Function]') {
+          if (item1.toString() !== item2.toString()) return false;
+        } else {
+          if (item1 !== item2) return false;
+        }
+
+      }
+    };
+
+    // Compare properties
+    if (type === '[object Array]') {
+      for (var i = 0; i < valueLen; i++) {
+        if (compare(value[i], other[i]) === false) return false;
+      }
+    } else {
+      for (var key in value) {
+        if (value.hasOwnProperty(key)) {
+          if (compare(value[key], other[key]) === false) return false;
+        }
+      }
+    }
+
+    // If nothing failed, return true
+    return true;
+
+  };
+
+    const request = require('request');
+    const service_curtidas = require('../service/service-curtidas');
+    const service_ouvinte  = require('../service/service-ouvinte');
+    const airtime_service = require('../service/service-airtime');
+    const html2json = require('html2json').html2json;
+    const bunyan = require('bunyan');
+    var ouvintes = {};
+    const log = bunyan.createLogger(
+      {
+        name: "webradioApp",
+        streams: [{
+          path: '/var/log/webradioApp.log',
+        }]
+      });
+
+    function requestListMount(){
+      try {
+          request(config.icecast.listclients, config.icecast.auth
+                                      ,function (error, response, body) {
+
+            if (response) {
+              // console.log(response);
+              if (response.statusCode == 200){
+                // console.log(body);
+                var json = html2json(body);
+                // console.log(json.child);
+                // console.log('1:',json.child[0].child[0]);TXT
+                // console.log('2:',json.child[0].child[1]);TXT
+                // console.log('3:',json.child[0].child[2]);HEAD
+                // console.log('4:',json.child[0].child[3]);TXT
+                // console.log('5:',json.child[0].child[4]);BODY
+                // console.log('6:',json.child[0].child[5]);TXT
+
+                // console.log('BODY:',json.child[0].child[3]);
+                // console.log('div1:',json.child[0].child[3].child[10]);
+                // console.log('div2:',json.child[0].child[3].child[10].child[3]);
+                // console.log('table1:',json.child[0].child[3].child[10].child[3].child[6]);
+
+                let trs = json.child[0].child[3].child[10].child[3].child[6].child;
+
+                if(trs){
+
+                  let ouvintes_tmp = {
+                    data_inclusao: new Date(),
+                    ips: []
+                  };
+                  let ouvinte_tmp = {};
+                  let ipExist = false;
+                  for(let i = 0; i < trs.length; i++){
+                    if(trs[i].tag){
+                      if(trs[i].tag === 'tr'){
+                        if(i > 1){
+                          // console.log('[' + i + ']', trs[i].child[1].child[0].text);
+                          ouvinte_tmp            = {};
+                          ipExist                = false;
+                          ouvinte_tmp.ip         = trs[i].child[1].child[0].text;
+                          ouvinte_tmp.quantidade = 1;
+                          for (let j = 0; j < ouvintes_tmp.ips.length; j++){
+                            if(ouvintes_tmp.ips && ouvintes_tmp.ips[j].ip){
+                              if(ouvintes_tmp.ips[j].ip === ouvinte_tmp.ip){
+                                ouvintes_tmp.ips[j].quantidade ++;
+                                ipExist = true;
+                              }
                             }
                           }
-                        }
-                        if(!ipExist){
-                          ouvintes_tmp.ips.push(ouvinte_tmp);
+                          if(!ipExist){
+                            ouvintes_tmp.ips.push(ouvinte_tmp);
+                          }
                         }
                       }
                     }
                   }
-                }
 
-                // console.log('ouvintes', ouvintes);
-                if (!ouvintes.ips && ouvintes_tmp.ips.length > 0) {
-                  ouvintes = ouvintes_tmp;
-                  // console.log('gravar', ouvintes);
-                  service_ouvinte.insert(ouvintes);
-                } else if(ouvintes.ips) {
-                  // console.log('getDate', ouvintes.data_inclusao.getDate());
-                  // console.log('getMonth', ouvintes.data_inclusao.getMonth());
-                  // console.log('getFullYear', ouvintes.data_inclusao.getFullYear());
-                  // console.log('ouvintes_tmpgetDate', ouvintes_tmp.data_inclusao.getDate());
-                  // console.log('ouvintes_tmpgetMonth', ouvintes_tmp.data_inclusao.getMonth());
-                  // console.log('ouvintes_tmpgetFullYear', ouvintes_tmp.data_inclusao.getFullYear());
-                  
-                  // console.log('ouv', ouvintes);
-                  // console.log('tmp', ouvintes_tmp);
-
-                  // console.log(!isEqual(ouvintes.ips,ouvintes_tmp.ips));
-                  // console.log(ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate());
-                  // console.log(ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() );
-                  // console.log(ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear());
-                  // console.log('equals?',ouvintes.ips.equals(ouvintes_tmp.ips));
-                  if(!isEqual(ouvintes.ips,ouvintes_tmp.ips) ||
-                    ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate() ||
-                    ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() ||
-                    ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear()) {
-                    
+                  // console.log('ouvintes', ouvintes);
+                  if (!ouvintes.ips && ouvintes_tmp.ips.length > 0) {
                     ouvintes = ouvintes_tmp;
-                    // console.log('gravar', ouvintes_tmp);
+                    // console.log('gravar', ouvintes);
                     service_ouvinte.insert(ouvintes);
-                  } else {
-                    // console.log('ja foi gravado', ouvintes);
+                  } else if(ouvintes.ips) {
+                    // console.log('getDate', ouvintes.data_inclusao.getDate());
+                    // console.log('getMonth', ouvintes.data_inclusao.getMonth());
+                    // console.log('getFullYear', ouvintes.data_inclusao.getFullYear());
+                    // console.log('ouvintes_tmpgetDate', ouvintes_tmp.data_inclusao.getDate());
+                    // console.log('ouvintes_tmpgetMonth', ouvintes_tmp.data_inclusao.getMonth());
+                    // console.log('ouvintes_tmpgetFullYear', ouvintes_tmp.data_inclusao.getFullYear());
+                    
+                    // console.log('ouv', ouvintes);
+                    // console.log('tmp', ouvintes_tmp);
+
+                    // console.log(!isEqual(ouvintes.ips,ouvintes_tmp.ips));
+                    // console.log(ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate());
+                    // console.log(ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() );
+                    // console.log(ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear());
+                    // console.log('equals?',ouvintes.ips.equals(ouvintes_tmp.ips));
+                    if(!isEqual(ouvintes.ips,ouvintes_tmp.ips) ||
+                      ouvintes.data_inclusao.getDate() !== ouvintes_tmp.data_inclusao.getDate() ||
+                      ouvintes.data_inclusao.getMonth() !== ouvintes_tmp.data_inclusao.getMonth() ||
+                      ouvintes.data_inclusao.getFullYear() !== ouvintes_tmp.data_inclusao.getFullYear()) {
+                      
+                      ouvintes = ouvintes_tmp;
+                      // console.log('gravar', ouvintes_tmp);
+                      service_ouvinte.insert(ouvintes);
+                    } else {
+                      // console.log('ja foi gravado', ouvintes);
+                    }
                   }
                 }
               }
             }
-          }
-      });
+        });
 
-    } catch(e){
-      log.error({
-        error: e,
-        request: config.icecast.listclients
-      });
+      } catch(e){
+        log.error({
+          error: e,
+          request: config.icecast.listclients
+        });
+      }
     }
-  }
 
-  function requestImage(){
-    try {
+    function requestImage(){
+      try {
 
-      request('https://samcloudmedia.spacial.com/webwidgets/player/v4/300x160.html?sid=71531&rid=155795&startstation=false&theme=light&showBuyButton=always&token=6d08178e919343d63d5e12947937409bb81699fb'
-                                    ,function (error, response, body) {
+        request('https://samcloudmedia.spacial.com/webwidgets/player/v4/300x160.html?sid=71531&rid=155795&startstation=false&theme=light&showBuyButton=always&token=6d08178e919343d63d5e12947937409bb81699fb'
+                                      ,function (error, response, body) {
 
-          if (response) {
-            // console.log(response);
-            if (response.statusCode == 200){
-              // console.log(body);
-              console.log('body', body);
-              var sourceImg = body.substring(body.indexof('id="coverArt"') + 6, body.indexof('id="coverArt"') + 100);
-              console.log('sourceImg', sourceImg);
-
-
-              var json = html2json(body);
-              console.log(json.child);
-              // console.log('1:',json.child[0].child[0]);
-              // console.log('2:',json.child[0].child[1]);
-              // console.log('3:',json.child[0].child[2]);
-              // console.log('4:',json.child[0].child[3]);
-              // console.log('5:',json.child[0].child[4]);
-              // console.log('6:',json.child[0].child[5]);
-
-              console.log('body', json.child[0].child[3]);
-              console.log('div1', json.child[0].child[3].child[7]);
-              console.log('div2', json.child[0].child[3].child[7].child[1]);
-              console.log('div3', json.child[0].child[3].child[7].child[1].child[1]);
-              console.log('div4', json.child[0].child[3].child[7].child[1].child[1].child[3]);
-              console.log('div5', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1]);
-              console.log('table1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1]);
-              console.log('tbody1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1]);
-              console.log('tr1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1]);
-              console.log('td1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1].child[1]);
-              console.log('img',        json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1].child[1].child[0]);
-              console.log('img-source', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1].child[1].child[0].attr.src);
-              
+            if (response) {
+              // console.log(response);
+              if (response.statusCode == 200){
+                // console.log(body);
+                console.log('body', body);
+                var sourceImg = body.substring(body.indexof('id="coverArt"') + 6, body.indexof('id="coverArt"') + 100);
+                console.log('sourceImg', sourceImg);
 
 
+                var json = html2json(body);
+                console.log(json.child);
+                // console.log('1:',json.child[0].child[0]);
+                // console.log('2:',json.child[0].child[1]);
+                // console.log('3:',json.child[0].child[2]);
+                // console.log('4:',json.child[0].child[3]);
+                // console.log('5:',json.child[0].child[4]);
+                // console.log('6:',json.child[0].child[5]);
+
+                console.log('body', json.child[0].child[3]);
+                console.log('div1', json.child[0].child[3].child[7]);
+                console.log('div2', json.child[0].child[3].child[7].child[1]);
+                console.log('div3', json.child[0].child[3].child[7].child[1].child[1]);
+                console.log('div4', json.child[0].child[3].child[7].child[1].child[1].child[3]);
+                console.log('div5', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1]);
+                console.log('table1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1]);
+                console.log('tbody1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1]);
+                console.log('tr1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1]);
+                console.log('td1', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1].child[1]);
+                console.log('img',        json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1].child[1].child[0]);
+                console.log('img-source', json.child[0].child[3].child[7].child[1].child[1].child[3].child[1].child[1].child[1].child[1].child[1].child[0].attr.src);
+                
+
+
+              }
             }
-          }
-      });
+        });
 
-    } catch(e){
-      log.error({
-        error: e,
-        request: 'image'
-      });
+      } catch(e){
+        log.error({
+          error: e,
+          request: 'image'
+        });
+      }
     }
-  }
-  
-  function requestAirtimeStats(isNewUser){
-    try {
-      request(config.icecast.stats, config.icecast.auth
-                                    ,function (error, response, body) {
-              // console.log('error:', error); // Print the error if one occurred and handle it
-              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-          if (response) {
-            // console.log(response);
-            if (response.statusCode == 200){
-                const parseString = require('xml2js').parseString;
-                // console.log('body2', body);
-                parseString(body, function (err, result) {
-                  var obj = result;
-                  if (obj.icestats.source) {
-                    if(obj.icestats.source[0].title){
-                      var airtime = {
-                        listener_peak:  obj.icestats.source[0].listener_peak[0],
-                        listeners:      obj.icestats.source[0].listeners[0],
-                        mount:          obj.icestats.source[0].$.mount,
-                        stream_start:   new Date(obj.icestats.source[0].stream_start[0]),
-                        stream_start2:  obj.icestats.source[0].stream_start[0],
-                        title:          obj.icestats.source[0].title[0]
-                      };
-                      airtime_service.upsert(airtime, function (err, result) {
+    
+    function requestAirtimeStats(isNewUser){
+      try {
+        request(config.icecast.stats, config.icecast.auth
+                                      ,function (error, response, body) {
+                // console.log('error:', error); // Print the error if one occurred and handle it
+                // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+            if (response) {
+              // console.log(response);
+              if (response.statusCode == 200){
+                  const parseString = require('xml2js').parseString;
+                  // console.log('body2', body);
+                  parseString(body, function (err, result) {
+                    var obj = result;
+                    if (obj.icestats.source) {
+                      if(obj.icestats.source[0].title){
+                        var airtime = {
+                          listener_peak:  obj.icestats.source[0].listener_peak[0],
+                          listeners:      obj.icestats.source[0].listeners[0],
+                          mount:          obj.icestats.source[0].$.mount,
+                          stream_start:   new Date(obj.icestats.source[0].stream_start[0]),
+                          stream_start2:  obj.icestats.source[0].stream_start[0],
+                          title:          obj.icestats.source[0].title[0]
+                        };
+                        airtime_service.upsert(airtime, function (err, result) {
 
-                        // console.log('upsert', result);
-                        if(err === null) {
+                          // console.log('upsert', result);
+                          if(err === null) {
+                            airtime_service.findByListenerPeakToday(function (err, result) {
+                              if(err === null) {
+                                airtime.listener_peak = result[0].listenersMax;
+                                io.emit('airtime-stats', airtime);
+                              }
+                            });
+                          }
+                        });
+
+                        if(isNewUser){
                           airtime_service.findByListenerPeakToday(function (err, result) {
                             if(err === null) {
-                              airtime.listener_peak = result[0].listenersMax;
+                              if(result[0].listenersMax){
+                                airtime.listener_peak = result[0].listenersMax;  
+                              }
                               io.emit('airtime-stats', airtime);
                             }
                           });
                         }
-                      });
-
-                      if(isNewUser){
-                        airtime_service.findByListenerPeakToday(function (err, result) {
-                          if(err === null) {
-                            if(result[0].listenersMax){
-                              airtime.listener_peak = result[0].listenersMax;  
-                            }
-                            io.emit('airtime-stats', airtime);
-                          }
-                        });
                       }
                     }
-                  }
-              });
+                });
+              }
+            }
+        });
+
+      } catch(e){
+        log.error({
+          error: e,
+          request: config.icecast.stats
+        });
+      }
+    }
+
+    function requestLiveInfo(isNewUser){
+      try {
+        request(config.airtime.liveinfo, function (error, response, body) {
+          // console.log('body', body);
+          if(body){  
+            var tmp = body.replace('(', '');
+            tmp = tmp.replace(')', '');
+            var live_info = {};
+            var hasErro = false;
+
+            
+            try {
+              var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
+              // console.log('fechaPare', fechaPare);
+              if (fechaPare == ')') {
+                tmp = tmp.substring(0, tmp.length - 1);
+              }
+              // console.log('tmp', tmp);
+              live_info = JSON.parse( tmp );
+            } catch(e){
+              hasErro = true;
+              log.error(e);
+            }
+
+            if (!hasErro) {
+              // console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+              var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
+              // console.log('live_info', live_info);
+              // console.log('live_date', live_date);
+              // console.log('hours', live_date.getHours());
+              // console.log('minutes', live_date.getMinutes());
+              // console.log('seconds', live_date.getSeconds());
+              var artista = live_info.current.name;
+              artista = artista.substring(artista.indexOf("-") + 2, artista.length);
+              var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
+              artista = artista.substring(0, artista.indexOf("-") - 1);
+              // console.log('currentMusic', currentMusic);
+              // console.log('artista', artista);
+              // console.log('musica', musica);
+              if(currentMusic.artist !== artista && currentMusic.name !== musica || isNewUser){
+                currentMusic.artist = artista;
+                currentMusic.name = musica;
+                // console.log('buscar audio por', (artista + ' - ' + musica));
+                service_curtidas.findByAudio(artista + ' - ' + musica,
+                      (err, result) => {
+                        if(err) io.emit('airtime-info', live_info);
+                      
+                      live_info.curtidas = result;
+                      io.emit('airtime-info', live_info);
+                });
+              }
             }
           }
-      });
-
-    } catch(e){
-      log.error({
-        error: e,
-        request: config.icecast.stats
-      });
-    }
-  }
-
-  function requestLiveInfo(isNewUser){
-    try {
-      request(config.airtime.liveinfo, function (error, response, body) {
-        // console.log('body', body);
-        if(body){  
-          var tmp = body.replace('(', '');
-          tmp = tmp.replace(')', '');
-          var live_info = {};
-          var hasErro = false;
-
           
-          try {
-            var fechaPare = tmp.substring(tmp.length - 1, tmp.length);
-            // console.log('fechaPare', fechaPare);
-            if (fechaPare == ')') {
-              tmp = tmp.substring(0, tmp.length - 1);
-            }
-            // console.log('tmp', tmp);
-            live_info = JSON.parse( tmp );
-          } catch(e){
-            hasErro = true;
-            log.error(e);
-          }
-
-          if (!hasErro) {
-            // console.log('date_live', live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-            var live_date = new Date(live_info.schedulerTime.substr(0, 10) + "T" + live_info.schedulerTime.substr(11, 8));
-            // console.log('live_info', live_info);
-            // console.log('live_date', live_date);
-            // console.log('hours', live_date.getHours());
-            // console.log('minutes', live_date.getMinutes());
-            // console.log('seconds', live_date.getSeconds());
-            var artista = live_info.current.name;
-            artista = artista.substring(artista.indexOf("-") + 2, artista.length);
-            var musica = artista.substring(artista.indexOf("-") + 2, artista.length);
-            artista = artista.substring(0, artista.indexOf("-") - 1);
-            // console.log('currentMusic', currentMusic);
-            // console.log('artista', artista);
-            // console.log('musica', musica);
-            if(currentMusic.artist !== artista && currentMusic.name !== musica || isNewUser){
-              currentMusic.artist = artista;
-              currentMusic.name = musica;
-              // console.log('buscar audio por', (artista + ' - ' + musica));
-              service_curtidas.findByAudio(artista + ' - ' + musica,
-                    (err, result) => {
-                      if(err) io.emit('airtime-info', live_info);
-                    
-                    live_info.curtidas = result;
-                    io.emit('airtime-info', live_info);
-              });
-            }
-          }
-        }
-        
-      });
-    } catch(e){
-      log.error({
-        error: e,
-        request: config.airtime.liveinfo
-      });
+        });
+      } catch(e){
+        log.error({
+          error: e,
+          request: config.airtime.liveinfo
+        });
+      }
     }
+
+    function loopEterno(){
+      log.info('Iniciar requisições no airtime');
+      setTimeout(function () {
+
+        requestLiveInfo(false);
+        requestAirtimeStats(false);
+
+        requestListMount();
+
+        // requestImage();
+
+        // console.log((new Date).toLocaleString().substr(11))
+        // console.log(new Date)
+
+        // const options = {
+        //   hostname: 'http://177.54.158.150',
+        //   port: 8000,
+        //   path: '/airtime_128',
+        //   method: 'GET',
+        //   headers: {
+        //     'Content-Type': 'application/x-www-form-urlencoded',
+        //     // 'Content-Length': Buffer.byteLength(postData)
+        //   }
+        // };
+
+        // const req = http.request(options, (res) => {
+        //   console.log(`STATUS: ${res.statusCode}`);
+        //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
+        //   res.setEncoding('utf8');
+        //   res.on('data', (chunk) => {
+        //     console.log(`BODY: ${chunk}`);
+        //   });
+        //   res.on('end', () => {
+        //     console.log('No more data in response.');
+        //   });
+        // });
+
+        // req.on('error', (e) => {
+        //   console.error(`problem with request: ${e.message}`);
+        // });
+
+        // // write data to request body
+        // // req.write(postData);
+        // req.end();
+
+  //----------------------------------------------------------------------------------
+        // http.get('http://expressjs.com/en/api.html', (res) => {
+
+        //   const { statusCode } = res;
+        //   const contentType = res.headers['content-type'];
+
+        //   console.log('contentType', contentType);
+
+        //   let error;
+        //   if (statusCode !== 200) {
+        //     error = new Error('Request Failed.\n' +
+        //                       `Status Code: ${statusCode}`);
+        //   // } else if (!/^application\/json/.test(contentType)) {
+        //   //   error = new Error('Invalid content-type.\n' +
+        //   //                     `Expected application/json but received ${contentType}`);
+        //   }
+        //   if (error) {
+        //     console.error(error.message);
+        //     // consume response data to free up memory
+        //     res.resume();
+        //     return;
+        //   }
+
+        //   res.setEncoding('utf8');
+        //   let rawData = '';
+        //   // res.on('data', (chunk) => { rawData += chunk; console.log('chunk', chunk)});
+        //   res.on('data', function (chunk) {
+        //     // console.log('BODY: ' + chunk);
+
+        //     console.log(html2json(chunk.substring(chunk.indexOf('<body>'), chunk.indexOf('</body>') )));
+        //   });
+
+        //   // res.on('end', () => {
+        //   //   try {
+        //   //     const parsedData = JSON.parse(rawData);
+        //   //     console.log(parsedData);
+        //   //   } catch (e) {
+        //   //     console.error(e.message);
+        //   //   }
+        //   // });
+        // }).on('error', (e) => {
+        //   console.error(`Got error: ${e.message}`);
+        // });
+
+      loopEterno();    
+    }, 10000)
+    
+
   }
 
-  function loopEterno(){
-    log.info('Iniciar requisições no airtime');
-    setTimeout(function () {
-
-      requestLiveInfo(false);
-      requestAirtimeStats(false);
-
-      requestListMount();
-
-      // requestImage();
-
-      // console.log((new Date).toLocaleString().substr(11))
-      // console.log(new Date)
-
-      // const options = {
-      //   hostname: 'http://177.54.158.150',
-      //   port: 8000,
-      //   path: '/airtime_128',
-      //   method: 'GET',
-      //   headers: {
-      //     'Content-Type': 'application/x-www-form-urlencoded',
-      //     // 'Content-Length': Buffer.byteLength(postData)
-      //   }
-      // };
-
-      // const req = http.request(options, (res) => {
-      //   console.log(`STATUS: ${res.statusCode}`);
-      //   console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-      //   res.setEncoding('utf8');
-      //   res.on('data', (chunk) => {
-      //     console.log(`BODY: ${chunk}`);
-      //   });
-      //   res.on('end', () => {
-      //     console.log('No more data in response.');
-      //   });
-      // });
-
-      // req.on('error', (e) => {
-      //   console.error(`problem with request: ${e.message}`);
-      // });
-
-      // // write data to request body
-      // // req.write(postData);
-      // req.end();
-
-//----------------------------------------------------------------------------------
-      // http.get('http://expressjs.com/en/api.html', (res) => {
-
-      //   const { statusCode } = res;
-      //   const contentType = res.headers['content-type'];
-
-      //   console.log('contentType', contentType);
-
-      //   let error;
-      //   if (statusCode !== 200) {
-      //     error = new Error('Request Failed.\n' +
-      //                       `Status Code: ${statusCode}`);
-      //   // } else if (!/^application\/json/.test(contentType)) {
-      //   //   error = new Error('Invalid content-type.\n' +
-      //   //                     `Expected application/json but received ${contentType}`);
-      //   }
-      //   if (error) {
-      //     console.error(error.message);
-      //     // consume response data to free up memory
-      //     res.resume();
-      //     return;
-      //   }
-
-      //   res.setEncoding('utf8');
-      //   let rawData = '';
-      //   // res.on('data', (chunk) => { rawData += chunk; console.log('chunk', chunk)});
-      //   res.on('data', function (chunk) {
-      //     // console.log('BODY: ' + chunk);
-
-      //     console.log(html2json(chunk.substring(chunk.indexOf('<body>'), chunk.indexOf('</body>') )));
-      //   });
-
-      //   // res.on('end', () => {
-      //   //   try {
-      //   //     const parsedData = JSON.parse(rawData);
-      //   //     console.log(parsedData);
-      //   //   } catch (e) {
-      //   //     console.error(e.message);
-      //   //   }
-      //   // });
-      // }).on('error', (e) => {
-      //   console.error(`Got error: ${e.message}`);
-      // });
-
-    loopEterno();    
-  }, 10000)
-  
-
+  loopEterno();
+  })
 }
-
-loopEterno();
-})
