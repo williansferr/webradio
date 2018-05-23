@@ -2,7 +2,7 @@ function initChartsCurtidas(data){
 			// dataCurtidasChart = JSON.parse('<%- JSON.stringify(curtidaCharts) %>');
 	dataCurtidasChart = data;
 
-    optionsDailySalesChart = {
+    optionsChart = {
     	lineSmooth: Chartist.Interpolation.cardinal({
             tension: 0
         }),
@@ -13,7 +13,7 @@ function initChartsCurtidas(data){
         height: '300px'
     }
 
-    var curtidasCharts = new Chartist.Bar('#curtidasCharts', dataCurtidasChart, optionsDailySalesChart);
+    var curtidasCharts = new Chartist.Bar('#curtidasCharts', dataCurtidasChart, optionsChart);
 
     md.startAnimationForLineChart(curtidasCharts);
 
@@ -38,62 +38,95 @@ function initChartsDeslike(data){
 
 }
 
-function initChartsAirtimes(data){
+function initChartsAirtimes(data, tipo){
 	// dataAirtimeChart = JSON.parse(data);
 	dataAirtimeChart = data;
 
-    optionsDailySalesChart = {
-    	lineSmooth: Chartist.Interpolation.cardinal({
-			tension: 10
-		}),
-		axisY: {
-			showGrid: true,
-			offset: 40
-		},
-		axisX: {
-			showGrid: false,
-		},
-		low: 0,
-		high: data.high,
-		showPoint: true,
-		height: '300px'
-    }
+	if(tipo === '0'){
+		optionsChart = {
+	    	lineSmooth: Chartist.Interpolation.cardinal({
+				tension: 10
+			}),
+			axisY: {
+				showGrid: true,
+				offset: 40
+			},
+			axisX: {
+				showGrid: false,
+			},
+			low: 0,
+			high: data.high,
+			showPoint: true,
+			height: '300px'
+	    }
 
-    var airtimeCharts = new Chartist.Line('#airtimeCharts', dataAirtimeChart, optionsDailySalesChart);
+	    var airtimeCharts = new Chartist.Line('#airtimeCharts', dataAirtimeChart, optionsChart);
 
-    md.startAnimationForLineChart(airtimeCharts);
+	    md.startAnimationForLineChart(airtimeCharts);
+
+	} else if(tipo === '1') {
+		optionsChart = {
+	    	lineSmooth: Chartist.Interpolation.cardinal({
+	            tension: 0
+	        }),
+	        low: 0,
+	        high: data.high,
+	        chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+	        height: '300px'
+	    }
+
+	    var airtimeCharts = new Chartist.Bar('#airtimeCharts', dataAirtimeChart, optionsChart);
+	    md.startAnimationForLineChart(airtimeCharts);
+	}
+    
 
 }
 
-function initChartsOuvintes(data){
+function initChartsOuvintes(data, tipo){
 	// dataAirtimeChart = JSON.parse(data);
 	dataOuvinteChart = data;
 
-    optionsDailySalesChart = {
-    	lineSmooth: Chartist.Interpolation.cardinal({
-			tension: 10
-		}),
-		axisY: {
-			showGrid: true,
-			offset: 40
-		},
-		axisX: {
-			showGrid: false,
-		},
-		low: 0,
-		high: data.high,
-		showPoint: true,
-		height: '300px'
-    }
+	if (tipo === '0'){
+		optionsChart = {
+	    	lineSmooth: Chartist.Interpolation.cardinal({
+				tension: 10
+			}),
+			axisY: {
+				showGrid: true,
+				offset: 40
+			},
+			axisX: {
+				showGrid: false,
+			},
+			low: 0,
+			high: data.high,
+			showPoint: true,
+			height: '300px'
+	    }
 
-    var ouvinteCharts = new Chartist.Line('#ouvinteCharts', dataOuvinteChart, optionsDailySalesChart);
+	    var ouvinteCharts = new Chartist.Line('#ouvinteCharts', dataOuvinteChart, optionsChart);
 
-    md.startAnimationForLineChart(ouvinteCharts);
+	    md.startAnimationForLineChart(ouvinteCharts);
+	} else if(tipo === '1'){
+		optionsChart = {
+	    	lineSmooth: Chartist.Interpolation.cardinal({
+	            tension: 0
+	        }),
+	        low: 0,
+	        high: data.high,
+	        chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+	        height: '400px'
+	    }
 
+	    var ouvinteCharts = new Chartist.Bar('#ouvinteCharts', dataOuvinteChart, optionsChart);
+
+	    md.startAnimationForLineChart(ouvinteCharts);
+	}
 }
 
 function initChartsAirtimesByPeriodo(){
 
+	let selectTipo = $("#id-tipo-airtime").val();
 	let dtInicial = new Date();
 	let dtFinal = new Date();
 	let tmpI = $('#id-dt-inicial').val();
@@ -131,7 +164,7 @@ function initChartsAirtimesByPeriodo(){
         // console.log('getAirtimes() done');
         // console.log(msg);
         let ac = JSON.parse(msg);
-        initChartsAirtimes(ac.airtimeCharts);
+        initChartsAirtimes(ac.airtimeCharts, selectTipo);
     });
 
     request.fail(function (jqXHR, textStatus) {
@@ -146,6 +179,7 @@ function initChartsAirtimesByPeriodo(){
 function initChartsOuvintesByPeriodo(){
 	// console.log("id-ips:", $("#id-ips").val());
 	let selectIps = $("#id-ips").val();
+	let selectTipo = $("#id-tipo").val();
 	let dtInicial = new Date();
 	let dtFinal = new Date();
 	let tmpI = $('#id-dt-o-inicial').val();
@@ -176,8 +210,6 @@ function initChartsOuvintesByPeriodo(){
 		newdata.labels = ouvinteCharts.labels;
 		newdata.series = [];
 
-		console.log('ouvinteCharts', ouvinteCharts);
-
 		for(var i = 0; i < selectIps.length; i++){
 			for(var j = 0; j < ouvinteCharts.ips.length; j++){
 				if(selectIps[i] === ouvinteCharts.ips[j].ip){
@@ -186,8 +218,8 @@ function initChartsOuvintesByPeriodo(){
 			}
 		}
 		newdata.high = ouvinteCharts.high;
-		console.log(newdata);
-		initChartsOuvintes(newdata);
+		// console.log(newdata);
+		initChartsOuvintes(newdata, selectTipo);
 
 	} else {
 		var vai = {data_inicial: dtInicial, data_final: dtFinal, ips: selectIps};
@@ -207,7 +239,7 @@ function initChartsOuvintesByPeriodo(){
             // console.log(msg);
             let oc = JSON.parse(msg);
             ouvinteCharts = oc.ouvinteCharts;
-            initChartsOuvintes(oc.ouvinteCharts);
+            initChartsOuvintes(oc.ouvinteCharts, selectTipo);
         });
 
         request.fail(function (jqXHR, textStatus) {

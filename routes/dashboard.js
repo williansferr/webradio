@@ -117,7 +117,10 @@ global.classMenu = {
 	Objetivo: 
 		- Buscar comentários na data de hoje
 		- Buscar musicas mais curtidas e retornar as 10 mais, para compor o gráfico de ranking
-		- 
+		- Buscar musicas menus curtidas e retornar as 10 mais, para compor o gráfico de ranking
+		- Buscar quantidade de ouvintes por dia no geral (airtimes)
+		- Buscar quantidade de ouvintes por endereços (ouvintes)
+		- Retornar todos os resultados obtidos nas buscas.
 
 */
 	router.get('/', authenticationMiddleware(), function(req, res, next) {
@@ -317,39 +320,6 @@ global.classMenu = {
 		    					});
 	    					});
 	    				});
-
-						// request('http://177.54.158.150:8000/admin/listmounts'
-	     //                                                   ,{
-	     //                                                      'auth': {
-	     //                                                        'user': 'admin',
-	     //                                                        'pass': '31ypq8X18LSR',
-	     //                                                        'sendImmediately': false
-	     //                                                    }}
-		    //                                   ,function (error, response, body) {
-			   //              // console.log('error:', error); // Print the error if one occurred and handle it
-			   //              // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-
-			   //              if (response.statusCode == 200){
-			   //                  const parseString = require('xml2js').parseString;
-			   //                  console.log('body2', body);
-			   //                  console.dir('parse xml to object');
-			   //                  parseString(body, function (err, result) {
-			   //                    var obj = result;
-			   //                    console.dir(obj);
-			   //                    // console.dir(obj.icestats.source[0].listener_peak[0]);
-			   //                    // var airtime_service = require('../service/service-airtime');
-			   //                    // var airtime = {
-			   //                    //   listener_peak: obj.icestats.source[0].listener_peak[0],
-			   //                    //   mount: 'airtime_128'
-			   //                    // };
-			   //                    // airtime_service.upsert(airtime);
-			   //                    // console.dir('listener_peak',result.source.listener_peak);
-			   //                });
-			   //              }
-			   //                // res.send(body)
-			   //          });
-			   			//charts2: charts2, charts: charts,
-	    				
 	    			})
 	  		});
 		} catch(e) {

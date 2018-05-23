@@ -106,17 +106,27 @@
 			                            <small>GERAL</small>
 			                        </h4>
 			                        <div class="row">
-			                        	<div class="col col-12 col-md-5">
+			                        	<div class="col col-12 col-md-4">
 					                        <div class="form-group">
 					                            <label class="label-control">Data inicial</label>
 					                            <input id="id-dt-inicial" type="text" class="form-control datepicker" value="<%= airtimeCharts.dia1 %>" />
 					                        </div>
 				                    	</div>
-				                    	<div class="col col-12 col-md-5">
+				                    	<div class="col col-12 col-md-4">
 				                    		<div class="form-group">
 					                            <label class="label-control">Data final</label>
 					                            <input id="id-dt-final" type="text" class="form-control datepicker" value="<%= airtimeCharts.hoje %>" />
 					                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-2">
+				                    		<div class="form-group">
+				                    			<label class="label-control">Tipo</label>
+												<select id="id-tipo-airtime" class="selectpicker" data-style="select-with-transition" title="Selecione o tipo" data-size="5">
+				                    				<option disabled>Selecione o tipo</option>
+				                    				<option value="0" selected>Linha</option>
+				                    				<option value="1">Barra</option>
+	                                        	</select>
+				                    		</div>
 				                    	</div>
 				                    	<div class="col col-12 col-md-2">
 				                    		<div class="form-group">
@@ -168,7 +178,7 @@
 					                            <input id="id-dt-o-final" type="text" class="form-control datepicker" value="<%= airtimeCharts.hoje %>" />
 					                        </div>
 				                    	</div>
-				                    	<div class="col col-12 col-md-4">
+				                    	<div class="col col-12 col-md-2">
 				                    		<div class="form-group">
 					                            <label class="label-control">Endereço</label>
 				                    			<select id="id-ips" class="selectpicker" data-style="select-with-transition" multiple title="Selecione o endereço" data-size="5">
@@ -178,6 +188,16 @@
 	                                            <%}%>
 	                                        	</select>
 	                                        </div>
+				                    	</div>
+				                    	<div class="col col-12 col-md-2">
+				                    		<div class="form-group">
+				                    			<label class="label-control">Tipo</label>
+												<select id="id-tipo" class="selectpicker" data-style="select-with-transition" title="Selecione o tipo" data-size="5">
+				                    				<option disabled>Selecione o tipo</option>
+				                    				<option value="0">Linha</option>
+				                    				<option value="1" selected>Barra</option>
+	                                        	</select>
+				                    		</div>
 				                    	</div>
 				                    	<div class="col col-12 col-md-2">
 				                    		<div class="form-group">
@@ -251,8 +271,6 @@
 
 
 	<% include partials/script %>
-	<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
-	<!-- <script src="/js/plugins/moment.min.js"></script> -->
 	<script src="/js/plugins/jquery.select-bootstrap.js"></script>
 	<script src="/js/plugins/moment-with-locales.min.js"></script>
 	<!-- DateTimePicker Plugin -->
@@ -261,8 +279,6 @@
 	<script src="/js/plugins/chartist.min.js"></script>
 	<script src="/js/init/initDatetimepickers.js"></script>
 	<script src="/js/init/initDashboard.js"></script>
-	<!-- <script src="/js/init/charts.js"></script>
-	<script src="/js/init/initChartsPage.js"></script> -->
 	
 
 	<script>
@@ -277,9 +293,9 @@
 		$( document ).ready(function() {
 			ouvinteCharts = JSON.parse('<%- JSON.stringify(ouvinteCharts) %>');
 			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'));
-			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'));
+			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'), '0');
 			initChartsDeslike(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'));
-			initChartsOuvintes(ouvinteCharts);
+			initChartsOuvintes(ouvinteCharts, '1');
 			initDatetimepickers();
 			initAirtimeStats();
 
@@ -320,9 +336,7 @@
 	        });
 
 	        socket.on('comentario-io', function(msg){
-	            if(msg._id != null && msg._id != undefined) {
-	            	$('#id-qt-comentario').html(parseInt($('#id-qt-comentario').text()) + 1);
-	            }
+	            if(msg._id) $('#id-qt-comentario').html(parseInt($('#id-qt-comentario').text()) + 1);
 	        });
 	    }
 

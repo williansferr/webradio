@@ -29,14 +29,9 @@ var Audio = {
 				var album,albumart,artist,title;
 				
 				album = $(this).data('album');
-				if (album == null || album == ''){
-					
-				}
-
 				albumart = $(this).data('albumart');
 				artist = $(this).data('artist');
 				title = $(this).data('title');
-
 
 				album=album?'<span class="album">'+album+'</span>':'';
 				albumart=albumart?'<img src="'+albumart+'">':'';
@@ -111,11 +106,8 @@ var Audio = {
 									$('#txt-album').html('<i class="fas fa-music"></i>');
 								}
 								$('#txt-artist').html('<i class="fas fa-user"></i> ' + artista);
-					            
 					            $('#txt-title').html('<i class="fas fa-headphones"></i> ' + musica);
 								
-					            
-
 					            var albumart = $('#albumart-id').data('albumart');
 					            albumart=albumart?'<img src="'+albumart+'">':'';
 								$('.album-art').html(albumart);

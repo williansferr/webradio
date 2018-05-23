@@ -9,8 +9,6 @@ function findByDataInclusao(data_inclusao, callback){
 }
 
 function findByDtToday(callback){
-    console.log((new Date().getDate() - 1));
-    console.log(new Date());
     global.db.collection("comentarios").find({data_inclusao: {$lt: new Date(), $gte: new Date(new Date().setDate(new Date().getDate()-1))}}).toArray(callback)
 }
 

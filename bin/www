@@ -245,7 +245,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
 
   function requestListMount(){
     try {
-        request(config.airtime.listclients, config.airtime.auth
+        request(config.icecast.listclients, config.icecast.auth
                                     ,function (error, response, body) {
 
           if (response) {
@@ -342,7 +342,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
     } catch(e){
       log.error({
         error: e,
-        request: config.airtime.listclients
+        request: config.icecast.listclients
       });
     }
   }
@@ -400,7 +400,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
   
   function requestAirtimeStats(isNewUser){
     try {
-      request(config.airtime.stats, config.airtime.auth
+      request(config.icecast.stats, config.icecast.auth
                                     ,function (error, response, body) {
               // console.log('error:', error); // Print the error if one occurred and handle it
               // console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
@@ -454,7 +454,7 @@ mongoClient.connect(process.env.MONGO_CONNECTION, function(err, conn){
     } catch(e){
       log.error({
         error: e,
-        request: config.airtime.stats
+        request: config.icecast.stats
       });
     }
   }
