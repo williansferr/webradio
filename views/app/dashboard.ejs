@@ -6,19 +6,21 @@
 </head>
 
 <body>
-	<!-- <div class="loader">
+	<%/*
+	<div class="loader">
 		<svg class="circular" viewBox="25 25 50 50">
 			<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/>
 		</svg>
-	</div> -->
+	</div>
 	<!-- <pre>
-	<%= comentarios_hoje.length %>
+	< %= comentarios_hoje.length % >
 
-	<%= notification %>
-	<% if (notification) { %>
-		<teste><%= notification %></teste>
-	<%}%>
-	</pre>  -->
+	< %= notification % >
+	< % if (notification) { % >
+		<teste>< %= notification % ></teste>
+	< %}% >
+	</pre> -->
+	*/%>
     <div class="wrapper">
     	<% include sidebar/sidebar %>
     	<div class="main-panel myScroll">
@@ -63,7 +65,8 @@
 			            </div>
 			            <div class="col-lg-3 col-md-6 col-sm-6">
 			                <div class="card card-stats">
-			                    <!-- <div class="card-header" data-background-color="green">
+			                	<%/*
+			                    <div class="card-header" data-background-color="green">
 			                        <i class="material-icons">audiotrack</i>
 			                    </div>
 			                    <div class="card-content">
@@ -74,12 +77,14 @@
 			                        <div class="stats">
 			                            <i class="material-icons">date_range</i> Last 24 Hours
 			                        </div>
-			                    </div> -->
+			                    </div>
+			                    */%>
 			                </div>
 			            </div>
 			            <div class="col-lg-3 col-md-6 col-sm-6">
 			                <div class="card card-stats">
-			                    <!-- <div class="card-header" data-background-color="blue">
+			                	<%/*
+			                    <div class="card-header" data-background-color="blue">
 			                        <i class="fa fa-twitter"></i>
 			                    </div>
 			                    <div class="card-content">
@@ -90,7 +95,8 @@
 			                        <div class="stats">
 			                            <i class="material-icons">update</i> Just Updated
 			                        </div>
-			                    </div> -->
+			                    </div>
+			                    */%>
 			                </div>
 			            </div>
 			        </div>
@@ -140,6 +146,7 @@
 			                    <div id="airtimeCharts" class="ct-chart"></div>
 			                </div>
 			            </div>
+			            <%/*
 			            <!-- <div class="col-md-6">
 			                <div class="card">
 			                    <div class="card-header card-header-icon" data-background-color="rose">
@@ -153,6 +160,7 @@
 			                    <div id="multipleBarsChart" class="ct-chart"></div>
 			                </div>
 			            </div> -->
+			            */%>
 			        </div>
 
 			        <div class="row">
@@ -263,8 +271,6 @@
 			                </div>
 			            </div>
 			        </div>
-
-			        
 			</div>
 		</div>
 	</div>

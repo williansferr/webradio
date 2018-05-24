@@ -1,7 +1,7 @@
     <div class="sidebar" data-active-color="white" data-background-color="orange" data-image="<%= path %>img/background/img8.jpg">
         <div class="logo">
             <div class="logo-normal">
-                <a href="https://www.luppiart.com.br" class="simple-text">
+                <a href="http://www.luppiarts.com/" class="simple-text">
                     Luppi Art
                 </a>
             </div>
@@ -19,12 +19,13 @@
                     <img src="<%= path %>img/default-avatar.png" />
                 </div>
                 <div class="info">
-                    <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                    <a <%# data-toggle="collapse" href="#collapseExample" class="collapsed" %>>
                         <span>
                             <%= user.name %>
-                            <b class="caret"></b>
+                            <%# <b class="caret"></b> %>
                         </span>
                     </a>
+                    <%/*
                     <div class="collapse" id="collapseExample">
                         <ul class="nav">
                             <li>
@@ -35,6 +36,7 @@
                             </li>
                         </ul>
                     </div>
+                    */%>
                 </div>
             </div>
             <div class="nav-container">
