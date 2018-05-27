@@ -108,6 +108,10 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 					series.push(totalPorMes);
 				}
 
+				for(var i = 0; i < labels.length; i++){
+					labels[i] = labels[i] + "(" + series[i] + ")";
+				}
+
 				airtime.labels = labels;
 				airtime.series = [];
 				airtime.series.push(series);
