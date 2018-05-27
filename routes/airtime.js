@@ -90,7 +90,7 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				
 				let totalPorMes = 0;
 				for (var i = 0, len = airtimes.length; i < len; i++) {
-					if (anos.indexOf(airtimes[i]._id.year) > -1){
+					if (anos.indexOf(airtimes[i]._id.year) == -1){
 						anos.push(airtimes[i]._id.year);
 					}
 					if(label === airtimes[i]._id.month + "/" + airtimes[i]._id.year){
