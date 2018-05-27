@@ -70,7 +70,7 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 })
 
 
-router.post('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
+router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 	try {
 		service_airtime.findAllGroupBy(
 			(err, result) => {
