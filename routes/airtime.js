@@ -91,12 +91,12 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				for (var i = 0, len = airtimes.length; i < len; i++) {
 					
 					if(label === airtimes[i]._id.month + "/" + airtimes[i]._id.year){
-						totalPorMes += Number(airtimes[i].listenersMax);
+						totalPorMes += parseInt(airtimes[i].listenersMax);
 					} else {
 						label = airtimes[i]._id.month + "/" + airtimes[i]._id.year;
 						labels.push(label);
 						series.push(totalPorMes);
-						totalPorMes = Number(airtimes[i].listenersMax);
+						totalPorMes = parseInt(airtimes[i].listenersMax);
 					}
 					console.log('totalPorMes', totalPorMes);
 					if(totalPorMes > maxList){
