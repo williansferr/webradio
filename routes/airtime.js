@@ -69,4 +69,55 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 	
 })
 
+
+router.post('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
+	try {
+		service_airtime.findAllGroupBy(
+			(err, result) => {
+				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
+			
+				// console.log('findByDataInclusaoBetweenAirtime', result);
+
+				let airtimes = result;
+				let airtime = {};
+				let labels = [];
+				let series = [];
+				let maxList = 0;
+				if (airtimes){
+					let label = airtimes[0]._id.month + "/" + airtimes[0]._id.year;
+					labels.push(label);
+				} else {
+					let label = "";
+				}
+				
+				let totalPorMes = 0;
+				for (var i = 0, len = airtimes.length; i < len; i++) {
+					
+					if(label === airtimes[i]._id.month + "/" + airtimes[i]._id.year){
+						totalPorMes += airtimes[i].listenersMax;
+					} else {
+						label = airtimes[i]._id.month + "/" + airtimes[i]._id.year;
+						labels.push(label);
+						series.push(totalPorMes);
+						totalPorMes = airtimes[i].listenersMax;
+					}
+
+					if(airtimes[i].listenersMax > maxList){
+						maxList = airtimes[i].listenersMax;
+					}
+
+				}
+
+				airtime.labels = labels;
+				airtime.series = [];
+				airtime.series.push(series);
+				airtime.high = maxList;
+				
+				return res.status(200).end(JSON.stringify({ airtimeMensal: airtime, message: result }));
+			});
+	} catch (e) {
+		return res.status(500).end(JSON.stringify({ message: 'findByDataInclusaoBetween', error: e }));
+	}
+})	
+
 module.exports = router;

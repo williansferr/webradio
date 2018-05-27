@@ -106,6 +106,31 @@ function findByDataInclusaoBetween(data_inicial, data_final, callback) {
     ).toArray(callback);
 }
 
+function findAllGroupBy(callback) {
+    global.db.collection("airtimes").aggregate(
+        [
+            { 
+                $group : { 
+                    _id : { 
+                        year: { $year: "$data_inclusao" },
+                        month: { $month: "$data_inclusao" },
+                        day: { $dayOfMonth: "$data_inclusao" }
+                    }, 
+                    count : { 
+                        "$sum" : 1 
+                    },
+                    listenersMax: { $max: "$listeners"}
+                }
+            },
+            {
+                $sort: { 
+                    _id: 1
+                } 
+            }
+        ]
+    ).toArray(callback);
+}
+
 function insert(airtime, callback){
     airtime.data_inclusao = new Date();
     global.db.collection("airtimes").insert(airtime, callback)
