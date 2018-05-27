@@ -185,8 +185,8 @@ function initChartsAirtimesByMonth(){
         for (var i = 0; i < ac.airtimeMensal.anos.length; i++) {
         	$('#id-mes-airtime')
 		         .append($("<option></option>")
-		                    .attr("value",airtimes.anos[i])
-		                    .text(airtimes.anos[i]));
+		                    .attr("value",ac.airtimeMensal.anos[i])
+		                    .text(ac.airtimeMensal.anos[i]));
         }
         
     });
