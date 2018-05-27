@@ -169,7 +169,7 @@ function initChartsOuvintes(data, tipo){
 }
 
 function initChartsAirtimesByMonth(){
-// initChartsAirtimesMonth
+
 	let selectTipo = $("#id-tipo-airtime-month").val();
 	const request = $.ajax({
         url: '/airtime/allGroupBy',

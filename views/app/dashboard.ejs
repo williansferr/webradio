@@ -340,6 +340,7 @@
 		});
 
 		$( document ).ready(function() {
+			initChartsAirtimesByMonth();
 			ouvinteCharts = JSON.parse('<%- JSON.stringify(ouvinteCharts) %>');
 			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'));
 			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'), '0');
