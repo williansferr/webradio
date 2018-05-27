@@ -98,22 +98,22 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 						series.push(totalPorMes);
 						totalPorMes = parseInt(airtimes[i].listenersMax);
 					}
-					console.log('totalPorMes', totalPorMes);
+					
 					if(totalPorMes > maxList){
 						maxList = totalPorMes;
 					}
 				}
 				//Quando so tem 1 mes
 				if (airtimes){
-					if(label === airtimes[0]._id.month + "/" + airtimes[0]._id.year){
-						series.push(totalPorMes);
-					}
+					series.push(totalPorMes);
 				}
 
 				airtime.labels = labels;
 				airtime.series = [];
 				airtime.series.push(series);
 				airtime.high = maxList;
+
+				console.log('airtimeMensal', airtime);
 				
 				return res.status(200).end(JSON.stringify({ airtimeMensal: airtime, airtimes: result }));
 			});
