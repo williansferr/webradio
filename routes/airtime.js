@@ -76,8 +76,6 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 			(err, result) => {
 				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
 			
-				// console.log('findByDataInclusaoBetweenAirtime', result);
-
 				let airtimes = result;
 				let airtime = {};
 				let labels = [];
@@ -100,9 +98,9 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 						series.push(totalPorMes);
 						totalPorMes = airtimes[i].listenersMax;
 					}
-
-					if(airtimes[i].listenersMax > maxList){
-						maxList = airtimes[i].listenersMax;
+					console.log('totalPorMes', totalPorMes);
+					if(totalPorMes > maxList){
+						maxList = totalPorMes;
 					}
 
 				}
