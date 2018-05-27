@@ -79,9 +79,7 @@ router.get('/allGroupBy/:ano', authenticationMiddleware(), function(req, res, ne
 				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
 			
 				let airtimes = [];
-				console.log('ano', ano);
 				for (var i = 0, len = result.length; i < len; i++) {
-					console.log('year', result[i]._id.year);
 					if(ano === parseInt(result[i]._id.year)){
 						
 						airtimes.push(result[i]);
@@ -133,7 +131,7 @@ router.get('/allGroupBy/:ano', authenticationMiddleware(), function(req, res, ne
 				airtime.anos = anos;
 				airtime.high = maxList;
 
-				console.log('airtimeMensal', airtime);
+				// console.log('airtimeMensal', airtime);
 				
 				return res.status(200).end(JSON.stringify({ airtimeMensal: airtime, airtimes: result }));
 			});
