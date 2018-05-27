@@ -80,9 +80,9 @@ router.get('/allGroupBy/:ano', authenticationMiddleware(), function(req, res, ne
 			
 				let airtimes = [];
 				for (var i = 0, len = result.length; i < len; i++) {
-					if(ano === airtimes[i]._id.year){
+					if(ano === result[i]._id.year){
 						console.log('ano', ano);
-						console.log('airtimes[i]._id.year', airtimes[i]._id.year);
+						console.log('airtimes[i]._id.year', result[i]._id.year);
 						airtimes.push(result[i]);
 					}
 				}
