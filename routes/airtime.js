@@ -115,7 +115,7 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				airtime.series.push(series);
 				airtime.high = maxList;
 				
-				return res.status(200).end(JSON.stringify({ airtimeMensal: airtime, message: result }));
+				return res.status(200).end(JSON.stringify({ airtimeMensal: airtime, airtimes: result }));
 			});
 	} catch (e) {
 		return res.status(500).end(JSON.stringify({ message: 'findByDataInclusaoBetween', error: e }));

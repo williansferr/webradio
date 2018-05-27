@@ -38,6 +38,50 @@ function initChartsDeslike(data){
 
 }
 
+function initChartsAirtimesMonth(data, tipo){
+	// dataAirtimeChart = JSON.parse(data);
+	dataAirtimeChart = data;
+
+	if(tipo === '0'){
+		optionsChart = {
+	    	lineSmooth: Chartist.Interpolation.cardinal({
+				tension: 10
+			}),
+			axisY: {
+				showGrid: true,
+				offset: 40
+			},
+			axisX: {
+				showGrid: false,
+			},
+			low: 0,
+			high: data.high,
+			showPoint: true,
+			height: '300px'
+	    }
+
+	    var airtimeCharts = new Chartist.Line('#airtimeMonthCharts', dataAirtimeChart, optionsChart);
+
+	    md.startAnimationForLineChart(airtimeCharts);
+
+	} else if(tipo === '1') {
+		optionsChart = {
+	    	lineSmooth: Chartist.Interpolation.cardinal({
+	            tension: 0
+	        }),
+	        low: 0,
+	        high: data.high,
+	        chartPadding: { top: 0, right: 0, bottom: 0, left: 0},
+	        height: '300px'
+	    }
+
+	    var airtimeCharts = new Chartist.Bar('#airtimeMonthCharts', dataAirtimeChart, optionsChart);
+	    md.startAnimationForLineChart(airtimeCharts);
+	}
+    
+
+}
+
 function initChartsAirtimes(data, tipo){
 	// dataAirtimeChart = JSON.parse(data);
 	dataAirtimeChart = data;
@@ -122,6 +166,29 @@ function initChartsOuvintes(data, tipo){
 
 	    md.startAnimationForLineChart(ouvinteCharts);
 	}
+}
+
+function initChartsAirtimesByMonth(){
+// initChartsAirtimesMonth
+	let selectTipo = $("#id-tipo-airtime-month").val();
+	const request = $.ajax({
+        url: '/airtime/allGroupBy',
+        type: 'GET'
+    });
+    
+
+    request.done(function (msg) {
+        let ac = JSON.parse(msg);
+        airtimes = ac.airtimes;
+        initChartsAirtimesMonth(ac.airtimeMensal, selectTipo);
+    });
+
+    request.fail(function (jqXHR, textStatus) {
+        console.log('erro');
+        console.log(jqXHR);
+        console.log(textStatus);
+        //swal("Erro!", textoErro1.textStatus, "error");
+    });
 }
 
 function initChartsAirtimesByPeriodo(){
@@ -255,3 +322,4 @@ function initChartsOuvintesByPeriodo(){
 var dtIniOuvi = new Date();
 var dtFinOuvi = new Date();
 var ouvinteCharts = {};
+var airtimes = {};
