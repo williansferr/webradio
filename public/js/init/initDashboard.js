@@ -42,6 +42,12 @@ function initChartsAirtimesMonth(data, tipo){
 	// dataAirtimeChart = JSON.parse(data);
 	dataAirtimeChart = data;
 
+	var total = 0;
+	for(var i = 0; i < data.series.length; i++){
+		total += parseInt(data.series[i]);
+	}
+	$('id-total-month').text("Total: " + total);
+
 	if(tipo === '0'){
 		optionsChart = {
 	    	lineSmooth: Chartist.Interpolation.cardinal({
@@ -183,11 +189,9 @@ function initChartsAirtimesByMonth(){
         let ac = JSON.parse(msg);
         airtimes = ac.airtimes;
         initChartsAirtimesMonth(ac.airtimeMensal, selectTipo);
-
-        for (var i = 0; i < ac.airtimeMensal.anos.length; i++) {
-        	console.log("add", ac.airtimeMensal.anos[i]);
-        	$('#id-mes-airtime').append($("<option></option>").attr("value",ac.airtimeMensal.anos[i]).text(ac.airtimeMensal.anos[i]));
-        }
+        // for (var i = 0; i < ac.airtimeMensal.anos.length; i++) {
+        // 	$('#id-mes-airtime').append($("<option></option>").attr("value",ac.airtimeMensal.anos[i]).text(ac.airtimeMensal.anos[i]));
+        // }
         
     });
 
