@@ -229,8 +229,10 @@ global.classMenu = {
 		    					var airtime = {};
 		    					labels = [];
 		    					series = [];
+		    					let ano = 0;
 		    					let maxList = 0;
 		    					for (var i = 0, len = airtimes.length; i < len; i++) {
+
 			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
 			    					series.push(airtimes[i].listenersMax);
 			    					if(airtimes[i].listenersMax > maxList){

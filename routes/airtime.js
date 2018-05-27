@@ -80,6 +80,7 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				let airtime = {};
 				let labels = [];
 				let series = [];
+				let anos = [];
 				let maxList = 0;
 				let label = "";
 				if (airtimes){
@@ -89,7 +90,9 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				
 				let totalPorMes = 0;
 				for (var i = 0, len = airtimes.length; i < len; i++) {
-					
+					if (anos.indexOf(airtimes[i]._id.year) > -1){
+						anos.push(airtimes[i]._id.year);
+					}
 					if(label === airtimes[i]._id.month + "/" + airtimes[i]._id.year){
 						totalPorMes += parseInt(airtimes[i].listenersMax);
 					} else {
@@ -109,12 +112,13 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				}
 
 				for(var i = 0; i < labels.length; i++){
-					labels[i] = labels[i] + "(" + series[i] + ")";
+					labels[i] = labels[i] + " (" + series[i] + ")";
 				}
 
 				airtime.labels = labels;
 				airtime.series = [];
 				airtime.series.push(series);
+				airtime.anos = anos;
 				airtime.high = maxList;
 
 				console.log('airtimeMensal', airtime);
