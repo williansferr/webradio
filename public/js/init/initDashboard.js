@@ -43,9 +43,9 @@ function initChartsAirtimesMonth(data, tipo){
 	dataAirtimeChart = data;
 
 	var total = 0;
-	for(var i = 0; i < data.series.length; i++){
-		console.log("["+i+"]",data.series[i]);
-		total += parseInt(data.series[i]);
+	for(var i = 0; i < data.series[0].length; i++){
+		console.log("["+i+"]",data.series[0][i]);
+		total += parseInt(data.series[0][i]);
 	}
 	$('#id-total-month').text("Total: " + total);
 
