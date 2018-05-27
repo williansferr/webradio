@@ -102,7 +102,12 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 					if(totalPorMes > maxList){
 						maxList = totalPorMes;
 					}
-
+				}
+				//Quando so tem 1 mes
+				if (airtimes){
+					if(label === airtimes[0]._id.month + "/" + airtimes[0]._id.year){
+						series.push(totalPorMes);
+					}
 				}
 
 				airtime.labels = labels;
