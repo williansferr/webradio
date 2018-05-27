@@ -117,6 +117,9 @@
 					                            <label class="label-control">Ano</label>
 					                            <select id="id-mes-airtime" class="selectpicker" data-style="select-with-transition" title="Selecione o ano" data-size="5">
 				                    				<option disabled>Selecione o ano</option>
+													<% for(var i = 0; i < airtimeMonthCharts.anos.length; i++){ %>
+														<option value="<%= airtimeMonthCharts.anos[i] %>"><%= airtimeMonthCharts.anos[i] %></option>
+													<%}%>
 	                                        	</select>
 					                        </div>
 				                    	</div>
@@ -340,8 +343,9 @@
 		});
 
 		$( document ).ready(function() {
-			initChartsAirtimesByMonth();
 			ouvinteCharts = JSON.parse('<%- JSON.stringify(ouvinteCharts) %>');
+			airtimeMonthCharts = JSON.parse('<%- JSON.stringify(airtimeMonthCharts) %>');
+			initChartsAirtimesMonth(airtimeMonthCharts, '0');
 			initChartsCurtidas(JSON.parse('<%- JSON.stringify(curtidaCharts) %>'));
 			initChartsAirtimes(JSON.parse('<%- JSON.stringify(airtimeCharts) %>'), '0');
 			initChartsDeslike(JSON.parse('<%- JSON.stringify(deslikeCharts) %>'));

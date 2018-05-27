@@ -328,4 +328,5 @@ function initChartsOuvintesByPeriodo(){
 var dtIniOuvi = new Date();
 var dtFinOuvi = new Date();
 var ouvinteCharts = {};
+var airtimeMonthCharts = {};
 var airtimes = {};

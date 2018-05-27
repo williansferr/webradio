@@ -317,8 +317,59 @@ global.classMenu = {
 									data.ouvinteCharts = ouvinte;
 
 									// console.log(ouvinte);
-		    						res.render('app/dashboard', data);
 
+									service_airtime.findAllGroupBy(
+									(err, result) => {
+										if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
+									
+										let airtimes = result;
+										let airtime = {};
+										let labels = [];
+										let series = [];
+										let anos = [];
+										let maxList = 0;
+										let label = "";
+										if (airtimes){
+											label = airtimes[0]._id.month + "/" + airtimes[0]._id.year;
+											labels.push(label);
+										}
+										
+										let totalPorMes = 0;
+										for (var i = 0, len = airtimes.length; i < len; i++) {
+											if (anos.indexOf(airtimes[i]._id.year) == -1){
+												anos.push(airtimes[i]._id.year);
+											}
+											if(label === airtimes[i]._id.month + "/" + airtimes[i]._id.year){
+												totalPorMes += parseInt(airtimes[i].listenersMax);
+											} else {
+												label = airtimes[i]._id.month + "/" + airtimes[i]._id.year;
+												labels.push(label);
+												series.push(totalPorMes);
+												totalPorMes = parseInt(airtimes[i].listenersMax);
+											}
+											
+											if(totalPorMes > maxList){
+												maxList = totalPorMes;
+											}
+										}
+										//Quando so tem 1 mes
+										if (airtimes){
+											series.push(totalPorMes);
+										}
+
+										for(var i = 0; i < labels.length; i++){
+											labels[i] = labels[i] + " (" + series[i] + ")";
+										}
+
+										airtime.labels = labels;
+										airtime.series = [];
+										airtime.series.push(series);
+										airtime.anos = anos;
+										airtime.high = maxList;
+
+										data.airtimeMonthCharts = airtime;
+										res.render('app/dashboard', data);	
+									});
 		    					});
 	    					});
 	    				});
