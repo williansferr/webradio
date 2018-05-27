@@ -234,4 +234,4 @@ function remove(_id, callback){
     global.db.collection("airtimes").remove({ _id: ObjectId(_id) }, { justOne : true }, callback)
 }
 
-module.exports = { insert, upsert,  update, remove, findById, findByDataInclusao, findByListenerPeakToday, findByDataInclusaoGTE, findByDataInclusaoBetween, findAll }
+module.exports = { insert, upsert,  update, remove, findById, findByDataInclusao, findByListenerPeakToday, findByDataInclusaoGTE, findByDataInclusaoBetween, findAllGroupBy, findAll }
