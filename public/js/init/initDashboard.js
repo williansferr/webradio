@@ -44,10 +44,10 @@ function initChartsAirtimesMonth(data, tipo){
 
 	var total = 0;
 	for(var i = 0; i < data.series.length; i++){
+		console.log("["+i+"]",data.series[i]);
 		total += parseInt(data.series[i]);
 	}
-	console.log("total", total);
-	$('id-total-month').val("Total: " + total);
+	$('#id-total-month').text("Total: " + total);
 
 	if(tipo === '0'){
 		optionsChart = {
