@@ -46,7 +46,8 @@ function initChartsAirtimesMonth(data, tipo){
 	for(var i = 0; i < data.series.length; i++){
 		total += parseInt(data.series[i]);
 	}
-	$('id-total-month').text("Total: " + total);
+	console.log("total", total);
+	$('id-total-month').val("Total: " + total);
 
 	if(tipo === '0'){
 		optionsChart = {
