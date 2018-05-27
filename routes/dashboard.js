@@ -322,11 +322,25 @@ global.classMenu = {
 									(err, result) => {
 										if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
 									
-										let airtimes = result;
+										// let airtimes = result;
+
+										let airtimes = [];
+										let anos = [];
+										let ano = parseInt(dia1.getFullYear());
+										for (var i = 0, len = result.length; i < len; i++) {
+											if (anos.indexOf(result[i]._id.year) == -1){
+												anos.push(result[i]._id.year);
+											}
+											if(ano === parseInt(result[i]._id.year)){
+												
+												airtimes.push(result[i]);
+											}
+										}
+
 										let airtime = {};
 										let labels = [];
 										let series = [];
-										let anos = [];
+										
 										let maxList = 0;
 										let label = "";
 										if (airtimes){
@@ -336,9 +350,6 @@ global.classMenu = {
 										
 										let totalPorMes = 0;
 										for (var i = 0, len = airtimes.length; i < len; i++) {
-											if (anos.indexOf(airtimes[i]._id.year) == -1){
-												anos.push(airtimes[i]._id.year);
-											}
 											if(label === airtimes[i]._id.month + "/" + airtimes[i]._id.year){
 												totalPorMes += parseInt(airtimes[i].listenersMax);
 											} else {
