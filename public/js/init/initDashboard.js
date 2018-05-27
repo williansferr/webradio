@@ -181,8 +181,9 @@ function initChartsAirtimesByMonth(){
         let ac = JSON.parse(msg);
         airtimes = ac.airtimes;
         initChartsAirtimesMonth(ac.airtimeMensal, selectTipo);
-        
+
         for (var i = 0; i < ac.airtimeMensal.anos.length; i++) {
+        	console.log("add", ac.airtimeMensal.anos[i]);
         	$('#id-mes-airtime')
 		         .append($("<option></option>")
 		                    .attr("value",ac.airtimeMensal.anos[i])
