@@ -70,13 +70,24 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 })
 
 
-router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
+router.get('/allGroupBy/:ano', authenticationMiddleware(), function(req, res, next) {
 	try {
+		const ano = req.params.ano;
+
 		service_airtime.findAllGroupBy(
 			(err, result) => {
 				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
 			
-				let airtimes = result;
+				let airtimes = [];
+				for (var i = 0, len = result.length; i < len; i++) {
+					if(ano === airtimes[i]._id.year){
+						console.log('ano', ano);
+						console.log('airtimes[i]._id.year', airtimes[i]._id.year);
+						airtimes.push(result[i]);
+					}
+				}
+
+
 				let airtime = {};
 				let labels = [];
 				let series = [];

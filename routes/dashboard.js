@@ -431,7 +431,7 @@ global.classMenu = {
 			disableExpandAll();
 			enableExpandMenuPodcast();
 			classMenu.podcast.cadastro = 'active visible';
-			const id = req.params.id;		
+			const id = req.params.id;
 
 			service_podcast.findById(id, 
 				(err, result) => {

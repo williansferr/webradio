@@ -171,8 +171,10 @@ function initChartsOuvintes(data, tipo){
 function initChartsAirtimesByMonth(){
 
 	let selectTipo = $("#id-tipo-airtime-month").val();
+	let selectAno = $("#id-mes-airtime").val();
+
 	const request = $.ajax({
-        url: '/airtime/allGroupBy',
+        url: '/airtime/allGroupBy/' + selectAno,
         type: 'GET'
     });
     
