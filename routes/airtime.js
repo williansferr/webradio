@@ -72,7 +72,7 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 
 router.get('/allGroupBy/:ano', authenticationMiddleware(), function(req, res, next) {
 	try {
-		const ano = req.params.ano;
+		const ano = parseInt(req.params.ano);
 
 		service_airtime.findAllGroupBy(
 			(err, result) => {
@@ -82,7 +82,7 @@ router.get('/allGroupBy/:ano', authenticationMiddleware(), function(req, res, ne
 				console.log('ano', ano);
 				for (var i = 0, len = result.length; i < len; i++) {
 					console.log('year', result[i]._id.year);
-					if(ano === result[i]._id.year){
+					if(ano === parseInt(result[i]._id.year)){
 						
 						airtimes.push(result[i]);
 					}
