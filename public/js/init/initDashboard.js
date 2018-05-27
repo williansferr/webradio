@@ -184,10 +184,7 @@ function initChartsAirtimesByMonth(){
 
         for (var i = 0; i < ac.airtimeMensal.anos.length; i++) {
         	console.log("add", ac.airtimeMensal.anos[i]);
-        	$('#id-mes-airtime')
-		         .append($("<option></option>")
-		                    .attr("value",ac.airtimeMensal.anos[i])
-		                    .text(ac.airtimeMensal.anos[i]));
+        	$('#id-mes-airtime').append($("<option></option>").attr("value",ac.airtimeMensal.anos[i]).text(ac.airtimeMensal.anos[i]));
         }
         
     });
