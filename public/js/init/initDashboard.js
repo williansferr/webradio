@@ -93,6 +93,12 @@ function initChartsAirtimes(data, tipo){
 	// dataAirtimeChart = JSON.parse(data);
 	dataAirtimeChart = data;
 
+	var total = 0;
+	for(var i = 0; i < data.series[0].length; i++){
+		total += parseInt(data.series[0][i]);
+	}
+	$('#id-total-periodo').text("Total: " + total);
+
 	if(tipo === '0'){
 		optionsChart = {
 	    	lineSmooth: Chartist.Interpolation.cardinal({
