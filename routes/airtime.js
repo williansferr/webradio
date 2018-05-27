@@ -83,11 +83,10 @@ router.get('/allGroupBy', authenticationMiddleware(), function(req, res, next) {
 				let labels = [];
 				let series = [];
 				let maxList = 0;
+				let label = "";
 				if (airtimes){
-					let label = airtimes[0]._id.month + "/" + airtimes[0]._id.year;
+					label = airtimes[0]._id.month + "/" + airtimes[0]._id.year;
 					labels.push(label);
-				} else {
-					let label = "";
 				}
 				
 				let totalPorMes = 0;
