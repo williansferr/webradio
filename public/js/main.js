@@ -94,7 +94,7 @@ var Curtida = {
             window.open("https://twitter.com/atentooficial", '_blank');
         });
         $('.fa-whatsapp-square').on('click', function() {
-            window.open("https://api.whatsapp.com/send?phone=11998332512", '_blank');
+            window.open("https://api.whatsapp.com/send?phone=5511998332512", '_blank');
         });
     },
     load:function(){
