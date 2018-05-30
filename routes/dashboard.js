@@ -495,7 +495,7 @@ global.classMenu = {
 			enableExpandMenuPodcast();
 			classMenu.podcast.consulta = 'active visible';
 
-			const header_podcast = [{name: "id"}, {name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}];
+			const header_podcast = [{name: "id"}, {name: "autor"}, {name: "Título"}, {name: "Subtítulo"}, {name: "Descrição"}, {name: "Capa"}, {name: "Audio"}, {name: "Data Inclusão"}];
 			service_podcast.findAll(
 				(err, result) => {
 	    			if(err) return res.status(204).end(JSON.stringify({ message: "não localizado", error: err }))

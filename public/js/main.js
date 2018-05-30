@@ -84,6 +84,18 @@ var Curtida = {
     init:function(){
         this.info.init();
         this.load();
+        $('.fa-facebook-square').on('click', function() {
+            window.open("https://www.facebook.com/AtentoBrasilOficial/", '_blank');
+        });
+        $('.fa-linkedin').on('click', function() {
+            window.open("https://br.linkedin.com/", '_blank');
+        });
+        $('.fa-twitter-square').on('click', function() {
+            window.open("https://twitter.com/?lang=pt-br", '_blank');
+        });
+        $('.fa-whatsapp-square').on('click', function() {
+            window.open("https://api.whatsapp.com/send?phone=43984823280", '_blank');
+        });
     },
     load:function(){
         $('#like-audio').on('click', function() {
