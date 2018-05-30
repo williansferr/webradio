@@ -73,7 +73,8 @@
 																		}
 																	%>
 																	<td><%- quebra %></td>
-																	<td><%= new Date(comentario.data_inclusao).getDate() + "/" + (new Date(comentario.data_inclusao).getMonth() + 1) + "/" + new Date(comentario.data_inclusao).getFullYear() + " - " + comentario.data_inclusao %></td>
+																	<% var data = new Date(comentario.data_inclusao); %>
+																	<td><%= data.getDate() + "/" + (data.getMonth() + 1) + "/" + data.getFullYear() + " " + data.getHours() + ":" + data.getMinutes() + ":" + data.getSeconds() %></td>
 																	<td>
 																		<button class="btn btn-simple btn-danger btn-icon remove" onclick="Comentario.del('<%= comentario._id %>', '<%= comentario.comentario %>', this)">
 																			<i class="material-icons">close</i>
