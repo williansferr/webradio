@@ -16,8 +16,8 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 	try {
 		// console.log('body', req.body);
 
-		// console.log('before.data_inicial', req.body.data_inicial);
-		// console.log('before.data_final', req.body.data_final);
+		console.log('before.data_inicial', req.body.data_inicial);
+		console.log('before.data_final', req.body.data_final);
 
 		// console.log('before.new Date.data_inicial', new Date(req.body.data_inicial));
 		// console.log('before.new Date.data_final', new Date(req.body.data_final));
