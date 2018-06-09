@@ -378,6 +378,8 @@ global.classMenu = {
 										airtime.anos = anos;
 										airtime.high = maxList;
 
+										console.log('airtime::', airtime);
+
 										data.airtimeMonthCharts = airtime;
 										res.render('app/dashboard', data);	
 									});
