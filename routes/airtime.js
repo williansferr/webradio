@@ -16,8 +16,8 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 	try {
 		// console.log('body', req.body);
 
-		console.log('before.data_inicial', req.body.data_inicial);
-		console.log('before.data_final', req.body.data_final);
+		// console.log('before.data_inicial', req.body.data_inicial);
+		// console.log('before.data_final', req.body.data_final);
 
 		// console.log('before.new Date.data_inicial', new Date(req.body.data_inicial));
 		// console.log('before.new Date.data_final', new Date(req.body.data_final));
@@ -36,14 +36,14 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 			ano: dtF.getFullYear()
 		}
 
-		console.log('data_inicial', data_inicial);
-		console.log('data_final', data_final);
+		// console.log('data_inicial', data_inicial);
+		// console.log('data_final', data_final);
 
 		service_airtime.findByDataInclusaoBetween(data_inicial, data_final,
 			(err, result) => {
 				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findByAudio não localizado", error: err }));
 			
-				console.log('findByDataInclusaoBetweenAirtime', result);
+				// console.log('findByDataInclusaoBetweenAirtime', result);
 
 				let airtimes = result;
 				let airtime = {};
@@ -51,7 +51,7 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 				let series = [];
 				let maxList = 0;
 				for (var i = 0, len = airtimes.length; i < len; i++) {
-					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year + " (" + airtimes[i].listenersMax + ")");
 					series.push(airtimes[i].listenersMax);
 					if(airtimes[i].listenersMax > maxList){
 						maxList = airtimes[i].listenersMax;

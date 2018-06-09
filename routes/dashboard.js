@@ -233,7 +233,7 @@ global.classMenu = {
 		    					let maxList = 0;
 		    					for (var i = 0, len = airtimes.length; i < len; i++) {
 
-			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year + " (" + airtimes[i].listenersMax + ")");
 			    					series.push(airtimes[i].listenersMax);
 			    					if(airtimes[i].listenersMax > maxList){
 			    						maxList = airtimes[i].listenersMax;
