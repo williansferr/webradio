@@ -210,33 +210,29 @@ function initChartsAirtimesByMonth(){
 
 function initChartsAirtimesByPeriodo(){
 
-	let selectTipo = $("#id-tipo-airtime").val();
 	let dtInicial = new Date();
-	let dtFinal = new Date();
-	let tmpI = $('#id-dt-inicial').val();
-	let tmpF = $('#id-dt-final').val();
+	let dtFinal   = new Date();
 
-	console.log('tmpI', tmpI);
-	console.log('tmpF', tmpF);
-
+	let selectTipo = $("#id-tipo-airtime").val();
+	let tmpI       = $('#id-dt-inicial').val();
+	let tmpF 	   = $('#id-dt-final').val();
 
 	let dia = tmpI.substring(0, 2);
 	let mes = tmpI.substring(3, 5);
 	let ano = tmpI.substring(6, 10);
-	dtInicial.setDate(dia);
-	dtInicial.setMonth(parseInt(mes) - 1);
-	dtInicial.setFullYear(ano);
 
-	console.log('antes dia', dia);
+	dtInicial.setFullYear(ano);
+	dtInicial.setMonth(parseInt(mes) - 1);
+	dtInicial.setDate(dia);
+	
 	dia = tmpF.substring(0, 2);
-	console.log('depois dia', dia);
 	mes = tmpF.substring(3, 5);
 	ano = tmpF.substring(6, 10);
-	dtFinal.setDate(dia);
-	dtFinal.setMonth(parseInt(mes) - 1);
+
 	dtFinal.setFullYear(ano);
-	
-	
+	dtFinal.setMonth(parseInt(mes) - 1);
+	dtFinal.setDate(dia);
+		
 	console.log('datainicial', dtInicial);
 	console.log('datafinal', dtFinal);
 
