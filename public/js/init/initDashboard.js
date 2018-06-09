@@ -319,8 +319,8 @@ function initChartsOuvintesByPeriodo(){
         
 
         request.done(function (msg) {
-            // console.log('getAirtimes() done');
-            // console.log(msg);
+            console.log('getAirtimes() done');
+            console.log(msg);
             let oc = JSON.parse(msg);
             ouvinteCharts = oc.ouvinteCharts;
             initChartsOuvintes(oc.ouvinteCharts, selectTipo);
