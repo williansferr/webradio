@@ -233,7 +233,7 @@ global.classMenu = {
 		    					let maxList = 0;
 		    					for (var i = 0, len = airtimes.length; i < len; i++) {
 
-			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
+			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year + " (" + airtimes[i].listenersMax + ")");
 			    					series.push(airtimes[i].listenersMax);
 			    					if(airtimes[i].listenersMax > maxList){
 			    						maxList = airtimes[i].listenersMax;
@@ -323,7 +323,6 @@ global.classMenu = {
 										if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
 									
 										// let airtimes = result;
-										console.log('result::', result);
 										let airtimes = [];
 										let anos = [];
 										let ano = parseInt(dia1.getFullYear());
@@ -377,8 +376,6 @@ global.classMenu = {
 										airtime.series.push(series);
 										airtime.anos = anos;
 										airtime.high = maxList;
-
-										console.log('airtime::', airtime);
 
 										data.airtimeMonthCharts = airtime;
 										res.render('app/dashboard', data);	
