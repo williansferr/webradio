@@ -216,6 +216,10 @@ function initChartsAirtimesByPeriodo(){
 	let tmpI = $('#id-dt-inicial').val();
 	let tmpF = $('#id-dt-final').val();
 
+	console.log('tmpI', tmpI);
+	console.log('tmpF', tmpF);
+
+
 	let dia = tmpI.substring(0, 2);
 	let mes = tmpI.substring(3, 5);
 	let ano = tmpI.substring(6, 10);
@@ -231,8 +235,8 @@ function initChartsAirtimesByPeriodo(){
 	dtFinal.setFullYear(ano);
 	
 	
-	// console.log('datainicial', dtInicial);
-	// console.log('datafinal', dtFinal);
+	console.log('datainicial', dtInicial);
+	console.log('datafinal', dtFinal);
 
 	var vai = {data_inicial: dtInicial, data_final: dtFinal};
 
