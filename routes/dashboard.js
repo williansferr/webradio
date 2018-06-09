@@ -246,7 +246,7 @@ global.classMenu = {
 								airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
 								airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
 
-								console.log('airtime:::', airtime);
+								// console.log('airtime:::', airtime);
 
 								const data = { deslikeCharts: deslike, airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
 								log.info({

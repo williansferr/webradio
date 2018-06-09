@@ -36,11 +36,14 @@ router.post('/', authenticationMiddleware(), function(req, res, next) {
 			ano: dtF.getFullYear()
 		}
 
+		console.log('data_inicial', data_inicial);
+		console.log('data_final', data_final);
+
 		service_airtime.findByDataInclusaoBetween(data_inicial, data_final,
 			(err, result) => {
 				if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findByAudio não localizado", error: err }));
 			
-				// console.log('findByDataInclusaoBetweenAirtime', result);
+				console.log('findByDataInclusaoBetweenAirtime', result);
 
 				let airtimes = result;
 				let airtime = {};
