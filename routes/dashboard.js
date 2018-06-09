@@ -233,7 +233,7 @@ global.classMenu = {
 		    					let maxList = 0;
 		    					for (var i = 0, len = airtimes.length; i < len; i++) {
 
-			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year + " (" + airtimes[i].listenersMax + ")");
+			    					labels.push(airtimes[i]._id.day + "/" + airtimes[i]._id.month + "/" + airtimes[i]._id.year);
 			    					series.push(airtimes[i].listenersMax);
 			    					if(airtimes[i].listenersMax > maxList){
 			    						maxList = airtimes[i].listenersMax;
@@ -245,6 +245,8 @@ global.classMenu = {
 								airtime.high = maxList;
 								airtime.hoje = hoje.getDate() + "/" + (hoje.getMonth() + 1) + "/" + hoje.getFullYear();
 								airtime.dia1 = dia1.getDate() + "/" + (dia1.getMonth() + 1) + "/" + dia1.getFullYear();
+
+								console.log('airtime:::', airtime);
 
 								const data = { deslikeCharts: deslike, airtimeCharts: airtime, curtidaCharts: curtida, comentarios_hoje: comentarios, classMenu: classMenu, user: {name: req.user.username, password: req.user.password, email: req.user.email}, notification: ''};
 								log.info({
