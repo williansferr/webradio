@@ -227,7 +227,9 @@ function initChartsAirtimesByPeriodo(){
 	dtInicial.setMonth(parseInt(mes) - 1);
 	dtInicial.setFullYear(ano);
 
+	console.log('antes dia', dia);
 	dia = tmpF.substring(0, 2);
+	console.log('depois dia', dia);
 	mes = tmpF.substring(3, 5);
 	ano = tmpF.substring(6, 10);
 	dtFinal.setDate(dia);
