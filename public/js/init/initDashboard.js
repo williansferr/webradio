@@ -232,9 +232,6 @@ function initChartsAirtimesByPeriodo(){
 	dtFinal.setFullYear(ano);
 	dtFinal.setMonth(parseInt(mes) - 1);
 	dtFinal.setDate(dia);
-		
-	console.log('datainicial', dtInicial);
-	console.log('datafinal', dtFinal);
 
 	var vai = {data_inicial: dtInicial, data_final: dtFinal};
 
@@ -247,8 +244,8 @@ function initChartsAirtimesByPeriodo(){
     
 
     request.done(function (msg) {
-        console.log('getAirtimes() done');
-        console.log(msg);
+        // console.log('getAirtimes() done');
+        // console.log(msg);
         let ac = JSON.parse(msg);
         initChartsAirtimes(ac.airtimeCharts, selectTipo);
     });
@@ -264,16 +261,19 @@ function initChartsAirtimesByPeriodo(){
 
 function initChartsOuvintesByPeriodo(){
 	// console.log("id-ips:", $("#id-ips").val());
-	let selectIps = $("#id-ips").val();
-	let selectTipo = $("#id-tipo").val();
+	
 	let dtInicial = new Date();
-	let dtFinal = new Date();
-	let tmpI = $('#id-dt-o-inicial').val();
-	let tmpF = $('#id-dt-o-final').val();
+	let dtFinal   = new Date();
+
+	let selectIps  = $("#id-ips").val();
+	let selectTipo = $("#id-tipo").val();
+	let tmpI 	   = $('#id-dt-o-inicial').val();
+	let tmpF 	   = $('#id-dt-o-final').val();
 
 	let dia = tmpI.substring(0, 2);
 	let mes = tmpI.substring(3, 5);
 	let ano = tmpI.substring(6, 10);
+
 	dtInicial.setDate(dia);
 	dtInicial.setMonth(parseInt(mes) - 1);
 	dtInicial.setFullYear(ano);
@@ -281,6 +281,7 @@ function initChartsOuvintesByPeriodo(){
 	dia = tmpF.substring(0, 2);
 	mes = tmpF.substring(3, 5);
 	ano = tmpF.substring(6, 10);
+	
 	dtFinal.setDate(dia);
 	dtFinal.setMonth(parseInt(mes) - 1);
 	dtFinal.setFullYear(ano);
