@@ -323,7 +323,7 @@ global.classMenu = {
 										if(err) return res.status(204).end(JSON.stringify({ message: "service_curtidas.findAllGroupBy não localizado", error: err }));
 									
 										// let airtimes = result;
-
+										console.log('result::', result);
 										let airtimes = [];
 										let anos = [];
 										let ano = parseInt(dia1.getFullYear());
